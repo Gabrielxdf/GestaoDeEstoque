@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="425.0" prefWidth="547.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="254.0" layoutY="14.0" text="Label" />
+      <Group>
+         <children>
+            <Group />
+         </children>
+      </Group>
+      <Button layoutX="486.0" layoutY="377.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('http://icons.iconarchive.com/icons/hopstarter/button/32/Button-Help-icon.png'); -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-border-radius: 100; -fx-background-radius: 100;" />
+      <AnchorPane layoutX="108.0" layoutY="76.0" prefHeight="274.0" prefWidth="329.0" style="-fx-background-color: #90ee90;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <children>
+            <Label layoutX="114.0" layoutY="14.0" text="Nome do Produto">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField layoutX="17.0" layoutY="31.0" prefHeight="25.0" prefWidth="296.0" />
+            <Label layoutX="17.0" layoutY="66.0" text="Código">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField layoutX="14.0" layoutY="88.0" prefHeight="25.0" prefWidth="60.0" />
+            <Label layoutX="107.0" layoutY="66.0" text="Valor">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField layoutX="89.0" layoutY="88.0" prefHeight="25.0" prefWidth="66.0" promptText="0,00" />
+            <Label layoutX="11.0" layoutY="122.0" text="Quantidade">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField layoutX="11.0" layoutY="139.0" prefHeight="25.0" prefWidth="66.0" />
+            <Label layoutX="87.0" layoutY="122.0" text="Cód. Fornec.">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField layoutX="87.0" layoutY="139.0" prefHeight="25.0" prefWidth="70.0" />
+            <Label layoutX="60.0" layoutY="172.0" text="Descrição">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField layoutX="13.0" layoutY="189.0" prefHeight="25.0" prefWidth="148.0" />
+            <Label layoutX="207.0" layoutY="66.0" text="Estoque Mínimo">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField layoutX="207.0" layoutY="88.0" prefHeight="25.0" prefWidth="93.0" />
+            <Label layoutX="216.0" layoutY="122.0" text="Estoque Ideal">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField layoutX="207.0" layoutY="139.0" prefHeight="25.0" prefWidth="93.0" />
+            <Label layoutX="204.0" layoutY="172.0" text="Classificação ABC">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField layoutX="207.0" layoutY="189.0" prefHeight="25.0" prefWidth="93.0" promptText="C" />
+            <Button layoutX="188.0" layoutY="235.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="OK" />
+            <Button layoutX="244.0" layoutY="235.0" mnemonicParsing="false" text="Cancelar" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
