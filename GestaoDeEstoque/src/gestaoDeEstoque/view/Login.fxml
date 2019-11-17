@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="323.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <effect>
+      <DropShadow />
+   </effect>
+   <children>
+      <TextField layoutX="76.0" layoutY="60.0" promptText="Usuário" style="-fx-background-radius: 100;" />
+      <PasswordField layoutX="76.0" layoutY="113.0" promptText="Senha" style="-fx-background-radius: 100;" />
+      <Button layoutX="76.0" layoutY="165.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 100;" text="Acessar" />
+      <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="247.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/user-icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="247.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/password-icon.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="131.0" layoutY="36.0" text="Usuário">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="135.0" layoutY="94.0" text="Senha">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="81.0" layoutY="139.0" text="esqueceu a senha ?" textFill="#3009f5" underline="true">
+         <font>
+            <Font size="10.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+      </Label>
+   </children>
+</AnchorPane>

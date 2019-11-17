@@ -16,9 +16,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaodeestoque.view.EditFornecedorController">
    <children>
-      <Label layoutX="282.0" layoutY="5.0" text="Label" AnchorPane.bottomAnchor="376.0" AnchorPane.leftAnchor="282.0" AnchorPane.rightAnchor="281.0" AnchorPane.topAnchor="5.0">
+      <Label alignment="CENTER" layoutX="164.0" layoutY="4.0" prefHeight="19.0" prefWidth="276.0" text="Cadastro de Fornecedor" AnchorPane.bottomAnchor="377.0" AnchorPane.leftAnchor="164.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="4.0">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold" size="18.0" />
          </font></Label>
       <TabPane layoutY="27.0" prefHeight="333.0" prefWidth="604.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
