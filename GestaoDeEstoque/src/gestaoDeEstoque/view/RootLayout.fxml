@@ -1,32 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="695.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Principal">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="228.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Produtos" />
+                        <Button layoutX="121.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-radius: 100;" text="Fornecedores" />
+                        <Button layoutX="335.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Clientes" />
+                        <Button layoutX="442.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Funcionários" />
+                        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Grupos" />
+                        <Button layoutX="549.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Ações">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Entrada" />
+                        <Button layoutX="121.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Saída" />
+                        <Button layoutX="223.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Relatórios">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Semanal" />
+                        <Button layoutX="121.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Mensal" />
+                        <Button layoutX="228.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Anual" />
+                        <Button layoutX="335.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </top>
 </BorderPane>
