@@ -42,7 +42,8 @@
                         <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Semanal" />
                         <Button layoutX="121.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Mensal" />
                         <Button layoutX="228.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Anual" />
-                        <Button layoutX="335.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
+                        <Button layoutX="335.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Grupos" />
+                        <Button layoutX="442.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
                      </children>
                   </AnchorPane>
               </content>
