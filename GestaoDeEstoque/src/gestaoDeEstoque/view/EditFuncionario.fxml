@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="486.0" prefWidth="651.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaodeestoque.view.EditFornecedorController">
+<AnchorPane id="AnchorPane" prefHeight="486.0" prefWidth="651.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaoDeEstoque.view.EditFuncionarioController">
    <children>
       <AnchorPane layoutX="10.0" layoutY="8.0" prefHeight="400.0" prefWidth="651.0" style="-fx-background-color: #90ee90;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -24,8 +24,8 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <TextField layoutX="21.0" layoutY="58.0" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 100;" />
-            <TextField layoutX="223.0" layoutY="58.0" prefHeight="26.0" prefWidth="62.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="nomeTextField" layoutX="21.0" layoutY="58.0" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="codigoTextField" layoutX="223.0" layoutY="58.0" prefHeight="26.0" prefWidth="62.0" style="-fx-background-radius: 100;" />
             <Label layoutX="229.0" layoutY="34.0" text="Código">
                <font>
                   <Font name="System Bold" size="13.0" />
@@ -36,28 +36,28 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <TextField layoutX="312.0" layoutY="58.0" prefHeight="26.0" prefWidth="186.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="usuarioTextField" layoutX="312.0" layoutY="58.0" prefHeight="26.0" prefWidth="186.0" style="-fx-background-radius: 100;" />
             <Label layoutX="81.0" layoutY="94.0" text="E-mail">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <TextField layoutX="18.0" layoutY="116.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="emailTextField" layoutX="18.0" layoutY="116.0" style="-fx-background-radius: 100;" />
             <Label layoutX="227.0" layoutY="94.0" text="Senha de acesso">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <PasswordField layoutX="203.0" layoutY="116.0" style="-fx-background-radius: 100;" />
+            <PasswordField fx:id="senhaPasswordField" layoutX="203.0" layoutY="116.0" style="-fx-background-radius: 100;" />
             <Label layoutX="404.0" layoutY="94.0" text="Confirme a senha">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <PasswordField layoutX="383.0" layoutY="116.0" style="-fx-background-radius: 100;" />
+            <PasswordField fx:id="confirmarSenhaPasswordField" layoutX="383.0" layoutY="116.0" style="-fx-background-radius: 100;" />
             <Group layoutX="482.0" layoutY="445.0">
                <children>
-                  <Button layoutX="62.0" mnemonicParsing="false" text="Cancelar">
+                  <Button fx:id="cancelarButton" layoutX="62.0" mnemonicParsing="false" text="Cancelar">
                      <graphic>
                         <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -66,7 +66,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Ok">
+                  <Button fx:id="okButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Ok">
                      <graphic>
                         <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -77,18 +77,18 @@
                   </Button>
                </children>
             </Group>
-            <TableView layoutX="11.0" layoutY="193.0" prefHeight="236.0" prefWidth="630.0">
+            <TableView fx:id="funcionarioTable" layoutX="11.0" layoutY="193.0" prefHeight="236.0" prefWidth="630.0">
               <columns>
-                <TableColumn prefWidth="37.0" text="Cód" />
-                <TableColumn prefWidth="211.0" text="Nome" />
-                  <TableColumn prefWidth="137.0" text="Usuário" />
-                  <TableColumn prefWidth="177.0" text="E-mail" />
+                <TableColumn fx:id="codigoColumn" prefWidth="37.0" text="Cód" />
+                <TableColumn fx:id="nomeColumn" prefWidth="211.0" text="Nome" />
+                  <TableColumn fx:id="usuarioColumn" prefWidth="137.0" text="Usuário" />
+                  <TableColumn fx:id="emailColumn" prefWidth="177.0" text="E-mail" />
               </columns>
             </TableView>
-            <Button layoutX="17.0" layoutY="443.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('http://icons.iconarchive.com/icons/hopstarter/button/32/Button-Help-icon.png'); -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-border-radius: 100; -fx-background-radius: 100;" />
+            <Button fx:id="helpButton" layoutX="17.0" layoutY="443.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('http://icons.iconarchive.com/icons/hopstarter/button/32/Button-Help-icon.png'); -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-border-radius: 100; -fx-background-radius: 100;" />
             <ToggleButtonGroup layoutX="153.0" layoutY="446.0" selectionType="SINGLE">
                <toggles>
-                  <ToggleButton selected="true" text="Cadastrar">
+                  <ToggleButton fx:id="cadastrarToggleButton" selected="true" text="Cadastrar">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -97,7 +97,7 @@
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ToggleButton text="Alterar">
+                  <ToggleButton fx:id="alterarToggleButton" text="Alterar">
                      <graphic>
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -110,18 +110,18 @@
             </ToggleButtonGroup>
             <Button layoutX="336.0" layoutY="446.0" mnemonicParsing="false" text="Excluir">
                <graphic>
-                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="excluirButton" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/delete-32.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <TextField layoutX="175.0" layoutY="167.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
+            <TextField fx:id="pesquisaTextField" layoutX="175.0" layoutY="167.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
             <ToggleButtonGroup layoutX="350.0" layoutY="167.0" prefHeight="26.0" prefWidth="283.0" selectionType="SINGLE">
                <toggles>
-                  <ToggleButton selected="true" text="Pesquisa por nome" />
-                  <ToggleButton prefHeight="26.0" prefWidth="149.0" text="Pesquisa por código" />
+                  <ToggleButton fx:id="pesquisaPorNomeToggleButton" selected="true" text="Pesquisa por nome" />
+                  <ToggleButton fx:id="pesquisaPorCodigoToggleButton" prefHeight="26.0" prefWidth="149.0" text="Pesquisa por código" />
                </toggles>
             </ToggleButtonGroup>
          </children>

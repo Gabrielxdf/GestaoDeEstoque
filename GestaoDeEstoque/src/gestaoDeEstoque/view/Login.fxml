@@ -11,14 +11,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="323.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="323.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaoDeEstoque.view.LoginController">
    <effect>
       <DropShadow />
    </effect>
    <children>
-      <TextField layoutX="76.0" layoutY="60.0" promptText="Usuário" style="-fx-background-radius: 100;" />
-      <PasswordField layoutX="76.0" layoutY="113.0" promptText="Senha" style="-fx-background-radius: 100;" />
-      <Button layoutX="76.0" layoutY="165.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 100;" text="Acessar" />
+      <TextField fx:id="usuarioTextField" layoutX="76.0" layoutY="60.0" promptText="Usuário" style="-fx-background-radius: 100;" />
+      <PasswordField fx:id="senhaPasswordField" layoutX="76.0" layoutY="113.0" promptText="Senha" style="-fx-background-radius: 100;" />
+      <Button fx:id="acessarButton" layoutX="76.0" layoutY="165.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 100;" text="Acessar" />
       <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="247.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/user-icon.png" />
@@ -39,7 +39,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="81.0" layoutY="139.0" text="esqueceu a senha ?" textFill="#3009f5" underline="true">
+      <Label fx:id="esqueceuSenhaLabel" layoutX="81.0" layoutY="139.0" text="esqueceu a senha ?" textFill="#3009f5" underline="true">
          <font>
             <Font size="10.0" />
          </font>

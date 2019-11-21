@@ -17,11 +17,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="575.0" prefWidth="766.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaodeestoque.view.EditFornecedorController">
+<AnchorPane id="AnchorPane" prefHeight="575.0" prefWidth="766.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaoDeEstoque.view.EditClienteController">
    <children>
       <TabPane prefHeight="530.0" prefWidth="766.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Principal">
+          <Tab fx:id="principal" text="Principal">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="502.0" prefWidth="0.0">
                      <children>
@@ -30,70 +30,70 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="14.0" layoutY="36.0" style="-fx-background-radius: 100;" />
+                        <TextField fx:id="nomeTextField" layoutX="14.0" layoutY="36.0" style="-fx-background-radius: 100;" />
                         <Label layoutX="270.0" layoutY="14.0" text="CPF">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="198.0" layoutY="36.0" style="-fx-background-radius: 100;" />
+                        <TextField fx:id="cpfTextField" layoutX="198.0" layoutY="36.0" style="-fx-background-radius: 100;" />
                         <Label layoutX="404.0" layoutY="14.0" text="Código">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="383.0" layoutY="36.0" prefHeight="26.0" prefWidth="93.0" style="-fx-background-radius: 100;" />
+                        <TextField fx:id="codigoTextField" layoutX="383.0" layoutY="36.0" prefHeight="26.0" prefWidth="93.0" style="-fx-background-radius: 100;" />
                         <Label layoutX="27.0" layoutY="78.0" text="Data de Nascimento">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="15.0" layoutY="103.0" style="-fx-background-radius: 100;" />
+                        <TextField fx:id="dataTextField" layoutX="15.0" layoutY="103.0" style="-fx-background-radius: 100;" />
                         <Label layoutX="264.0" layoutY="78.0" text="E-mail">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="198.0" layoutY="103.0" style="-fx-background-radius: 100;" />
+                        <TextField fx:id="emailTextField" layoutX="198.0" layoutY="103.0" style="-fx-background-radius: 100;" />
                         <Label layoutX="62.0" layoutY="144.0" text="Tel. Celular">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="15.0" layoutY="167.0" style="-fx-background-radius: 100;" />
+                        <TextField fx:id="telCelularTextField" layoutX="15.0" layoutY="167.0" style="-fx-background-radius: 100;" />
                         <Label layoutX="224.0" layoutY="144.0" text="Tel. Residencial">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="198.0" layoutY="167.0" style="-fx-background-radius: 100;" />
-                        <TableView layoutX="10.0" layoutY="234.0" prefHeight="267.0" prefWidth="746.0">
+                        <TextField fx:id="telResidencialTextField" layoutX="198.0" layoutY="167.0" style="-fx-background-radius: 100;" />
+                        <TableView fx:id="principalClienteTable" layoutX="10.0" layoutY="234.0" prefHeight="267.0" prefWidth="746.0">
                           <columns>
-                            <TableColumn prefWidth="37.0" text="Cód" />
-                            <TableColumn prefWidth="204.0" text="Nome" />
-                              <TableColumn prefWidth="76.0" text="CPF" />
-                              <TableColumn prefWidth="129.0" text="Nascimento" />
-                              <TableColumn prefWidth="138.0" text="E-mail" />
-                              <TableColumn minWidth="0.0" prefWidth="131.0" text="Telefones">
+                            <TableColumn fx:id="principalCodigoColumn" prefWidth="37.0" text="Cód" />
+                            <TableColumn fx:id="principalNomeColumn" prefWidth="204.0" text="Nome" />
+                              <TableColumn fx:id="cpfColumn" prefWidth="76.0" text="CPF" />
+                              <TableColumn fx:id="DataColumn" prefWidth="129.0" text="Nascimento" />
+                              <TableColumn fx:id="emailColumn" prefWidth="138.0" text="E-mail" />
+                              <TableColumn fx:id="telefonesColumn" minWidth="0.0" prefWidth="131.0" text="Telefones">
                                  <columns>
-                                    <TableColumn prefWidth="75.0" text="Celular" />
-                                    <TableColumn prefWidth="75.0" text="Res." />
+                                    <TableColumn fx:id="celularColumn" prefWidth="75.0" text="Celular" />
+                                    <TableColumn fx:id="residencialColumn" prefWidth="75.0" text="Res." />
                                  </columns>
                               </TableColumn>
                           </columns>
                         </TableView>
-                        <TextField layoutX="282.0" layoutY="208.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
+                        <TextField fx:id="principalPesquisaTextField" layoutX="282.0" layoutY="208.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
                         <ToggleButtonGroup layoutX="455.0" layoutY="208.0" selectionType="SINGLE">
                            <toggles>
-                              <ToggleButton selected="true" text="Pesquisa por nome" />
-                              <ToggleButton prefHeight="26.0" prefWidth="159.0" text="Pesquisa por código" />
+                              <ToggleButton fx:id="principalPesquisaPorNomeToggleButton" selected="true" text="Pesquisa por nome" />
+                              <ToggleButton fx:id="principalPesquisaPorCodigoToggleButton" prefHeight="26.0" prefWidth="159.0" text="Pesquisa por código" />
                            </toggles>
                         </ToggleButtonGroup>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Endereço">
+          <Tab fx:id="endereco" text="Endereço">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="766.0">
                      <children>
@@ -102,19 +102,19 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="15.0" layoutY="37.0" style="-fx-background-radius: 100;" />
+                        <TextField fx:id="cepTextField" layoutX="15.0" layoutY="37.0" style="-fx-background-radius: 100;" />
                         <Label layoutX="257.0" layoutY="14.0" text="Endereço">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="206.0" layoutY="37.0" style="-fx-background-radius: 100;" />
+                        <TextField fx:id="enderecoTextField" layoutX="206.0" layoutY="37.0" style="-fx-background-radius: 100;" />
                         <Label layoutX="401.0" layoutY="79.0" text="Estado">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="comboBox" layoutX="401.0" layoutY="104.0" prefHeight="25.0" prefWidth="36.0" style="-fx-background-radius: 100;" />
+                        <ComboBox fx:id="estadoComboBox" layoutX="401.0" layoutY="104.0" prefHeight="25.0" prefWidth="36.0" style="-fx-background-radius: 100;" />
                         <Label layoutX="266.0" layoutY="79.0" text="Cidade">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -125,22 +125,26 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="12.0" layoutY="104.0" style="-fx-background-radius: 100;" />
-                        <TextField layoutX="206.0" layoutY="104.0" style="-fx-background-radius: 100;" />
-                        <TableView layoutX="10.0" layoutY="198.0" prefHeight="299.0" prefWidth="746.0">
+                        <TextField fx:id="bairroTextField" layoutX="12.0" layoutY="104.0" style="-fx-background-radius: 100;" />
+                        <TextField fx:id="cidadeTextField" layoutX="206.0" layoutY="104.0" style="-fx-background-radius: 100;" />
+                        <TableView fx:id="enderecoClienteTable" layoutX="10.0" layoutY="198.0" prefHeight="299.0" prefWidth="746.0">
                            <columns>
-                              <TableColumn prefWidth="37.0" text="Cód" />
-                              <TableColumn prefWidth="204.0" text="Nome" />
-                              <TableColumn prefWidth="76.0" text="CEP" />
-                              <TableColumn prefWidth="129.0" text="Endereço" />
-                              <TableColumn prefWidth="138.0" text="Bairro" />
-                              <TableColumn minWidth="0.0" prefWidth="104.0" text="Cidade" />
-                              <TableColumn prefWidth="57.0" text="Estado" />
+                              <TableColumn fx:id="enderecoCodigoColumn" prefWidth="37.0" text="Cód" />
+                              <TableColumn fx:id="enderecoNomeColumn" prefWidth="204.0" text="Nome" />
+                              <TableColumn fx:id="cepColumn" prefWidth="76.0" text="CEP" />
+                              <TableColumn fx:id="enderecoColumn" prefWidth="129.0" text="Endereço" />
+                              <TableColumn fx:id="bairroColumn" prefWidth="138.0" text="Bairro" />
+                              <TableColumn fx:id="cidadeColumn" minWidth="0.0" prefWidth="104.0" text="Cidade" />
+                              <TableColumn fx:id="estadoColumn" prefWidth="57.0" text="Estado" />
                            </columns>
                         </TableView>
-                        <TextField layoutX="279.0" layoutY="172.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
-                        <ToggleButton layoutX="454.0" layoutY="172.0" selected="true" text="Pesquisa por nome" />
-                        <ToggleButton layoutX="597.0" layoutY="172.0" prefHeight="26.0" prefWidth="159.0" text="Pesquisa por código" />
+                        <TextField fx:id="enderecoPesquisaTextField" layoutX="305.0" layoutY="172.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
+                        <ToggleButtonGroup layoutX="480.0" layoutY="173.0" selectionType="SINGLE">
+                           <toggles>
+                              <ToggleButton fx:id="enderecoPesquisaPorNomeToggleButton" selected="true" text="Pesquisa por nome" />
+                              <ToggleButton fx:id="enderecoPesquisaPorCodigoToggleButton" prefHeight="26.0" prefWidth="159.0" text="Pesquisa por código" />
+                           </toggles>
+                        </ToggleButtonGroup>
                      </children>
                   </AnchorPane>
             </content>
@@ -149,7 +153,7 @@
       </TabPane>
       <Group layoutX="603.0" layoutY="539.0">
          <children>
-            <Button layoutX="62.0" mnemonicParsing="false" text="Cancelar">
+            <Button fx:id="cancelarButton" layoutX="62.0" mnemonicParsing="false" text="Cancelar">
                <graphic>
                   <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -158,7 +162,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Ok">
+            <Button fx:id="okButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Ok">
                <graphic>
                   <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -169,10 +173,10 @@
             </Button>
          </children>
       </Group>
-      <Button layoutX="7.0" layoutY="536.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('http://icons.iconarchive.com/icons/hopstarter/button/32/Button-Help-icon.png'); -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-border-radius: 100; -fx-background-radius: 100;" />
+      <Button fx:id="helpButton" layoutX="7.0" layoutY="536.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('http://icons.iconarchive.com/icons/hopstarter/button/32/Button-Help-icon.png'); -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-border-radius: 100; -fx-background-radius: 100;" />
       <ToggleButtonGroup layoutX="237.0" layoutY="539.0" selectionType="SINGLE">
          <toggles>
-            <ToggleButton selected="true" text="Cadastrar">
+            <ToggleButton fx:id="cadastrarToggleButton" selected="true" text="Cadastrar">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -181,7 +185,7 @@
                   </ImageView>
                </graphic>
             </ToggleButton>
-            <ToggleButton text="Alterar">
+            <ToggleButton fx:id="alterarToggleButton" text="Alterar">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -192,7 +196,7 @@
             </ToggleButton>
          </toggles>
       </ToggleButtonGroup>
-      <Button layoutX="422.0" layoutY="539.0" mnemonicParsing="false" text="Excluir">
+      <Button fx:id="excluirButton" layoutX="422.0" layoutY="539.0" mnemonicParsing="false" text="Excluir">
          <graphic>
             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                <image>

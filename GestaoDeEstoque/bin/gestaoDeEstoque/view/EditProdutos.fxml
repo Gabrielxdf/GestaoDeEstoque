@@ -14,10 +14,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="575.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="575.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaoDeEstoque.view.EditProdutosController">
    <children>
       <AnchorPane layoutX="20.0" layoutY="15.0" prefHeight="575.0" prefWidth="766.0" style="-fx-background-color: #90ee90;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <effect>
@@ -32,43 +31,43 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField layoutX="17.0" layoutY="31.0" prefHeight="26.0" prefWidth="368.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="nomeTextField" layoutX="17.0" layoutY="31.0" prefHeight="26.0" prefWidth="368.0" style="-fx-background-radius: 100;" />
             <Label layoutX="27.0" layoutY="78.0" text="Código">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField layoutX="17.0" layoutY="93.0" prefHeight="26.0" prefWidth="66.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="codigoTextField" layoutX="17.0" layoutY="93.0" prefHeight="26.0" prefWidth="66.0" style="-fx-background-radius: 100;" />
             <Label layoutX="113.0" layoutY="78.0" text="Valor">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField layoutX="94.0" layoutY="93.0" prefHeight="26.0" prefWidth="86.0" promptText="0,00" style="-fx-background-radius: 100;" />
+            <TextField fx:id="valorTextField" layoutX="94.0" layoutY="93.0" prefHeight="26.0" prefWidth="86.0" promptText="0,00" style="-fx-background-radius: 100;" />
             <Label layoutX="193.0" layoutY="78.0" text="Cód. Barras">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField layoutX="189.0" layoutY="93.0" prefHeight="26.0" prefWidth="86.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="codigoBarrasTextField" layoutX="189.0" layoutY="93.0" prefHeight="26.0" prefWidth="86.0" style="-fx-background-radius: 100;" />
             <Label layoutX="295.0" layoutY="78.0" text="Estoque Mínimo">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField layoutX="295.0" layoutY="93.0" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="minimoTextField" layoutX="295.0" layoutY="93.0" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 100;" />
             <Label layoutX="424.0" layoutY="78.0" text="Estoque Ideal">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField layoutX="420.0" layoutY="93.0" prefHeight="26.0" prefWidth="101.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="idealTextField" layoutX="420.0" layoutY="93.0" prefHeight="26.0" prefWidth="101.0" style="-fx-background-radius: 100;" />
             <Label layoutX="541.0" layoutY="78.0" text="Código do Fornecedor">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField layoutX="528.0" layoutY="93.0" prefHeight="26.0" prefWidth="175.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="codigoFornecedorTextField" layoutX="528.0" layoutY="93.0" prefHeight="26.0" prefWidth="175.0" style="-fx-background-radius: 100;" />
             <Label layoutX="18.0" layoutY="133.0" text="Classificação ABC">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -79,10 +78,10 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField layoutX="149.0" layoutY="148.0" prefHeight="26.0" prefWidth="368.0" style="-fx-background-radius: 100;" />
-            <Group layoutX="584.0" layoutY="532.0" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="9.64892578125">
+            <TextField fx:id="descricaoTextField" layoutX="149.0" layoutY="148.0" prefHeight="26.0" prefWidth="368.0" style="-fx-background-radius: 100;" />
+            <Group layoutX="584.0" layoutY="532.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="OK">
+                  <Button fx:id="okButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="OK">
                      <graphic>
                         <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -91,7 +90,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="70.0" mnemonicParsing="false" text="Cancelar">
+                  <Button fx:id="cancelarButton" layoutX="70.0" mnemonicParsing="false" text="Cancelar">
                      <graphic>
                         <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -102,74 +101,42 @@
                   </Button>
                </children>
             </Group>
-            <Button layoutX="6.0" layoutY="529.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('http://icons.iconarchive.com/icons/hopstarter/button/32/Button-Help-icon.png'); -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-border-radius: 100; -fx-background-radius: 100;" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="6.0" />
-            <TableView layoutX="5.0" layoutY="221.0" prefHeight="297.0" prefWidth="742.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="221.0">
+            <Button fx:id="helpButton" layoutX="6.0" layoutY="529.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('http://icons.iconarchive.com/icons/hopstarter/button/32/Button-Help-icon.png'); -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-border-radius: 100; -fx-background-radius: 100;" />
+            <TableView fx:id="produtosTable" layoutX="5.0" layoutY="221.0" prefHeight="297.0" prefWidth="742.0">
               <columns>
-                <TableColumn prefWidth="44.0" text="Cód" />
-                <TableColumn minWidth="0.0" prefWidth="170.0" text="Nome" />
-                  <TableColumn minWidth="9.0" prefWidth="50.0" text="Valor" />
-                  <TableColumn prefWidth="92.0" text="Cód. Barras" />
-                  <TableColumn minWidth="0.0" prefWidth="63.0" text="Mínimo" />
-                  <TableColumn minWidth="3.0" prefWidth="50.0" text="Ideal" />
-                  <TableColumn prefWidth="58.0" text="Atual" />
-                  <TableColumn prefWidth="94.0" text="Cód. Fornec" />
-                  <TableColumn prefWidth="120.0" text="Classificação" />
+                <TableColumn fx:id="codigoColumn" prefWidth="44.0" text="Cód" />
+                <TableColumn fx:id="nomeColumn" minWidth="0.0" prefWidth="170.0" text="Nome" />
+                  <TableColumn fx:id="valorColumn" minWidth="9.0" prefWidth="50.0" text="Valor" />
+                  <TableColumn fx:id="codigoBarrasColumn" prefWidth="92.0" text="Cód. Barras" />
+                  <TableColumn fx:id="minimoColumn" minWidth="0.0" prefWidth="63.0" text="Mínimo" />
+                  <TableColumn fx:id="idealColumn" minWidth="3.0" prefWidth="50.0" text="Ideal" />
+                  <TableColumn fx:id="atualColumn" prefWidth="58.0" text="Atual" />
+                  <TableColumn fx:id="codigoFornecedorColumn" prefWidth="94.0" text="Cód. Fornec" />
+                  <TableColumn fx:id="classificacaoColumn" prefWidth="120.0" text="Classificação" />
               </columns>
             </TableView>
-            <ToggleButtonGroup layoutX="220.0" layoutY="532.0" selectionType="SINGLE" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="351.0">
+            <ToggleButtonGroup layoutX="220.0" layoutY="532.0" selectionType="SINGLE">
                <toggles>
-                  <HBox>
-                     <children>
-                        <Group>
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Group>
-                                       <children>
-                                          <HBox>
-                                             <children>
-                                                <Group>
-                                                   <children>
-                                                      <HBox>
-                                                         <children>
-                                                            <HBox>
-                                                               <children>
-                                                                    <ToggleButton selected="true" text="Cadastrar">
-                                                                     <graphic>
-                                                                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../resources/shopping_cart.png" />
-                                                                           </image>
-                                                                        </ImageView>
-                                                                     </graphic>
-                                                                    </ToggleButton>
-                                                                    <ToggleButton text="Alterar">
-                                                                     <graphic>
-                                                                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                                                           <image>
-                                                                              <Image url="@../resources/Pencil-icon.png" />
-                                                                           </image>
-                                                                        </ImageView>
-                                                                     </graphic>
-                                                                    </ToggleButton>
-                                                               </children>
-                                                            </HBox>
-                                                         </children>
-                                                      </HBox>
-                                                   </children>
-                                                </Group>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </Group>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </Group>
-                     </children>
-                  </HBox>
+                    <ToggleButton fx:id="cadastrarToggleButton" selected="true" text="Cadastrar">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/shopping_cart.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                    </ToggleButton>
+                    <ToggleButton fx:id="alterarToggleButton" text="Alterar">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/Pencil-icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                    </ToggleButton>
                </toggles></ToggleButtonGroup>
-            <Button layoutX="402.0" layoutY="532.0" mnemonicParsing="false" text="Excluir" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="402.0">
+            <Button fx:id="excluirButton" layoutX="402.0" layoutY="532.0" mnemonicParsing="false" text="Excluir">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -183,13 +150,13 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <ComboBox layoutX="439.0" layoutY="31.0" prefHeight="26.0" prefWidth="263.0" promptText="Não definido" style="-fx-background-radius: 100;" />
-            <ComboBox layoutX="23.0" layoutY="148.0" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 100;" />
-            <TextField layoutX="275.0" layoutY="195.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
+            <ComboBox fx:id="grupoComboBox" layoutX="439.0" layoutY="31.0" prefHeight="26.0" prefWidth="263.0" promptText="Não definido" style="-fx-background-radius: 100;" />
+            <ComboBox fx:id="classificacaoComboBox" layoutX="23.0" layoutY="148.0" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="pesquisaTextField" layoutX="275.0" layoutY="195.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
             <ToggleButtonGroup layoutX="450.0" layoutY="195.0" selectionType="SINGLE">
                 <toggles>
-                    <ToggleButton selected="true" text="Pesquisa por nome" />
-                    <ToggleButton prefHeight="26.0" prefWidth="154.0" text="Pesquisa por código" />
+                    <ToggleButton fx:id="pesquisaPorNomeToggleButton" selected="true" text="Pesquisa por nome" />
+                    <ToggleButton fx:id="pesquisaPorCodigoToggleButton" prefHeight="26.0" prefWidth="154.0" text="Pesquisa por código" />
                 </toggles>
             </ToggleButtonGroup>
             <Group layoutX="30.0" layoutY="182.0" />

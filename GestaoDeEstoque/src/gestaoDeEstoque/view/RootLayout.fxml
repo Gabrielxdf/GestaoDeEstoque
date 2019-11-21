@@ -6,44 +6,44 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="695.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="695.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaoDeEstoque.view.RootLayoutController">
    <top>
       <TabPane prefHeight="81.0" prefWidth="695.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Principal">
+          <Tab fx:id="principal" text="Principal">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="90.0" prefWidth="695.0">
                      <children>
-                        <Button layoutX="228.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Produtos" />
-                        <Button layoutX="121.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-radius: 100;" text="Fornecedores" />
-                        <Button layoutX="335.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Clientes" />
-                        <Button layoutX="442.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Funcionários" />
-                        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Grupos" />
-                        <Button layoutX="549.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
+                        <Button fx:id="produtosButton" layoutX="228.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Produtos" />
+                        <Button fx:id="fornecedoresButton" layoutX="121.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-radius: 100;" text="Fornecedores" />
+                        <Button fx:id="clientesButton" layoutX="335.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Clientes" />
+                        <Button fx:id="funcionariosButton" layoutX="442.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Funcionários" />
+                        <Button fx:id="principalGruposButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Grupos" />
+                        <Button fx:id="principalAjudaButton" layoutX="549.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Ações">
+          <Tab fx:id="acoes" text="Ações">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Entrada" />
-                        <Button layoutX="121.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Saída" />
-                        <Button layoutX="223.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
+                        <Button fx:id="entradaButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Entrada" />
+                        <Button fx:id="saidaButton" layoutX="121.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Saída" />
+                        <Button fx:id="acoesAjudaButton" layoutX="223.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Relatórios">
+            <Tab fx:id="relatorios" text="Relatórios">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Semanal" />
-                        <Button layoutX="121.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Mensal" />
-                        <Button layoutX="228.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Anual" />
-                        <Button layoutX="335.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Grupos" />
-                        <Button layoutX="442.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
+                        <Button fx:id="semanalButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Semanal" />
+                        <Button fx:id="mensalButton" layoutX="121.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Mensal" />
+                        <Button fx:id="anualButton" layoutX="228.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Anual" />
+                        <Button fx:id="relatoriosGruposButton" layoutX="335.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Grupos" />
+                        <Button fx:id="relatoriosAjudaButton" layoutX="442.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
                      </children>
                   </AnchorPane>
               </content>
