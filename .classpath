@@ -2,5 +2,8 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="GestaoDeEstoque/src"/>
+	<classpathentry kind="lib" path="GestaoDeEstoque/lib/caelum-stella-bean-validation-2.1.2.jar"/>
+	<classpathentry kind="lib" path="GestaoDeEstoque/lib/caelum-stella-core-2.1.2.jar"/>
+	<classpathentry kind="lib" path="GestaoDeEstoque/lib/WindowControllerFx.jar"/>
 	<classpathentry kind="output" path="GestaoDeEstoque/bin"/>
 </classpath>

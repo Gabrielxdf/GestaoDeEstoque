@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import gestaoDeEstoque.MainApp;
+import gestaoDeEstoque.util.Estados;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -70,7 +71,7 @@ public class EditFornecedorController implements Initializable{
 	@FXML
 	private TextField enderecoTextField;
 	@FXML
-	private ComboBox estadoComboBox;
+	private ComboBox <Estados> estadoComboBox;
 	@FXML
 	private TextField bairroTextField;
 	@FXML
@@ -114,10 +115,15 @@ public class EditFornecedorController implements Initializable{
 	
 	/**
      * Initializes the controller class.
+     * @author Gabriel
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        estadoComboBox.getItems().addAll("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO");
+    	for (Estados x : Estados.values()){
+    		estadoComboBox.getItems().add(x);
+    	}
 
     }
 
