@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="GestaoDeEstoque/lib/caelum-stella-bean-validation-2.1.2.jar"/>
 	<classpathentry kind="lib" path="GestaoDeEstoque/lib/caelum-stella-core-2.1.2.jar"/>
 	<classpathentry kind="lib" path="GestaoDeEstoque/lib/WindowControllerFx.jar"/>
+	<classpathentry kind="lib" path="GestaoDeEstoque/lib/ViaCepAPI.jar"/>
 	<classpathentry kind="output" path="GestaoDeEstoque/bin"/>
 </classpath>

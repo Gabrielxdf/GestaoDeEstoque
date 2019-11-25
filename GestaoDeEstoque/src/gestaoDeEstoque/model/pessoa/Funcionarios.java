@@ -1,4 +1,4 @@
-package GestaoDeEstoque.model.pessoa;
+package gestaoDeEstoque.model.pessoa;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;

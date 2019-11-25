@@ -23,7 +23,7 @@ public class MainApp extends Application {
     }
     
     /**
-     * Inicializa o root layout (layout base).
+     * Inicializa o RootLayout
      */
     public void initRootLayout() {
         try {

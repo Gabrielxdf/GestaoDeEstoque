@@ -1,4 +1,4 @@
-package GestaoDeEstoque.model.estoque;
+package gestaoDeEstoque.model.estoque;
 
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
