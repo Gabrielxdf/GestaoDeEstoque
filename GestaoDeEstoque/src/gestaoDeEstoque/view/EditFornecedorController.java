@@ -22,7 +22,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.TableView;
 
 import javafx.scene.control.TableColumn;
-
+/**
+ * Controlador da view EditFornecedor
+ * @author Gabriel Henrique
+ *
+ */
 public class EditFornecedorController implements Initializable{
 	@FXML
 	private Tab principal;
