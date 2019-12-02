@@ -18,7 +18,7 @@
                         <Button fx:id="fornecedoresButton" layoutX="121.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-radius: 100;" text="Fornecedores" />
                         <Button fx:id="clientesButton" layoutX="335.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Clientes" />
                         <Button fx:id="funcionariosButton" layoutX="442.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Funcionários" />
-                        <Button fx:id="principalGruposButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Grupos" />
+                        <Button fx:id="principalGruposButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleGrupo" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Grupos" />
                         <Button fx:id="principalAjudaButton" layoutX="549.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Ajuda" />
                      </children>
                   </AnchorPane>

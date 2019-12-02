@@ -1,5 +1,9 @@
 package gestaoDeEstoque.util;
-
+/**
+ * Enum de Estados para popular ComboBox.
+ * @author Gabriel Henrique
+ *
+ */
 public enum Estados {
 
 	AC, AL, AM, AP, BA, CE, DF, ES, GO, 

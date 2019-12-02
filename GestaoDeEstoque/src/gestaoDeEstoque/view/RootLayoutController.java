@@ -3,13 +3,15 @@ package gestaoDeEstoque.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gestaoDeEstoque.MainApp;
+import gestaoDeEstoque.model.estoque.Grupos;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.Tab;
 
-public class RootLayoutController implements Initializable{
+public class RootLayoutController implements Initializable {
 	@FXML
 	private Tab principal;
 	@FXML
@@ -44,10 +46,31 @@ public class RootLayoutController implements Initializable{
 	private Button relatoriosGruposButton;
 	@FXML
 	private Button relatoriosAjudaButton;
+	private MainApp mainApp;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
 	}
 
+	/**
+	 * Uma instância do MainApp para o Controller poder usar os métodos do MainApp
+	 * 
+	 * @param mainApp. uma referência à Aplicação principal.
+	 */
+	public void setMainApp(MainApp mainApp) {
+		this.mainApp = mainApp;
+	}
+
+	/**
+	 * Chamado quando o usuário clica no botão "Grupos". Abre uma janela para criar,
+	 * editar e excluir grupos.
+	 */
+	@FXML
+	private void handleGrupo() {
+		Grupos tempGrupo = new Grupos();
+		boolean okClicked = mainApp.showEditGrupos(tempGrupo);
+		/*if (okClicked) {
+			mainApp.getGruposData().add(tempGrupo);
+		}*/
+	}
 }
