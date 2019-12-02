@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.util.FactoryGrupos;
+import gestaoDeEstoque.util.Pesquisa;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -52,6 +53,10 @@ public class EditGruposController implements Initializable{
 	private Button excluirButton;
 	@FXML
 	private TextField pesquisaTextField;
+	/*
+	pesquisaTextField.setOnKeyReleased((KeyEvent e) ->){
+		gruposTable.setItems(Pesquisa.pesquisar(mainApp.getGruposData(), "", pesquisaTextField));
+	}*/
 
 	private MainApp mainApp;
 	private Stage dialogStage;
