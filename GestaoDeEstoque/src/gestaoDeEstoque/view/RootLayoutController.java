@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Grupos;
+import gestaoDeEstoque.model.estoque.Produtos;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -53,24 +54,30 @@ public class RootLayoutController implements Initializable {
 	}
 
 	/**
-	 * Uma instância do MainApp para o Controller poder usar os métodos do MainApp
+	 * Uma instï¿½ncia do MainApp para o Controller poder usar os mï¿½todos do MainApp
 	 * 
-	 * @param mainApp. uma referência à Aplicação principal.
+	 * @param mainApp. uma referï¿½ncia ï¿½ Aplicaï¿½ï¿½o principal.
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
 
 	/**
-	 * Chamado quando o usuário clica no botão "Grupos". Abre uma janela para criar,
+	 * Chamado quando o usuï¿½rio clica no botï¿½o "Grupos". Abre uma janela para criar,
 	 * editar e excluir grupos.
 	 */
 	@FXML
 	private void handleGrupo() {
 		Grupos tempGrupo = new Grupos();
-		boolean okClicked = mainApp.showEditGrupos(tempGrupo);
-		/*if (okClicked) {
-			mainApp.getGruposData().add(tempGrupo);
-		}*/
+		mainApp.showEditGrupos(tempGrupo);
+	}
+	
+	/**
+	 * Chamado quando o usuÃ¡rio clica no botÃ£o "Produtos". Abre uma janela para criar, editar e excluir produtos.
+	 */
+	@FXML
+	private void handleProdutos() {
+		Produtos tempProduto = new Produtos();
+		mainApp.showEditProdutos(tempProduto);
 	}
 }

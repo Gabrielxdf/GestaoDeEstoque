@@ -1,41 +1,40 @@
 package gestaoDeEstoque.model.estoque;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Produtos {
 	private StringProperty nome;
 	private Grupos nomeGrupo;
-	private IntegerProperty codigo;
-	private DoubleProperty valor;
-	private LongProperty codigoBarras;
-	private IntegerProperty estoqueMinimo;
-	private IntegerProperty estoqueIdeal;
-	private IntegerProperty estoqueAtual;
+	private StringProperty codigo;
+	private StringProperty valor;
+	private StringProperty codigoBarras;
+	private StringProperty estoqueMinimo;
+	private StringProperty estoqueIdeal;
+	private StringProperty estoqueAtual;
 	private Fornecedor fornecedor;
 	private StringProperty classificacao;
 	private StringProperty descricao;
 
-	public Produtos(StringProperty nome, Grupos nomeGrupo, IntegerProperty codigo, DoubleProperty valor,
-			LongProperty codigoBarras, IntegerProperty estoqueMinimo, IntegerProperty estoqueIdeal,
-			IntegerProperty estoqueAtual, Fornecedor fornecedor, StringProperty classificacao,
-			StringProperty descricao) {
-		super();
-		this.nome = nome;
-		this.nomeGrupo = nomeGrupo;
-		this.codigo = codigo;
-		this.valor = valor;
-		this.codigoBarras = codigoBarras;
-		this.estoqueMinimo = estoqueMinimo;
-		this.estoqueIdeal = estoqueIdeal;
-		this.estoqueAtual = estoqueAtual;
-		this.fornecedor = fornecedor;
-		this.classificacao = classificacao;
-		this.descricao = descricao;
+	public Produtos() {
+		this(null, null, null, null, null, null, null, null, null, null);
 	}
+	public Produtos(String nome, String codigo, String valor, String codigoBarras, String estoqueMinimo,
+			String estoqueIdeal, String classificacao, String descricao, Fornecedor fornecedor, Grupos nomeGrupo) {
+		this.nome = new SimpleStringProperty(nome);
+		this.nomeGrupo = nomeGrupo;
+		this.codigo = new SimpleStringProperty(codigo);
+		this.valor = new SimpleStringProperty(valor);
+		this.codigoBarras = new SimpleStringProperty(codigoBarras);
+		this.estoqueMinimo = new SimpleStringProperty(estoqueMinimo);
+		this.estoqueIdeal = new SimpleStringProperty(estoqueIdeal);
+		this.fornecedor = fornecedor;
+		this.classificacao = new SimpleStringProperty(classificacao);
+		this.descricao = new SimpleStringProperty(descricao);
+	}
+	// Getters and Setters retornando Strings
 
+	// Getters and Setters retornando Property
 	public StringProperty getNome() {
 		return nome;
 	}
@@ -52,51 +51,51 @@ public class Produtos {
 		this.nomeGrupo = nomeGrupo;
 	}
 
-	public IntegerProperty getCodigo() {
+	public StringProperty getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(IntegerProperty codigo) {
+	public void setCodigo(StringProperty codigo) {
 		this.codigo = codigo;
 	}
 
-	public DoubleProperty getValor() {
+	public StringProperty getValor() {
 		return valor;
 	}
 
-	public void setValor(DoubleProperty valor) {
+	public void setValor(StringProperty valor) {
 		this.valor = valor;
 	}
 
-	public LongProperty getCodigoBarras() {
+	public StringProperty getCodigoBarras() {
 		return codigoBarras;
 	}
 
-	public void setCodigoBarras(LongProperty codigoBarras) {
+	public void setCodigoBarras(StringProperty codigoBarras) {
 		this.codigoBarras = codigoBarras;
 	}
 
-	public IntegerProperty getEstoqueMinimo() {
+	public StringProperty getEstoqueMinimo() {
 		return estoqueMinimo;
 	}
 
-	public void setEstoqueMinimo(IntegerProperty estoqueMinimo) {
+	public void setEstoqueMinimo(StringProperty estoqueMinimo) {
 		this.estoqueMinimo = estoqueMinimo;
 	}
 
-	public IntegerProperty getEstoqueIdeal() {
+	public StringProperty getEstoqueIdeal() {
 		return estoqueIdeal;
 	}
 
-	public void setEstoqueIdeal(IntegerProperty estoqueIdeal) {
+	public void setEstoqueIdeal(StringProperty estoqueIdeal) {
 		this.estoqueIdeal = estoqueIdeal;
 	}
 
-	public IntegerProperty getEstoqueAtual() {
+	public StringProperty getEstoqueAtual() {
 		return estoqueAtual;
 	}
 
-	public void setEstoqueAtual(IntegerProperty estoqueAtual) {
+	public void setEstoqueAtual(StringProperty estoqueAtual) {
 		this.estoqueAtual = estoqueAtual;
 	}
 
@@ -123,5 +122,4 @@ public class Produtos {
 	public void setDescricao(StringProperty descricao) {
 		this.descricao = descricao;
 	}
-
 }

@@ -3,6 +3,10 @@ package gestaoDeEstoque.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gestaoDeEstoque.MainApp;
+import gestaoDeEstoque.model.estoque.Grupos;
+import gestaoDeEstoque.model.estoque.Produtos;
+import gestaoDeEstoque.util.Estados;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -10,7 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import javafx.scene.control.ToggleButton;
-
+import javafx.stage.Stage;
 import javafx.scene.control.ComboBox;
 
 import javafx.scene.control.TableView;
@@ -67,9 +71,9 @@ public class EditProdutosController implements Initializable{
 	@FXML
 	private Button excluirButton;
 	@FXML
-	private ComboBox grupoComboBox;
+	private ComboBox<Grupos> grupoComboBox;
 	@FXML
-	private ComboBox classificacaoComboBox;
+	private ComboBox<String> classificacaoComboBox;
 	@FXML
 	private TextField pesquisaTextField;
 	@FXML
@@ -77,10 +81,27 @@ public class EditProdutosController implements Initializable{
 	@FXML
 	private ToggleButton pesquisaPorCodigoToggleButton;
 	
+	private MainApp mainApp;
+	private Stage dialogStage;
+	private Produtos produto;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		/*for (Grupos x : mainApp.getGruposData()){
+			grupoComboBox.getItems().add(x);
+    	}*/
 		
 	}
-
+	
+	public void setMainApp(MainApp mainApp) {
+		this.mainApp = mainApp;
+	}
+	
+	public void setStage(Stage dialogStage) {
+		this.dialogStage = dialogStage;
+	}
+	
+	public void setProduto(Produtos produto) {
+		this.produto = produto;
+	}
 }

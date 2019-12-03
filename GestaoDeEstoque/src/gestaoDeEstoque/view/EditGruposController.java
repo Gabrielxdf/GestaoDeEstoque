@@ -1,6 +1,7 @@
 package gestaoDeEstoque.view;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import gestaoDeEstoque.MainApp;
@@ -15,18 +16,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 
 import javafx.scene.control.ToggleButton;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.control.TableView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TableColumn;
 
 /**
- * Janela para adição, exclusão e edição de grupos.
+ * Janela para adiï¿½ï¿½o, exclusï¿½o e ediï¿½ï¿½o de grupos.
  * 
  * @author Gabriel Henrique
  *
@@ -60,7 +59,6 @@ public class EditGruposController implements Initializable {
 	private MainApp mainApp;
 	private Stage dialogStage;
 	private Grupos grupos;
-	private boolean okClicked;
 
 	/**
 	 * Inicializa o controlador EditGruposController.
@@ -80,12 +78,14 @@ public class EditGruposController implements Initializable {
 		gruposTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showGrupos(newValue));
 
+		// helpButton.setStyle("-fx-background-image: url('./HelpButton-icon.png');");
+
 	}
 
 	/**
-	 * Uma instância do MainApp para o Controller poder usar os métodos do MainApp
+	 * Uma instï¿½ncia do MainApp para o Controller poder usar os mï¿½todos do MainApp
 	 * 
-	 * @param {@link EditGruposController#mainApp} uma referência à Aplicação
+	 * @param {@link EditGruposController#mainApp} uma referï¿½ncia ï¿½ Aplicaï¿½ï¿½o
 	 *               principal.
 	 */
 	public void setMainApp(MainApp mainApp) {
@@ -127,23 +127,16 @@ public class EditGruposController implements Initializable {
 		nomeTextField.setText(grupos.getNome());
 	}
 
-	/**
-	 * Retorna true caso o usuário clicou em "OK", de outra forma, retorna falso.
-	 * 
-	 * @return okClicked
-	 */
-	public boolean isOkClicked() {
-		return okClicked;
-	}
 
 	/**
-	 * Chamado quando o usuário clica em "Ok". Cria um novo Grupo e adiciona a lista
-	 * observavel, que é adicionada à tabela.
+	 * Chamado quando o usuÃ¡rio clica em "Ok".
+	 * De acordo com o que ele estÃ¡ selecionando nos ToggleButton, o mÃ©todo adiciona um novo Grupo, ou edita
+	 * um Grupo selecionado.
 	 */
 	@FXML
 	private void handleOk() {
 		grupos.setNome(nomeTextField.getText());
-		// TODO verificar se o campo está vazio.
+		// TODO verificar se o campo estÃ¡ vazio.
 		if (cadastrarToggleButton.isSelected()) {
 			mainApp.getGruposData().add(FactoryGrupos.getGrupo(nomeTextField.getText()));
 			gruposTable.setItems(mainApp.getGruposData());
@@ -151,37 +144,59 @@ public class EditGruposController implements Initializable {
 		if (alterarToggleButton.isSelected()) {
 			int selectedIndex = gruposTable.getSelectionModel().getSelectedIndex();
 			if (selectedIndex >= 0) {
-				gruposTable.getItems().get(selectedIndex).setNome(nomeTextField.getText());
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("ConfirmaÃ§Ã£o");
+				alert.setHeaderText("VocÃª deseja mesmo fazer essa alteraÃ§Ã£o ?");
+				alert.setContentText(
+						"AlteraÃ§Ã£o no Grupo: " + "'" + mainApp.getGruposData().get(selectedIndex).getNome() + "'");
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+					gruposTable.getItems().get(selectedIndex).setNome(nomeTextField.getText());
+				} else {
+
+				}
+
 			} else {
 				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Nenhuma seleção");
+				alert.setTitle("Nenhuma seleï¿½ï¿½o");
 				alert.setHeaderText("Nenhuma Grupo Selecionado");
 				alert.setContentText("Por favor, selecione um grupo na tabela.");
 				alert.showAndWait();
 			}
 		}
 		nomeTextField.setText("");
-
-		okClicked = true;
 	}
 
 	/**
-	 * Chamado quando o usuário clica em "Cancelar".
+	 * Chamado quando o usuÃ¡rio clica em "Cancelar".
 	 */
 	@FXML
 	private void handleCancel() {
 		dialogStage.close();
 	}
-
+	/**
+	 * MÃ©todo para deletar algum item da Tabela.
+	 */
 	@FXML
 	private void handleDelete() {
 		int selectedIndex = gruposTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			gruposTable.getItems().remove(selectedIndex);
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("ConfirmaÃ§Ã£o");
+			alert.setHeaderText("VocÃª deseja mesmo fazer essa exclusÃ£o ?");
+			alert.setContentText(
+					"Excluir o Grupo: " + "'" + mainApp.getGruposData().get(selectedIndex).getNome() + "'");
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				gruposTable.getItems().remove(selectedIndex);
+			} else {
+
+			}
+
 		} else {
 
 			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Nenhuma seleção");
+			alert.setTitle("Nenhuma seleï¿½ï¿½o");
 			alert.setHeaderText("Nenhuma Grupo Selecionado");
 			alert.setContentText("Por favor, selecione um grupo na tabela.");
 			alert.showAndWait();
@@ -190,8 +205,10 @@ public class EditGruposController implements Initializable {
 
 	@FXML
 	private void pesquisar() {
-		//CASO O MÉTODO ESTIVESSE FUNCIONANDO
-		// gruposTable.setItems(Pesquisa.pesquisarPorNome(mainApp.getGruposData(), pesquisaTextField.getText()));
+		// CASO O Mï¿½TODO ESTIVESSE FUNCIONANDO
+		// gruposTable.setItems( (ObservableList<Grupos>)
+		// Pesquisa.pesquisarPorNome(mainApp.getGruposData(),
+		// pesquisaTextField.getText()));
 
 		ObservableList<Grupos> novaLista = FXCollections.observableArrayList();
 		if (pesquisaTextField.getText().length() > 0) {
