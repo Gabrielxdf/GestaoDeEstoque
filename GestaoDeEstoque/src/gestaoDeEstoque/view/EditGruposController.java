@@ -127,11 +127,10 @@ public class EditGruposController implements Initializable {
 		nomeTextField.setText(grupos.getNome());
 	}
 
-
 	/**
-	 * Chamado quando o usuário clica em "Ok".
-	 * De acordo com o que ele está selecionando nos ToggleButton, o método adiciona um novo Grupo, ou edita
-	 * um Grupo selecionado.
+	 * Chamado quando o usuário clica em "Ok". De acordo com o que ele está
+	 * selecionando nos ToggleButton, o método adiciona um novo Grupo, ou edita um
+	 * Grupo selecionado.
 	 */
 	@FXML
 	private void handleOk() {
@@ -174,6 +173,7 @@ public class EditGruposController implements Initializable {
 	private void handleCancel() {
 		dialogStage.close();
 	}
+
 	/**
 	 * Método para deletar algum item da Tabela.
 	 */
@@ -202,25 +202,13 @@ public class EditGruposController implements Initializable {
 			alert.showAndWait();
 		}
 	}
-
+	/**
+	 * Função de pesquisar na tabela pelo nome do Grupo, atualizando a tabela apenas com os grupos
+	 * que contém a String passada no campo de texto no nome.
+	 */
 	@FXML
 	private void pesquisar() {
-		// CASO O M�TODO ESTIVESSE FUNCIONANDO
-		// gruposTable.setItems( (ObservableList<Grupos>)
-		// Pesquisa.pesquisarPorNome(mainApp.getGruposData(),
-		// pesquisaTextField.getText()));
-
-		ObservableList<Grupos> novaLista = FXCollections.observableArrayList();
-		if (pesquisaTextField.getText().length() > 0) {
-			for (int x = 0; x < mainApp.getGruposData().size(); x++) {
-				if (mainApp.getGruposData().get(x).getNome().toLowerCase()
-						.contains(pesquisaTextField.getText().toLowerCase())) {
-					novaLista.add(mainApp.getGruposData().get(x));
-				}
-			}
-			gruposTable.setItems(novaLista);
-		} else {
-			gruposTable.setItems(mainApp.getGruposData());
-		}
+		ObservableList<Grupos> a = Pesquisa.pesquisarPorNome(mainApp.getGruposData(), pesquisaTextField.getText());
+		gruposTable.setItems(a);
 	}
 }
