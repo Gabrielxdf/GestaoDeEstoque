@@ -7,6 +7,9 @@ import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.util.FactoryGrupos;
 import gestaoDeEstoque.util.Pesquisa;
+import gestaoDeEstoque.util.Pesquisavel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -19,7 +22,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.control.TableView;
-
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TableColumn;
 
 /**
@@ -28,7 +31,7 @@ import javafx.scene.control.TableColumn;
  * @author Gabriel Henrique
  *
  */
-public class EditGruposController implements Initializable{
+public class EditGruposController implements Initializable {
 	@FXML
 	private TextField nomeTextField;
 	@FXML
@@ -53,10 +56,6 @@ public class EditGruposController implements Initializable{
 	private Button excluirButton;
 	@FXML
 	private TextField pesquisaTextField;
-	/*
-	pesquisaTextField.setOnKeyReleased((KeyEvent e) ->){
-		gruposTable.setItems(Pesquisa.pesquisar(mainApp.getGruposData(), "", pesquisaTextField));
-	}*/
 
 	private MainApp mainApp;
 	private Stage dialogStage;
@@ -77,9 +76,14 @@ public class EditGruposController implements Initializable{
 		valorColumn.setCellValueFactory(cellData -> cellData.getValue().getValorTotalProperty());
 
 		showGrupos(null);
-		
+
 		gruposTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showGrupos(newValue));
+
+		/*
+		 * pesquisaTextField.setOnKeyReleased((KeyEvent e)->{
+		 * gruposTable.setItems(pesquisar()); });
+		 */
 
 	}
 
@@ -115,7 +119,7 @@ public class EditGruposController implements Initializable{
 	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
-		
+
 	}
 
 	/**
@@ -138,29 +142,31 @@ public class EditGruposController implements Initializable{
 	}
 
 	/**
-	 * Chamado quando o usuário clica em "Ok".
-	 * Cria um novo Grupo e adiciona a lista observavel, que é adicionada à tabela.
+	 * Chamado quando o usuário clica em "Ok". Cria um novo Grupo e adiciona a lista
+	 * observavel, que é adicionada à tabela.
 	 */
 	@FXML
 	private void handleOk() {
 		grupos.setNome(nomeTextField.getText());
-		if(cadastrarToggleButton.isSelected()) {
-		mainApp.getGruposData().add(FactoryGrupos.getGrupo(nomeTextField.getText()));
+		//TODO verificar se o campo está vazio.
+		if (cadastrarToggleButton.isSelected()) {
+			mainApp.getGruposData().add(FactoryGrupos.getGrupo(nomeTextField.getText()));
+			gruposTable.setItems(mainApp.getGruposData());
 		}
-		if(alterarToggleButton.isSelected()) {
+		if (alterarToggleButton.isSelected()) {
 			int selectedIndex = gruposTable.getSelectionModel().getSelectedIndex();
 			if (selectedIndex >= 0) {
-		        gruposTable.getItems().get(selectedIndex).setNome(nomeTextField.getText());
-		    }else {
-		    	 Alert alert = new Alert(AlertType.WARNING);
-		            alert.setTitle("Nenhuma seleção");
-		            alert.setHeaderText("Nenhuma Grupo Selecionado");
-		            alert.setContentText("Por favor, selecione um grupo na tabela.");
-		            alert.showAndWait();
-		    }
+				gruposTable.getItems().get(selectedIndex).setNome(nomeTextField.getText());
+			} else {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Nenhuma seleção");
+				alert.setHeaderText("Nenhuma Grupo Selecionado");
+				alert.setContentText("Por favor, selecione um grupo na tabela.");
+				alert.showAndWait();
+			}
 		}
 		nomeTextField.setText("");
-		
+
 		okClicked = true;
 	}
 
@@ -171,19 +177,34 @@ public class EditGruposController implements Initializable{
 	private void handleCancel() {
 		dialogStage.close();
 	}
-	
+
 	@FXML
 	private void handleDelete() {
-		   int selectedIndex = gruposTable.getSelectionModel().getSelectedIndex();
-		    if (selectedIndex >= 0) {
-		        gruposTable.getItems().remove(selectedIndex);
-		    } else {
-		      
-		    Alert alert = new Alert(AlertType.WARNING);
-		            alert.setTitle("Nenhuma seleção");
-		            alert.setHeaderText("Nenhuma Grupo Selecionado");
-		            alert.setContentText("Por favor, selecione um grupo na tabela.");
-		            alert.showAndWait();
-		    }
+		int selectedIndex = gruposTable.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			gruposTable.getItems().remove(selectedIndex);
+		} else {
+
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Nenhuma seleção");
+			alert.setHeaderText("Nenhuma Grupo Selecionado");
+			alert.setContentText("Por favor, selecione um grupo na tabela.");
+			alert.showAndWait();
+		}
+	}
+
+	@FXML
+	private void pesquisar() {
+		// gruposTable.setItems(Pesquisa.pesquisarPorNome(mainApp.getGruposData(),
+		// pesquisaTextField.getText()));
+		
+			ObservableList<Grupos> novaLista = FXCollections.observableArrayList();
+			for (int x = 0; x < mainApp.getGruposData().size(); x++) {
+				if (mainApp.getGruposData().get(x).getNome().toLowerCase().contains(pesquisaTextField.getText().toLowerCase())) {
+				novaLista.add(mainApp.getGruposData().get(x));
+			}
+			}
+			gruposTable.setItems(novaLista);
+		
 	}
 }

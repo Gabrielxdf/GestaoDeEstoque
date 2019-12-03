@@ -3,6 +3,7 @@ package gestaoDeEstoque;
 import java.io.IOException;
 
 import gestaoDeEstoque.model.estoque.Grupos;
+import gestaoDeEstoque.util.FactoryGrupos;
 import gestaoDeEstoque.view.EditGruposController;
 import gestaoDeEstoque.view.RootLayoutController;
 import javafx.application.Application;
@@ -27,7 +28,7 @@ public class MainApp extends Application {
 	 */
 	public MainApp() {
 		// alguns dados de exemplo
-		gruposData.add(new Grupos("Não definido"));
+		gruposData.add(FactoryGrupos.getGrupo("Indefinido"));
 	}
 
 	@Override

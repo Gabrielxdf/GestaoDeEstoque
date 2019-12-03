@@ -49,7 +49,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="helpButton" layoutX="14.0" layoutY="354.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url(&quot;../resources/Button-Help-icon.png&quot;); -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-border-radius: 100; -fx-background-radius: 100;" />
+      <Button fx:id="helpButton" layoutX="14.0" layoutY="354.0" mnemonicParsing="false" onAction="#pesquisar" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url(&quot;../resources/Button-Help-icon.png&quot;); -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-border-radius: 100; -fx-background-radius: 100;" />
       <ToggleButtonGroup layoutX="112.0" layoutY="357.0" selectionType="SINGLE">
          <toggles>
             <ToggleButton fx:id="cadastrarToggleButton" selected="true" text="Cadastrar">
@@ -81,6 +81,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <TextField fx:id="pesquisaTextField" layoutX="214.0" layoutY="88.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
+      <TextField fx:id="pesquisaTextField" layoutX="214.0" layoutY="88.0" onKeyReleased="#pesquisar" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
    </children>
 </AnchorPane>
