@@ -80,11 +80,6 @@ public class EditGruposController implements Initializable {
 		gruposTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showGrupos(newValue));
 
-		/*
-		 * pesquisaTextField.setOnKeyReleased((KeyEvent e)->{
-		 * gruposTable.setItems(pesquisar()); });
-		 */
-
 	}
 
 	/**
@@ -148,7 +143,7 @@ public class EditGruposController implements Initializable {
 	@FXML
 	private void handleOk() {
 		grupos.setNome(nomeTextField.getText());
-		//TODO verificar se o campo está vazio.
+		// TODO verificar se o campo está vazio.
 		if (cadastrarToggleButton.isSelected()) {
 			mainApp.getGruposData().add(FactoryGrupos.getGrupo(nomeTextField.getText()));
 			gruposTable.setItems(mainApp.getGruposData());
@@ -195,16 +190,20 @@ public class EditGruposController implements Initializable {
 
 	@FXML
 	private void pesquisar() {
-		// gruposTable.setItems(Pesquisa.pesquisarPorNome(mainApp.getGruposData(),
-		// pesquisaTextField.getText()));
-		
-			ObservableList<Grupos> novaLista = FXCollections.observableArrayList();
+		//CASO O MÉTODO ESTIVESSE FUNCIONANDO
+		// gruposTable.setItems(Pesquisa.pesquisarPorNome(mainApp.getGruposData(), pesquisaTextField.getText()));
+
+		ObservableList<Grupos> novaLista = FXCollections.observableArrayList();
+		if (pesquisaTextField.getText().length() > 0) {
 			for (int x = 0; x < mainApp.getGruposData().size(); x++) {
-				if (mainApp.getGruposData().get(x).getNome().toLowerCase().contains(pesquisaTextField.getText().toLowerCase())) {
-				novaLista.add(mainApp.getGruposData().get(x));
-			}
+				if (mainApp.getGruposData().get(x).getNome().toLowerCase()
+						.contains(pesquisaTextField.getText().toLowerCase())) {
+					novaLista.add(mainApp.getGruposData().get(x));
+				}
 			}
 			gruposTable.setItems(novaLista);
-		
+		} else {
+			gruposTable.setItems(mainApp.getGruposData());
+		}
 	}
 }

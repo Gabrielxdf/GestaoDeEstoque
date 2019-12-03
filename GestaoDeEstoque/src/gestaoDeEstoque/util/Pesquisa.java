@@ -13,12 +13,12 @@ public class Pesquisa {
 		}
 		return novaLista;
 	}
-	public static ObservableList<Pesquisavel> pesquisarPorCodigo(ObservableList<Pesquisavel> listaObservavel, String pesquisa) {
+	/*public static ObservableList<Pesquisavel> pesquisarPorCodigo(ObservableList<Pesquisavel> listaObservavel, String pesquisa) {
 		ObservableList<Pesquisavel> novaLista = FXCollections.observableArrayList();
 		for(int x = 0; x<listaObservavel.size(); x++) {
 			if(listaObservavel.get(x).getNome().toLowerCase().contains(pesquisa.toLowerCase()));
 			novaLista.add(listaObservavel.get(x));
 		}
 		return novaLista;
-	}
+	}*/
 }
