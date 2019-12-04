@@ -1,24 +1,22 @@
 package gestaoDeEstoque.model.pessoa;
 
-import javafx.beans.property.IntegerProperty;
+
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Funcionarios extends Pessoa {
 
 	private StringProperty usuario;
 	private StringProperty senha;
-	private StringProperty senhaAcesso;
+	private StringProperty confirmaSenha;
 
-	public Funcionarios(Integer codigo, String nome, String email) {
-		super(codigo, nome, email);
-	}
 
-	public Funcionarios(Integer codigo, String nome, String email, StringProperty usuario, StringProperty senha,
-			StringProperty senhaAcesso) {
-		super(codigo, nome, email);
-		this.usuario = usuario;
-		this.senha = senha;
-		this.senhaAcesso = senhaAcesso;
+	public Funcionarios(String codigo, String nome, String email, String usuario, String senha,
+			String confirmaSenha) {
+		super(codigo, nome, email, null);
+		this.usuario = new SimpleStringProperty(usuario);
+		this.senha = new SimpleStringProperty(senha);
+		this.confirmaSenha = new SimpleStringProperty(confirmaSenha);
 	}
 
 	public StringProperty getUsuario() {
@@ -37,12 +35,12 @@ public class Funcionarios extends Pessoa {
 		this.senha = senha;
 	}
 
-	public StringProperty getSenhaAcesso() {
-		return senhaAcesso;
+	public StringProperty getConfirmaSenha() {
+		return confirmaSenha;
 	}
 
-	public void setSenhaAcesso(StringProperty senhaAcesso) {
-		this.senhaAcesso = senhaAcesso;
+	public void setConfirmaSenha(StringProperty confirmaSenha) {
+		this.confirmaSenha = confirmaSenha;
 	}
 
 }

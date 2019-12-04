@@ -78,9 +78,9 @@ public class EditGruposController implements Initializable {
 	}
 
 	/**
-	 * Uma inst�ncia do MainApp para o Controller poder usar os m�todos do MainApp
+	 * Uma instância do MainApp para o Controller poder usar os métodos do MainApp
 	 * 
-	 * @param {@link EditGruposController#mainApp} uma refer�ncia � Aplica��o
+	 * @param {@link EditGruposController#mainApp} uma referência à Aplicação
 	 *               principal.
 	 */
 	public void setMainApp(MainApp mainApp) {
@@ -142,7 +142,7 @@ public class EditGruposController implements Initializable {
 
 			} else {
 				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Nenhuma sele��o");
+				alert.setTitle("Nenhuma seleção");
 				alert.setHeaderText("Nenhuma Grupo Selecionado");
 				alert.setContentText("Por favor, selecione um grupo na tabela.");
 				alert.showAndWait();
@@ -181,7 +181,7 @@ public class EditGruposController implements Initializable {
 		} else {
 
 			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Nenhuma sele��o");
+			alert.setTitle("Nenhuma seleção");
 			alert.setHeaderText("Nenhuma Grupo Selecionado");
 			alert.setContentText("Por favor, selecione um grupo na tabela.");
 			alert.showAndWait();

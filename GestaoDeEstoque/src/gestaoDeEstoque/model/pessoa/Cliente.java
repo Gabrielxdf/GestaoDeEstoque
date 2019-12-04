@@ -1,7 +1,10 @@
 package gestaoDeEstoque.model.pessoa;
 
+import java.time.LocalDate;
+
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Cliente extends Pessoa {
@@ -10,14 +13,11 @@ public class Cliente extends Pessoa {
 	private Enderecos endereco;
 	private Telefones telefone;
 
-	public Cliente(Integer codigo, String nome, String email) {
-		super(codigo, nome, email);
-	}
 
-	public Cliente(Integer codigo, String nome, StringProperty cpf, Enderecos endereco, Telefones telefone,
-			String email) {
-		super(codigo, nome, email);
-		this.cpf = cpf;
+	public Cliente(String codigo, String nome, String cpf, Enderecos endereco, Telefones telefone,
+			String email, LocalDate dataNascimento) {
+		super(codigo, nome, email, dataNascimento);
+		this.cpf = new SimpleStringProperty(cpf);
 		this.endereco = endereco;
 		this.telefone = telefone;
 	}
