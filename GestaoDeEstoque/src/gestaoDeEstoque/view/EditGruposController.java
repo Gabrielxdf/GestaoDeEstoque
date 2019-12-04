@@ -5,8 +5,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Grupos;
-import gestaoDeEstoque.util.FactoryGrupos;
-import gestaoDeEstoque.util.Pesquisa;
+import gestaoDeEstoque.util.factory.FactoryGrupos;
+import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -86,6 +86,7 @@ public class EditGruposController implements Initializable {
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 		gruposTable.setItems(mainApp.getGruposData());
+		
 	}
 
 	/**

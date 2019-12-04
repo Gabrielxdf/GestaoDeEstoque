@@ -3,23 +3,24 @@ package gestaoDeEstoque.model.estoque;
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Fornecedor {
 	private StringProperty fornecedor;
 	private StringProperty cnpj;
-	private IntegerProperty codigo;
+	private StringProperty codigo;
 	private StringProperty email;
 	private Telefones telefone;
 	private Enderecos endereco;
 
-	public Fornecedor(StringProperty fornecedor, StringProperty cnpj, IntegerProperty codigo, StringProperty email,
-			Telefones telefone, Enderecos endereco) {
+	public Fornecedor(String fornecedor, String cnpj, String codigo, String email, Telefones telefone,
+			Enderecos endereco) {
 		super();
-		this.fornecedor = fornecedor;
-		this.cnpj = cnpj;
-		this.codigo = codigo;
-		this.email = email;
+		this.fornecedor = new SimpleStringProperty(fornecedor);
+		this.cnpj = new SimpleStringProperty(cnpj);
+		this.codigo = new SimpleStringProperty(codigo);
+		this.email = new SimpleStringProperty(email);
 		this.telefone = telefone;
 		this.endereco = endereco;
 	}
@@ -40,11 +41,11 @@ public class Fornecedor {
 		this.cnpj = cnpj;
 	}
 
-	public IntegerProperty getCodigo() {
+	public StringProperty getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(IntegerProperty codigo) {
+	public void setCodigo(StringProperty codigo) {
 		this.codigo = codigo;
 	}
 

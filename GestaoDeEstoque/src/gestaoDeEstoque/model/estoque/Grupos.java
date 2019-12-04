@@ -1,6 +1,6 @@
 package gestaoDeEstoque.model.estoque;
 
-import gestaoDeEstoque.util.Pesquisavel;
+import gestaoDeEstoque.util.pesquisa.Pesquisavel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

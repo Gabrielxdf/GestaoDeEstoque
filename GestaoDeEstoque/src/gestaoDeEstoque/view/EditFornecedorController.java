@@ -3,6 +3,7 @@ package gestaoDeEstoque.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 import gestaoDeEstoque.MainApp;
+import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.util.Estados;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -38,23 +39,23 @@ public class EditFornecedorController implements Initializable{
 	@FXML
 	private TextField tel1TextField;
 	@FXML
-	private TableView principalFornecedorTable;
+	private TableView<Fornecedor> principalFornecedorTable;
 	@FXML
-	private TableColumn principalCodigoColumn;
+	private TableColumn<Fornecedor, String> principalCodigoColumn;
 	@FXML
-	private TableColumn principalNomeColumn;
+	private TableColumn<Fornecedor, String> principalNomeColumn;
 	@FXML
-	private TableColumn principalCnpjColumn;
+	private TableColumn<Fornecedor, String> principalCnpjColumn;
 	@FXML
-	private TableColumn principalRazaoColumn;
+	private TableColumn<Fornecedor, String> principalRazaoColumn;
 	@FXML
-	private TableColumn principalEmailColumn;
+	private TableColumn<Fornecedor, String> principalEmailColumn;
 	@FXML
-	private TableColumn principalTelefonesColumn;
+	private TableColumn<Fornecedor, String> principalTelefonesColumn;
 	@FXML
-	private TableColumn principalTel1Column;
+	private TableColumn<Fornecedor, String> principalTel1Column;
 	@FXML
-	private TableColumn principalTel2Column;
+	private TableColumn<Fornecedor, String> principalTel2Column;
 	@FXML
 	private TextField principalPesquisaTextField;
 	@FXML
@@ -74,21 +75,21 @@ public class EditFornecedorController implements Initializable{
 	@FXML
 	private TextField cidadeTextField;
 	@FXML
-	private TableView enderecoFornecedorTable;
+	private TableView <Fornecedor>enderecoFornecedorTable;
 	@FXML
-	private TableColumn enderecoCodigoCOlumn;
+	private TableColumn<Fornecedor, String> enderecoCodigoColumn;
 	@FXML
-	private TableColumn enderecoNomeColumn;
+	private TableColumn<Fornecedor, String> enderecoNomeColumn;
 	@FXML
-	private TableColumn enderecoCepColumn;
+	private TableColumn<Fornecedor, String> enderecoCepColumn;
 	@FXML
-	private TableColumn enderecoEnderecoColumn;
+	private TableColumn<Fornecedor, String> enderecoEnderecoColumn;
 	@FXML
-	private TableColumn enderecoBairroColumn;
+	private TableColumn<Fornecedor, String> enderecoBairroColumn;
 	@FXML
-	private TableColumn enderecoCidadeColumn;
+	private TableColumn<Fornecedor, String> enderecoCidadeColumn;
 	@FXML
-	private TableColumn enderecoEstadoColumn;
+	private TableColumn<Fornecedor, String> enderecoEstadoColumn;
 	@FXML
 	private TextField enderecoPesquisaTextField;
 	@FXML
@@ -119,8 +120,7 @@ public class EditFornecedorController implements Initializable{
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-    	//carregarEstadosComboBox();
-
+    	carregarEstadosComboBox();
     }
     
     /**
@@ -132,10 +132,6 @@ public class EditFornecedorController implements Initializable{
     	}
 	}
 	
-	
-    
-    
-    
     
     
     

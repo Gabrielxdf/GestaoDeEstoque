@@ -129,7 +129,7 @@
                         <TextField fx:id="cidadeTextField" layoutX="206.0" layoutY="104.0" style="-fx-background-radius: 100;" />
                         <TableView fx:id="enderecoFornecedorTable" layoutX="10.0" layoutY="198.0" prefHeight="299.0" prefWidth="746.0">
                            <columns>
-                              <TableColumn fx:id="enderecoCodigoCOlumn" prefWidth="37.0" text="Cód" />
+                              <TableColumn fx:id="enderecoCodigoColumn" prefWidth="37.0" text="Cód" />
                               <TableColumn fx:id="enderecoNomeColumn" prefWidth="204.0" text="Nome" />
                               <TableColumn fx:id="enderecoCepColumn" prefWidth="76.0" text="CEP" />
                               <TableColumn fx:id="enderecoEnderecoColumn" prefWidth="129.0" text="Endereço" />

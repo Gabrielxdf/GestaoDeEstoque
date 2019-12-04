@@ -17,7 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 
-public class EditProdutosController implements Initializable{
+public class EditProdutosController implements Initializable {
 	@FXML
 	private TextField nomeTextField;
 	@FXML
@@ -41,25 +41,25 @@ public class EditProdutosController implements Initializable{
 	@FXML
 	private Button helpButton;
 	@FXML
-	private TableView produtosTable;
+	private TableView<Produtos> produtosTable;
 	@FXML
-	private TableColumn codigoColumn;
+	private TableColumn<Produtos, String> codigoColumn;
 	@FXML
-	private TableColumn nomeColumn;
+	private TableColumn<Produtos, String> nomeColumn;
 	@FXML
-	private TableColumn valorColumn;
+	private TableColumn<Produtos, String> valorColumn;
 	@FXML
-	private TableColumn codigoBarrasColumn;
+	private TableColumn<Produtos, String> codigoBarrasColumn;
 	@FXML
-	private TableColumn minimoColumn;
+	private TableColumn<Produtos, String> minimoColumn;
 	@FXML
-	private TableColumn idealColumn;
+	private TableColumn<Produtos, String> idealColumn;
 	@FXML
-	private TableColumn atualColumn;
+	private TableColumn<Produtos, String> atualColumn;
 	@FXML
-	private TableColumn codigoFornecedorColumn;
+	private TableColumn<Produtos, String> codigoFornecedorColumn;
 	@FXML
-	private TableColumn classificacaoColumn;
+	private TableColumn<Produtos, String> classificacaoColumn;
 	@FXML
 	private ToggleButton cadastrarToggleButton;
 	@FXML
@@ -76,32 +76,30 @@ public class EditProdutosController implements Initializable{
 	private ToggleButton pesquisaPorNomeToggleButton;
 	@FXML
 	private ToggleButton pesquisaPorCodigoToggleButton;
-	
+
 	private MainApp mainApp;
 	private Stage dialogStage;
-	
+
 	/**
 	 * Inicializa o controlador EditProdutosController.
-	 * @param URL location
+	 * 
+	 * @param URL            location
 	 * @param ResourceBundle resources
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//carregarGrupoComboBox();
 		carregarClassificacaoComboBox();
 	}
+	
+
 	/**
 	 * Carrega a ComboBox dos Grupos
 	 */
 	private void carregarGrupoComboBox() {
 		grupoComboBox.setItems(mainApp.getGruposData());
 		
-		grupoComboBox.getItems().addAll(mainApp.getGruposData());
-		
-		for (int x = 0; x < mainApp.getGruposData().size(); x++) {
-			grupoComboBox.getItems().add(mainApp.getGruposData().get(x));
-		}
 	}
+
 	/**
 	 * Carrega a ComboBox das Classificações
 	 */
@@ -110,25 +108,20 @@ public class EditProdutosController implements Initializable{
 		classificacaoComboBox.getItems().add("B");
 		classificacaoComboBox.getItems().add("C");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/**
-	 * Uma inst�ncia do MainApp para o Controller poder usar os m�todos do MainApp
+	 * Uma inst�ncia do MainApp para o Controller poder usar os m�todos do
+	 * MainApp
 	 * 
-	 * @param {@link EditProdutosController#mainApp} uma refer�ncia � Aplica��o
-	 *               principal.
+	 * @param {@link EditProdutosController#mainApp} uma refer�ncia �
+	 *               Aplica��o principal.
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
+		produtosTable.setItems(mainApp.getProdutosData());
+		carregarGrupoComboBox();
 	}
-	
+
 	/**
 	 * Define o Stage para este dialogo.
 	 * 
@@ -137,5 +130,5 @@ public class EditProdutosController implements Initializable{
 	public void setStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
-	
+
 }

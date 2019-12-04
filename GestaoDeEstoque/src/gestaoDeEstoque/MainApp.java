@@ -5,7 +5,7 @@ import java.io.IOException;
 import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
-import gestaoDeEstoque.util.FactoryGrupos;
+import gestaoDeEstoque.util.factory.FactoryGrupos;
 import gestaoDeEstoque.view.EditFornecedorController;
 import gestaoDeEstoque.view.EditGruposController;
 import gestaoDeEstoque.view.RootLayoutController;

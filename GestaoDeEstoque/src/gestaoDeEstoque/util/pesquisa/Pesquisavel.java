@@ -1,4 +1,4 @@
-package gestaoDeEstoque.util;
+package gestaoDeEstoque.util.pesquisa;
 
 public interface Pesquisavel {
 	public String getNome();

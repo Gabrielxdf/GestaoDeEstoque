@@ -1,8 +1,7 @@
-package gestaoDeEstoque.util;
+package gestaoDeEstoque.util.pesquisa;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import gestaoDeEstoque.util.Pesquisavel;
 
 public class Pesquisa {
 	public static <T extends Pesquisavel> ObservableList<T> pesquisarPorNome(ObservableList<T> listaObservavel,
