@@ -15,7 +15,7 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="90.0" prefWidth="695.0">
                      <children>
                         <Button fx:id="produtosButton" layoutX="228.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleProdutos" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Produtos" />
-                        <Button fx:id="fornecedoresButton" layoutX="121.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-radius: 100;" text="Fornecedores" />
+                        <Button fx:id="fornecedoresButton" layoutX="121.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleFornecedores" style="-fx-background-radius: 100;" text="Fornecedores" />
                         <Button fx:id="clientesButton" layoutX="335.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Clientes" />
                         <Button fx:id="funcionariosButton" layoutX="442.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Funcionários" />
                         <Button fx:id="principalGruposButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleGrupo" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100;" text="Grupos" />

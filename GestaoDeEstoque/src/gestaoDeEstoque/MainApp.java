@@ -2,9 +2,11 @@ package gestaoDeEstoque;
 
 import java.io.IOException;
 
+import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
 import gestaoDeEstoque.util.FactoryGrupos;
+import gestaoDeEstoque.view.EditFornecedorController;
 import gestaoDeEstoque.view.EditGruposController;
 import gestaoDeEstoque.view.RootLayoutController;
 import gestaoDeEstoque.view.EditProdutosController;
@@ -25,6 +27,7 @@ public class MainApp extends Application {
 	private BorderPane rootLayout;
 	private ObservableList<Grupos> gruposData = FXCollections.observableArrayList();
 	private ObservableList<Produtos> produtosData = FXCollections.observableArrayList();
+	private ObservableList<Fornecedor> fornecedoresData = FXCollections.observableArrayList();
 
 	/**
 	 * Construtor
@@ -45,7 +48,7 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * Retorna a lista observ�vel de Grupos.
+	 * Retorna a ObservableList de Grupos.
 	 * 
 	 * @return gruposData
 	 */
@@ -54,14 +57,20 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * Retorna a lista observável de Produtos.
+	 * Retorna a ObservableList de Produtos.
 	 * 
 	 * @return produtosData
 	 */
 	public ObservableList<Produtos> getProdutosData() {
 		return produtosData;
 	}
-
+	/**
+	 * Retorna a ObservableList de Fornecedores
+	 * @return
+	 */
+	public ObservableList<Fornecedor> getFornecedoresData(){
+		return fornecedoresData;
+	}
 	/**
 	 * Inicializa o RootLayout
 	 */
@@ -104,10 +113,9 @@ public class MainApp extends Application {
 
 	/**
 	 * Exibe a tela de Grupos.
-	 * @param grupo. O objeto Grupos a ser editado.
 	 * 
 	 */
-	public void showEditGrupos(Grupos grupo) {
+	public void showEditGrupos() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/EditGrupos.fxml"));
@@ -122,7 +130,6 @@ public class MainApp extends Application {
 
 			EditGruposController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-			controller.setGrupo(grupo);
 			controller.setMainApp(this);
 			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/groups-icon.png"));
 			dialogStage.showAndWait();
@@ -133,9 +140,8 @@ public class MainApp extends Application {
 	}
 	/**
 	 * Exibe a tela de Produtos.
-	 * @param produto. O objeto Produtos a ser editado.
 	 */
-	public void showEditProdutos(Produtos produto) {
+	public void showEditProdutos() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/EditProdutos.fxml"));
@@ -150,9 +156,34 @@ public class MainApp extends Application {
 			
 			EditProdutosController controller = loader.getController();
 			controller.setMainApp(this);
-			controller.setProduto(produto);
 			controller.setStage(dialogStage);
 			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/products-icon.png"));
+			dialogStage.showAndWait();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * Exibe a tela de Fornecedores.
+	 */
+	public void showEditFornecedores() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/EditFornecedor.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Fornecedores");
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+			
+			EditFornecedorController controller = loader.getController();
+			controller.setMainApp(this);
+			controller.setStage(dialogStage);
+			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/provider-icon.png"));
 			dialogStage.showAndWait();
 			
 		} catch (IOException e) {
@@ -162,7 +193,6 @@ public class MainApp extends Application {
 
 	/**
 	 * Retorna o palco principal.
-	 * 
 	 * @return primaryStage
 	 */
 	public Stage getPrimaryStage() {

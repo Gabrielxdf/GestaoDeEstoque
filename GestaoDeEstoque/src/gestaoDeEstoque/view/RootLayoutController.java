@@ -2,14 +2,12 @@ package gestaoDeEstoque.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-
 import javafx.scene.control.Tab;
 
 public class RootLayoutController implements Initializable {
@@ -47,6 +45,7 @@ public class RootLayoutController implements Initializable {
 	private Button relatoriosGruposButton;
 	@FXML
 	private Button relatoriosAjudaButton;
+	
 	private MainApp mainApp;
 
 	@Override
@@ -68,8 +67,16 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleGrupo() {
-		Grupos tempGrupo = new Grupos();
-		mainApp.showEditGrupos(tempGrupo);
+		mainApp.showEditGrupos();
+	}
+	
+	/**
+	 * Chamado quando o usuário clica no botão "Fornecedores". Abre uma janela para criar, editar 
+	 * e excluir fornecedores.
+	 */
+	@FXML
+	private void handleFornecedores() {
+		mainApp.showEditFornecedores();
 	}
 	
 	/**
@@ -77,7 +84,7 @@ public class RootLayoutController implements Initializable {
 	 */
 	@FXML
 	private void handleProdutos() {
-		Produtos tempProduto = new Produtos();
-		mainApp.showEditProdutos(tempProduto);
+		mainApp.showEditProdutos();
 	}
+	
 }

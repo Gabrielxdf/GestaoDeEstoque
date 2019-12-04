@@ -2,23 +2,19 @@ package gestaoDeEstoque.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
 import gestaoDeEstoque.util.Estados;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-
 import javafx.scene.control.TextField;
-
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import javafx.scene.control.ComboBox;
-
 import javafx.scene.control.TableView;
-
 import javafx.scene.control.TableColumn;
 
 public class EditProdutosController implements Initializable{
@@ -83,25 +79,63 @@ public class EditProdutosController implements Initializable{
 	
 	private MainApp mainApp;
 	private Stage dialogStage;
-	private Produtos produto;
 	
+	/**
+	 * Inicializa o controlador EditProdutosController.
+	 * @param URL location
+	 * @param ResourceBundle resources
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		/*for (Grupos x : mainApp.getGruposData()){
-			grupoComboBox.getItems().add(x);
-    	}*/
+		//carregarGrupoComboBox();
+		carregarClassificacaoComboBox();
+	}
+	/**
+	 * Carrega a ComboBox dos Grupos
+	 */
+	private void carregarGrupoComboBox() {
+		grupoComboBox.setItems(mainApp.getGruposData());
 		
+		grupoComboBox.getItems().addAll(mainApp.getGruposData());
+		
+		for (int x = 0; x < mainApp.getGruposData().size(); x++) {
+			grupoComboBox.getItems().add(mainApp.getGruposData().get(x));
+		}
+	}
+	/**
+	 * Carrega a ComboBox das Classificações
+	 */
+	private void carregarClassificacaoComboBox() {
+		classificacaoComboBox.getItems().add("A");
+		classificacaoComboBox.getItems().add("B");
+		classificacaoComboBox.getItems().add("C");
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * Uma inst�ncia do MainApp para o Controller poder usar os m�todos do MainApp
+	 * 
+	 * @param {@link EditProdutosController#mainApp} uma refer�ncia � Aplica��o
+	 *               principal.
+	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
 	
+	/**
+	 * Define o Stage para este dialogo.
+	 * 
+	 * @param dialogStage
+	 */
 	public void setStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
 	
-	public void setProduto(Produtos produto) {
-		this.produto = produto;
-	}
 }

@@ -3,13 +3,10 @@ package gestaoDeEstoque.view;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.util.FactoryGrupos;
 import gestaoDeEstoque.util.Pesquisa;
-import gestaoDeEstoque.util.Pesquisavel;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,7 +15,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import javafx.scene.control.TableView;
@@ -58,7 +54,6 @@ public class EditGruposController implements Initializable {
 
 	private MainApp mainApp;
 	private Stage dialogStage;
-	private Grupos grupos;
 
 	/**
 	 * Inicializa o controlador EditGruposController.
@@ -118,23 +113,12 @@ public class EditGruposController implements Initializable {
 	}
 
 	/**
-	 * Define o grupo a ser editado.
-	 * 
-	 * @param grupo
-	 */
-	public void setGrupo(Grupos grupos) {
-		this.grupos = grupos;
-		nomeTextField.setText(grupos.getNome());
-	}
-
-	/**
 	 * Chamado quando o usuário clica em "Ok". De acordo com o que ele está
 	 * selecionando nos ToggleButton, o método adiciona um novo Grupo, ou edita um
 	 * Grupo selecionado.
 	 */
 	@FXML
 	private void handleOk() {
-		grupos.setNome(nomeTextField.getText());
 		// TODO verificar se o campo está vazio.
 		if (cadastrarToggleButton.isSelected()) {
 			mainApp.getGruposData().add(FactoryGrupos.getGrupo(nomeTextField.getText()));

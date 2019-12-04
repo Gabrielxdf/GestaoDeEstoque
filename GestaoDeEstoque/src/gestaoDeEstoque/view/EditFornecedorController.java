@@ -2,25 +2,18 @@ package gestaoDeEstoque.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.util.Estados;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-
 import javafx.scene.control.TextField;
-
 import javafx.scene.control.ToggleButton;
-
 import javafx.scene.control.ComboBox;
-
 import javafx.scene.control.Tab;
-
 import javafx.scene.layout.AnchorPane;
-
+import javafx.stage.Stage;
 import javafx.scene.control.TableView;
-
 import javafx.scene.control.TableColumn;
 /**
  * Controlador da view EditFornecedor
@@ -75,7 +68,7 @@ public class EditFornecedorController implements Initializable{
 	@FXML
 	private TextField enderecoTextField;
 	@FXML
-	private ComboBox <Estados> estadoComboBox;
+	private ComboBox <Estados> estadosComboBox;
 	@FXML
 	private TextField bairroTextField;
 	@FXML
@@ -114,29 +107,52 @@ public class EditFornecedorController implements Initializable{
 	private ToggleButton alterarToggleButton;
 	@FXML
 	private Button excluirButton;
+	
 	private MainApp mainApp;
+	private Stage dialogStage;
 	
 	
 	/**
      * Initializes the controller class.
-     * @author Gabriel
      * @param url
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-    	for (Estados x : Estados.values()){
-    		estadoComboBox.getItems().add(x);
-    	}
+    public void initialize(URL location, ResourceBundle resources) {
+    	//carregarEstadosComboBox();
 
     }
-
+    
     /**
-     * É chamado pela aplicação principal para dar uma referência de volta a si
-     * mesmo.
-     *
-     * @param mainApp
-     */
+	 * Carrega a ComboBox dos Estados
+	 */
+	private void carregarEstadosComboBox() {
+		for (Estados x : Estados.values()){
+    		estadosComboBox.getItems().add(x);
+    	}
+	}
+	
+	
+    
+    
+    
+    
+    
+    
+    /**
+	 * Define o Stage para este dialogo.
+	 * 
+	 * @param dialogStage
+	 */
+    public void setStage(Stage dialogStage) {
+    	this.dialogStage = dialogStage;
+    }
+    /**
+	 * Uma inst�ncia do MainApp para o Controller poder usar os m�todos do MainApp
+	 * 
+	 * @param {@link EditFornecedorController#mainApp} uma refer�ncia � Aplica��o
+	 *               principal.
+	 */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }

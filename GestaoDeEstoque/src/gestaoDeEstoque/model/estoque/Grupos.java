@@ -76,4 +76,10 @@ public class Grupos implements Pesquisavel{
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return getNome();
+	}
+	
+
 }
