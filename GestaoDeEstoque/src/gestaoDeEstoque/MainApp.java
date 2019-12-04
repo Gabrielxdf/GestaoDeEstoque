@@ -5,6 +5,7 @@ import java.io.IOException;
 import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
+import gestaoDeEstoque.util.factory.FactoryFornecedores;
 import gestaoDeEstoque.util.factory.FactoryGrupos;
 import gestaoDeEstoque.view.EditFornecedorController;
 import gestaoDeEstoque.view.EditGruposController;
@@ -35,6 +36,7 @@ public class MainApp extends Application {
 	public MainApp() {
 		// alguns dados de exemplo
 		gruposData.add(FactoryGrupos.getGrupo("Indefinido"));
+		
 	}
 
 	@Override

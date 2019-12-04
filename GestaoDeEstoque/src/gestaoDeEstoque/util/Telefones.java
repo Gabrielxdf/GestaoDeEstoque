@@ -24,7 +24,7 @@ public class Telefones {
 		}
 	}
 
-	public StringProperty getCelular() {
+	public StringProperty getCelularProperty() {
 		return celular;
 	}
 
@@ -32,12 +32,20 @@ public class Telefones {
 		this.celular = celular;
 	}
 
-	public StringProperty getResidencial() {
+	public StringProperty getResidencialProperty() {
 		return residencial;
 	}
 
 	public void setResidencial(StringProperty residencial) {
 		this.residencial = residencial;
+	}
+
+	public List<StringProperty> getTelefonesFornecedoresProperty() {
+		return telefonesFornecedores;
+	}
+
+	public void setTelefonesFornecedores(List<StringProperty> telefonesFornecedores) {
+		this.telefonesFornecedores = telefonesFornecedores;
 	}
 
 }

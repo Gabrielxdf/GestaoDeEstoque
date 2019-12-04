@@ -25,7 +25,7 @@ public class EditFornecedorController implements Initializable{
 	@FXML
 	private Tab principal;
 	@FXML
-	private AnchorPane tel2TextField;
+	private TextField tel2TextField;
 	@FXML
 	private TextField fornecedorTextField;
 	@FXML
@@ -39,23 +39,23 @@ public class EditFornecedorController implements Initializable{
 	@FXML
 	private TextField tel1TextField;
 	@FXML
-	private TableView<Fornecedor> principalFornecedorTable;
+	private TableView<Fornecedor> fornecedorTable;
 	@FXML
-	private TableColumn<Fornecedor, String> principalCodigoColumn;
+	private TableColumn<Fornecedor, String> codigoColumn;
 	@FXML
-	private TableColumn<Fornecedor, String> principalNomeColumn;
+	private TableColumn<Fornecedor, String> nomeColumn;
 	@FXML
-	private TableColumn<Fornecedor, String> principalCnpjColumn;
+	private TableColumn<Fornecedor, String> cnpjColumn;
 	@FXML
-	private TableColumn<Fornecedor, String> principalRazaoColumn;
+	private TableColumn<Fornecedor, String> razaoColumn;
 	@FXML
-	private TableColumn<Fornecedor, String> principalEmailColumn;
+	private TableColumn<Fornecedor, String> emailColumn;
 	@FXML
-	private TableColumn<Fornecedor, String> principalTelefonesColumn;
+	private TableColumn<Fornecedor, String> telefonesColumn;
 	@FXML
-	private TableColumn<Fornecedor, String> principalTel1Column;
+	private TableColumn<Fornecedor, String> tel1Column;
 	@FXML
-	private TableColumn<Fornecedor, String> principalTel2Column;
+	private TableColumn<Fornecedor, String> tel2Column;
 	@FXML
 	private TextField principalPesquisaTextField;
 	@FXML
@@ -81,15 +81,15 @@ public class EditFornecedorController implements Initializable{
 	@FXML
 	private TableColumn<Fornecedor, String> enderecoNomeColumn;
 	@FXML
-	private TableColumn<Fornecedor, String> enderecoCepColumn;
+	private TableColumn<Fornecedor, String> cepColumn;
 	@FXML
-	private TableColumn<Fornecedor, String> enderecoEnderecoColumn;
+	private TableColumn<Fornecedor, String> enderecoColumn;
 	@FXML
-	private TableColumn<Fornecedor, String> enderecoBairroColumn;
+	private TableColumn<Fornecedor, String> bairroColumn;
 	@FXML
-	private TableColumn<Fornecedor, String> enderecoCidadeColumn;
+	private TableColumn<Fornecedor, String> cidadeColumn;
 	@FXML
-	private TableColumn<Fornecedor, String> enderecoEstadoColumn;
+	private TableColumn<Fornecedor, String> estadoColumn;
 	@FXML
 	private TextField enderecoPesquisaTextField;
 	@FXML
@@ -121,8 +121,61 @@ public class EditFornecedorController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	carregarEstadosComboBox();
+    	//inicializa as colunas da tabela
+    	codigoColumn.setCellValueFactory(cellData -> cellData.getValue().getFornecedorProperty());
+		nomeColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty());
+		cnpjColumn.setCellValueFactory(cellData -> cellData.getValue().getCnpjProperty());
+		razaoColumn.setCellValueFactory(cellData -> cellData.getValue().getRazaoSocialProperty());
+		emailColumn.setCellValueFactory(cellData -> cellData.getValue().getEmailProperty());
+		tel1Column.setCellValueFactory(cellData -> cellData.getValue().getTelefone().getTelefonesFornecedoresProperty().get(0));
+		tel2Column.setCellValueFactory(cellData -> cellData.getValue().getTelefone().getTelefonesFornecedoresProperty().get(1));
+		enderecoCodigoColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty());
+		enderecoNomeColumn.setCellValueFactory(cellData -> cellData.getValue().getFornecedorProperty());
+		cepColumn.setCellValueFactory(cellData -> cellData.getValue().getEndereco().getCepProperty());
+		enderecoColumn.setCellValueFactory(cellData -> cellData.getValue().getEndereco().getEnderecoProperty());
+		bairroColumn.setCellValueFactory(cellData -> cellData.getValue().getEndereco().getBairroProperty());
+		cidadeColumn.setCellValueFactory(cellData -> cellData.getValue().getEndereco().getCidadeProperty());
+		estadoColumn.setCellValueFactory(cellData -> cellData.getValue().getEndereco().getEstadoProperty());
+		
+		showFornecedores(null);
+		
+		fornecedorTable.getSelectionModel().selectedItemProperty()
+		.addListener((observable, oldValue, newValue) -> showFornecedores(newValue));
+		
     }
-    
+    /**
+	 * Preenche todos os campos de texto com o os dados do Fornecedor selecionado. Se o
+	 * grupo especificado for null, limpa todos os campos de texto.
+	 * 
+	 * @param fornecedor ou null
+	 */
+    private void showFornecedores(Fornecedor fornecedor) {
+    	if(fornecedor != null) {
+    		fornecedorTextField.setText(fornecedor.getFornecedorProperty().getName());
+    		cnpjTextField.setText(fornecedor.getCnpjProperty().getName());
+    		codigoTextField.setText(fornecedor.getCodigoProperty().getName());
+    		razaoTextField.setText(fornecedor.getRazaoSocialProperty().getName());
+    		emailTextField.setText(fornecedor.getEmailProperty().getName());
+    		tel1TextField.setText(fornecedor.getTelefone().getTelefonesFornecedoresProperty().get(0).getName());
+    		tel2TextField.setText(fornecedor.getTelefone().getTelefonesFornecedoresProperty().get(1).getName());
+    		cepTextField.setText(fornecedor.getEndereco().getCepProperty().getName());
+    		enderecoTextField.setText(fornecedor.getEndereco().getEnderecoProperty().getName());
+    		bairroTextField.setText(fornecedor.getEndereco().getBairroProperty().getName());
+    		cidadeTextField.setText(fornecedor.getEndereco().getCidadeProperty().getName());
+    	}else {
+    		fornecedorTextField.setText("");
+    		cnpjTextField.setText("");
+    		codigoTextField.setText("");
+    		razaoTextField.setText("");
+    		emailTextField.setText("");
+    		tel1TextField.setText("");
+    		tel2TextField.setText("");
+    		cepTextField.setText("");
+    		enderecoTextField.setText("");
+    		bairroTextField.setText("");
+    		cidadeTextField.setText("");
+    	}
+    }
     /**
 	 * Carrega a ComboBox dos Estados
 	 */
@@ -132,9 +185,11 @@ public class EditFornecedorController implements Initializable{
     	}
 	}
 	
+	
     
     
     
+	
     /**
 	 * Define o Stage para este dialogo.
 	 * 

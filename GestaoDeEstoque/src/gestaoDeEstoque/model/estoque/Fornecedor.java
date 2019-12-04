@@ -11,11 +11,12 @@ public class Fornecedor {
 	private StringProperty cnpj;
 	private StringProperty codigo;
 	private StringProperty email;
+	private StringProperty razaoSocial;
 	private Telefones telefone;
 	private Enderecos endereco;
 
 	public Fornecedor(String fornecedor, String cnpj, String codigo, String email, Telefones telefone,
-			Enderecos endereco) {
+			Enderecos endereco, String razao) {
 		super();
 		this.fornecedor = new SimpleStringProperty(fornecedor);
 		this.cnpj = new SimpleStringProperty(cnpj);
@@ -23,9 +24,18 @@ public class Fornecedor {
 		this.email = new SimpleStringProperty(email);
 		this.telefone = telefone;
 		this.endereco = endereco;
+		this.razaoSocial = new SimpleStringProperty(razao);
 	}
 
-	public StringProperty getFornecedor() {
+	public StringProperty getRazaoSocialProperty() {
+		return razaoSocial;
+	}
+
+	public void setRazaoSocial(StringProperty razaoSocial) {
+		this.razaoSocial = razaoSocial;
+	}
+
+	public StringProperty getFornecedorProperty() {
 		return fornecedor;
 	}
 
@@ -33,7 +43,7 @@ public class Fornecedor {
 		this.fornecedor = fornecedor;
 	}
 
-	public StringProperty getCnpj() {
+	public StringProperty getCnpjProperty() {
 		return cnpj;
 	}
 
@@ -41,7 +51,7 @@ public class Fornecedor {
 		this.cnpj = cnpj;
 	}
 
-	public StringProperty getCodigo() {
+	public StringProperty getCodigoProperty() {
 		return codigo;
 	}
 
@@ -49,7 +59,7 @@ public class Fornecedor {
 		this.codigo = codigo;
 	}
 
-	public StringProperty getEmail() {
+	public StringProperty getEmailProperty() {
 		return email;
 	}
 

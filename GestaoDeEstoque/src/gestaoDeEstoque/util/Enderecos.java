@@ -19,7 +19,7 @@ public class Enderecos {
 		this.endereco = endereco;
 	}
 
-	public StringProperty getCep() {
+	public StringProperty getCepProperty() {
 		return cep;
 	}
 
@@ -27,7 +27,7 @@ public class Enderecos {
 		this.cep = cep;
 	}
 
-	public StringProperty getBairro() {
+	public StringProperty getBairroProperty() {
 		return bairro;
 	}
 
@@ -35,7 +35,7 @@ public class Enderecos {
 		this.bairro = bairro;
 	}
 
-	public StringProperty getCidade() {
+	public StringProperty getCidadeProperty() {
 		return cidade;
 	}
 
@@ -43,7 +43,7 @@ public class Enderecos {
 		this.cidade = cidade;
 	}
 
-	public StringProperty getEstado() {
+	public StringProperty getEstadoProperty() {
 		return estado;
 	}
 
@@ -51,7 +51,7 @@ public class Enderecos {
 		this.estado = estado;
 	}
 
-	public StringProperty getEndereco() {
+	public StringProperty getEnderecoProperty() {
 		return endereco;
 	}
 
