@@ -12,11 +12,12 @@ public class FactoryClientes {
 			String email, String dataNascimento) {
 		String errorMessage = "";
 		Cliente retorno = null;
-		if (Verifica.stringVazia(codigo) && Verifica.stringVazia(nome) && Verifica.stringVazia(email)
-				&& Verifica.stringVazia(dataNascimento) && Verifica.objetoNulo(telefone)
-				&& Verifica.objetoNulo(endereco)) {
+		if (!Verifica.stringVazia(codigo) && !Verifica.stringVazia(nome) && !Verifica.stringVazia(email)
+				&& !Verifica.stringVazia(dataNascimento) && !Verifica.objetoNulo(telefone)
+				&& !Verifica.objetoNulo(endereco)) {
 			if (!DateUtil.validDate(dataNascimento)) {
 				errorMessage += "Data de Nascimento inválida, use o formato dd/mm/aaaa!\n";
+				errorMessage += "Alguns campos estão vazios.\n";
 			} else {
 				retorno = new Cliente(codigo, nome, cpf, endereco, telefone, email, DateUtil.parse(dataNascimento));
 			}

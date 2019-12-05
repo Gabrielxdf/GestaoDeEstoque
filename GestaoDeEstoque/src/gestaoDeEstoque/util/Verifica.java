@@ -1,7 +1,15 @@
 package gestaoDeEstoque.util;
 
-public class Verifica {
-	private static String errorMessage;
+import java.util.List;
+import br.com.caelum.stella.ValidationMessage;
+import br.com.caelum.stella.validation.CNPJValidator;
+import br.com.caelum.stella.validation.CPFValidator;
+import br.com.parg.viacep.ViaCEP;
+import br.com.parg.viacep.ViaCEPEvents;
+import br.com.parg.viacep.ViaCEPException;
+
+public class Verifica implements ViaCEPEvents {
+	ViaCEP cep = null;
 	
 	public static boolean stringVazia(String string) {
 		if (string.length() > 0) {
@@ -18,8 +26,64 @@ public class Verifica {
 			return false;
 		}
 	}
-	
-	public static String getErrorMessage() {
-		return errorMessage;
+
+	/**
+	 * Valida CPF.
+	 * 
+	 * @param cpf
+	 * @return true se o CPF for válido, caso contrário false.
+	 */
+	public static boolean validaCpf(String cpf) {
+		CPFValidator cpfValidator = new CPFValidator();
+		List<ValidationMessage> erros = cpfValidator.invalidMessagesFor(cpf);
+		if (erros.size() > 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
+
+	/**
+	 * Valida CNPJ.
+	 * 
+	 * @param cpf
+	 * @return true se o CNPJ for válido, caso contrário false.
+	 */
+	public static boolean validaCnpj(String cnpj) {
+		CNPJValidator cnpjValidator = new CNPJValidator();
+		List<ValidationMessage> erros = cnpjValidator.invalidMessagesFor(cnpj);
+		if (erros.size() > 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	/**
+	 * Valida o CEP
+	 * @param cep
+	 */
+	public void validaCep(String cep) {
+		ViaCEP viaCEP = new ViaCEP(this);
+		try {
+			viaCEP.buscar(cep);
+		} catch (ViaCEPException e){
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void onCEPError(String cep) {
+		
+	}
+
+	@Override
+	public void onCEPSuccess(ViaCEP cep) {
+		this.cep = cep;
+	}
+	
+	public ViaCEP getCep() {
+		return this.cep;
+	}
+
 }

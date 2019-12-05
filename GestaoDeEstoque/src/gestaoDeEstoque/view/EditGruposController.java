@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import gestaoDeEstoque.MainApp;
-import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
 import gestaoDeEstoque.util.factory.FactoryGrupos;
@@ -124,21 +123,20 @@ public class EditGruposController implements Initializable {
 	 */
 	@FXML
 	private void handleOk() {
-		// TODO verificar se o campo está vazio.
 		if (cadastrarToggleButton.isSelected()) {
+			String errorMessage = "";
 			Grupos tempGrupo = FactoryGrupos.getGrupo(nomeTextField.getText());
 			if(tempGrupo != null) {
 				mainApp.getGruposData().add(tempGrupo);
 				gruposTable.setItems(mainApp.getGruposData());
 			}else {
+				errorMessage += "Alguns campos estão vazios.\n";
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Dados inválidos");
 				alert.setHeaderText("Alguns dados obrigatórios estão inválidos e/ou vazios.");
 				alert.setContentText("");
 				alert.showAndWait();
 			}
-			
-			
 		}
 		if (alterarToggleButton.isSelected()) {
 			int selectedIndex = gruposTable.getSelectionModel().getSelectedIndex();

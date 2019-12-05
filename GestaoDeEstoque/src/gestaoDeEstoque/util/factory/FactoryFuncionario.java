@@ -8,10 +8,12 @@ public class FactoryFuncionario {
 	public static Funcionarios getFuncionario(String codigo, String nome, String email, String usuario, String senha,
 			String confirmaSenha) {
 		Funcionarios retorno = null;
-		if (Verifica.stringVazia(codigo) && Verifica.stringVazia(nome) && Verifica.stringVazia(email)
-				&& Verifica.stringVazia(email) && Verifica.stringVazia(usuario) && Verifica.stringVazia(senha)
-				&& Verifica.stringVazia(confirmaSenha)) {
+		if (!Verifica.stringVazia(codigo) && !Verifica.stringVazia(nome) && !Verifica.stringVazia(email)
+				&& !Verifica.stringVazia(email) && !Verifica.stringVazia(usuario) && !Verifica.stringVazia(senha)
+				&& !Verifica.stringVazia(confirmaSenha)) {
 			retorno = new Funcionarios(codigo, nome, email, usuario, senha, confirmaSenha);
+		}else {
+			errorMessage += "Alguns campos estão vazios.\n";
 		}
 		return retorno;
 	}

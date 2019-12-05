@@ -66,18 +66,18 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="198.0" layoutY="167.0" style="-fx-background-radius: 100;" />
+                        <TextField fx:id="tel2TextField" layoutX="198.0" layoutY="167.0" style="-fx-background-radius: 100;" />
                         <TableView fx:id="principalFornecedorTable" layoutX="10.0" layoutY="234.0" prefHeight="267.0" prefWidth="746.0">
                           <columns>
                             <TableColumn fx:id="principalCodigoColumn" prefWidth="37.0" text="Cód" />
                             <TableColumn fx:id="principalNomeColumn" prefWidth="204.0" text="Nome" />
-                              <TableColumn fx:id="principalCnpjColumn" prefWidth="76.0" text="CNPJ" />
-                              <TableColumn fx:id="principalRazaoColumn" prefWidth="129.0" text="Razão Social" />
-                              <TableColumn fx:id="principalEmailColumn" prefWidth="138.0" text="E-mail" />
-                              <TableColumn fx:id="principalTelefonesColumn" minWidth="0.0" prefWidth="131.0" text="Telefones">
+                              <TableColumn fx:id="cnpjColumn" prefWidth="76.0" text="CNPJ" />
+                              <TableColumn fx:id="razaoColumn" prefWidth="129.0" text="Razão Social" />
+                              <TableColumn fx:id="emailColumn" prefWidth="138.0" text="E-mail" />
+                              <TableColumn fx:id="telefonesColumn" minWidth="0.0" prefWidth="131.0" text="Telefones">
                                  <columns>
-                                    <TableColumn fx:id="principalTel1Column" prefWidth="75.0" text="1" />
-                                    <TableColumn fx:id="principalTel2Column" prefWidth="75.0" text="2" />
+                                    <TableColumn fx:id="tel1Column" prefWidth="75.0" text="1" />
+                                    <TableColumn fx:id="tel2Column" prefWidth="75.0" text="2" />
                                  </columns>
                               </TableColumn>
                           </columns>
@@ -102,7 +102,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="cepTextField" layoutX="15.0" layoutY="37.0" style="-fx-background-radius: 100;" />
+                        <TextField fx:id="cepTextField" layoutX="15.0" layoutY="37.0" onKeyReleased="#verificaCep" style="-fx-background-radius: 100;" />
                         <Label layoutX="257.0" layoutY="14.0" text="Endereço">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -131,17 +131,18 @@
                            <columns>
                               <TableColumn fx:id="enderecoCodigoColumn" prefWidth="37.0" text="Cód" />
                               <TableColumn fx:id="enderecoNomeColumn" prefWidth="204.0" text="Nome" />
-                              <TableColumn fx:id="enderecoCepColumn" prefWidth="76.0" text="CEP" />
-                              <TableColumn fx:id="enderecoEnderecoColumn" prefWidth="129.0" text="Endereço" />
-                              <TableColumn fx:id="enderecoBairroColumn" prefWidth="138.0" text="Bairro" />
-                              <TableColumn fx:id="enderecoCidadeColumn" minWidth="0.0" prefWidth="104.0" text="Cidade" />
-                              <TableColumn fx:id="enderecoEstadoColumn" prefWidth="57.0" text="Estado" />
+                              <TableColumn fx:id="cepColumn" prefWidth="76.0" text="CEP" />
+                              <TableColumn fx:id="enderecoColumn" prefWidth="129.0" text="Endereço" />
+                              <TableColumn fx:id="bairroColumn" prefWidth="138.0" text="Bairro" />
+                              <TableColumn fx:id="cidadeColumn" minWidth="0.0" prefWidth="104.0" text="Cidade" />
+                              <TableColumn fx:id="estadoColumn" prefWidth="57.0" text="Estado" />
                            </columns>
                         </TableView>
                         <TextField fx:id="enderecoPesquisaTextField" layoutX="305.0" layoutY="172.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
                         <ToggleButtonGroup selectionType="SINGLE" />
                         <ToggleButton fx:id="enderecoPesquisaPorNomeToggleButton" layoutX="480.0" layoutY="172.0" selected="true" text="Pesquisa por nome" />
                         <ToggleButton fx:id="enderecoPesquisaPorCodigoToggleButton" layoutX="597.0" layoutY="172.0" prefHeight="26.0" prefWidth="159.0" text="Pesquisa por código" />
+                        <Label fx:id="cepLabel" layoutX="58.0" layoutY="62.0" textFill="#ff0202" />
                      </children>
                   </AnchorPane>
             </content>

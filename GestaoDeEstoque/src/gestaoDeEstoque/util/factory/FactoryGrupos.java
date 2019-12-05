@@ -8,8 +8,10 @@ public class FactoryGrupos {
 	
 	public static Grupos getGrupo(String nome) {
 		Grupos retorno = null;
-		if (Verifica.stringVazia(nome)) {
+		if (!Verifica.stringVazia(nome)) {
 			retorno = new Grupos(nome);
+		}else {
+			errorMessage += "Alguns campos estão vazios.\n";
 		}
 		return retorno;
 	}

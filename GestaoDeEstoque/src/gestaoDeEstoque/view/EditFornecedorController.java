@@ -2,15 +2,26 @@ package gestaoDeEstoque.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import br.com.parg.viacep.ViaCEP;
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Fornecedor;
+import gestaoDeEstoque.model.estoque.Grupos;
+import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Estados;
+import gestaoDeEstoque.util.Telefones;
+import gestaoDeEstoque.util.Verifica;
+import gestaoDeEstoque.util.factory.FactoryFornecedores;
+import gestaoDeEstoque.util.factory.FactoryGrupos;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -25,8 +36,6 @@ public class EditFornecedorController implements Initializable{
 	@FXML
 	private Tab principal;
 	@FXML
-	private TextField tel2TextField;
-	@FXML
 	private TextField fornecedorTextField;
 	@FXML
 	private TextField cnpjTextField;
@@ -38,6 +47,8 @@ public class EditFornecedorController implements Initializable{
 	private TextField emailTextField;
 	@FXML
 	private TextField tel1TextField;
+	@FXML
+	private TextField tel2TextField;
 	@FXML
 	private TableView<Fornecedor> fornecedorTable;
 	@FXML
@@ -108,6 +119,8 @@ public class EditFornecedorController implements Initializable{
 	private ToggleButton alterarToggleButton;
 	@FXML
 	private Button excluirButton;
+	@FXML
+	private Label cepLabel;
 	
 	private MainApp mainApp;
 	private Stage dialogStage;
@@ -185,7 +198,56 @@ public class EditFornecedorController implements Initializable{
     	}
 	}
 	
-	
+	/**
+	 * Chamado quando o usuário clica em "Ok". De acordo com o que ele está
+	 * selecionando no ToggleButton, o método adiciona um novo Fornecedor, ou edita um
+	 * Fornecedor selecionado.
+	 */
+	@FXML
+	private void handleOk() {
+		if (cadastrarToggleButton.isSelected()) {
+			String errorMessage = "";
+			if(!Verifica.validaCnpj(cnpjTextField.getText())) {
+				errorMessage += "CNPJ Inválido!\n";
+			}
+			if(!verificaCep()) {
+				errorMessage += "CEP não encontrado ou inválido.";
+			}
+			Fornecedor tempFornecedor = FactoryFornecedores.getFornecedor(fornecedorTextField.getText(), cnpjTextField.getText(),
+			codigoTextField.getText(), emailTextField.getText(), new Telefones(tel1TextField.getText(), tel2TextField.getText()),
+			new Enderecos(cepTextField.getText(), bairroTextField.getText(), cidadeTextField.getText(), enderecoTextField.getText(),
+					estadosComboBox.getSelectionModel().getSelectedItem().name()), razaoTextField.getText());
+			
+			if(tempFornecedor != null) {
+				mainApp.getFornecedoresData().add(tempFornecedor);
+				fornecedorTable.setItems(mainApp.getFornecedoresData());
+			}else {
+				errorMessage += "Alguns dados obrigatórios estão inválidos e/ou vazios.";
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Dados inválidos");
+				alert.setHeaderText("Alguns dados obrigatórios estão inválidos e/ou vazios.");
+				alert.setContentText(errorMessage);
+				alert.showAndWait();
+			}
+			}
+		}
+		
+		@FXML
+		private boolean verificaCep() {
+			Verifica cep = new Verifica();
+			cep.validaCep(cepTextField.getText());
+			ViaCEP cepObjeto = cep.getCep();
+			if(cepObjeto != null) {
+				enderecoTextField.setText(cepObjeto.getLogradouro() + cepObjeto.getComplemento());
+				bairroTextField.setText(cepObjeto.getBairro());
+				cidadeTextField.setText(cepObjeto.getLocalidade());
+				return true;
+			}else {
+				cepLabel.setText("CEP não encontrado ou inválido.");
+				return false;
+			}
+			
+		}
     
     
     

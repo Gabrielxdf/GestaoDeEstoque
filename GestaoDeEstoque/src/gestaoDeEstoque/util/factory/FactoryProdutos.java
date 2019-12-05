@@ -12,13 +12,15 @@ public class FactoryProdutos {
 			String estoqueMinimo, String estoqueIdeal, String classificacao, String descricao, Fornecedor fornecedor,
 			Grupos nomeGrupo) {
 		Produtos retorno = null;
-		if (Verifica.stringVazia(nome) && Verifica.stringVazia(codigo) && Verifica.stringVazia(valor)
-				&& Verifica.stringVazia(codigoBarras) && Verifica.stringVazia(estoqueMinimo)
-				&& Verifica.stringVazia(estoqueIdeal) && Verifica.stringVazia(classificacao)
-				&& Verifica.stringVazia(descricao) && Verifica.objetoNulo(fornecedor)
-				&& Verifica.objetoNulo(nomeGrupo)) {
+		if (!Verifica.stringVazia(nome) && !Verifica.stringVazia(codigo) && !Verifica.stringVazia(valor)
+				&& !Verifica.stringVazia(codigoBarras) && !Verifica.stringVazia(estoqueMinimo)
+				&& !Verifica.stringVazia(estoqueIdeal) && !Verifica.stringVazia(classificacao)
+				&& !Verifica.stringVazia(descricao) && !Verifica.objetoNulo(fornecedor)
+				&& !Verifica.objetoNulo(nomeGrupo)) {
 			retorno = new Produtos(nome, codigo, valor, codigoBarras, estoqueMinimo, estoqueIdeal, classificacao,
 					descricao, fornecedor, nomeGrupo);
+		}else {
+			errorMessage += "Alguns campos estão vazios.\n";
 		}
 		return retorno;
 	}

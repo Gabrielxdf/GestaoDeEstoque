@@ -1,5 +1,6 @@
 package gestaoDeEstoque.util;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Enderecos {
@@ -9,14 +10,13 @@ public class Enderecos {
 	private StringProperty estado;
 	private StringProperty endereco;
 
-	public Enderecos(StringProperty cep, StringProperty bairro, StringProperty cidade, StringProperty estado,
-			StringProperty endereco) {
-		super();
-		this.cep = cep;
-		this.bairro = bairro;
-		this.cidade = cidade;
-		this.estado = estado;
-		this.endereco = endereco;
+	public Enderecos(String cep, String bairro, String cidade, String endereco,
+			String estado) {
+		this.cep = new SimpleStringProperty(cep);
+		this.bairro = new SimpleStringProperty(bairro);
+		this.cidade = new SimpleStringProperty(cidade);
+		this.estado = new SimpleStringProperty(estado);
+		this.endereco = new SimpleStringProperty(endereco);
 	}
 
 	public StringProperty getCepProperty() {
