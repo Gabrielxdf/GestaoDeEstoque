@@ -23,7 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 
 /**
- * Janela para adi��o, exclus�o e edi��o de grupos.
+ * Janela para adição, exclusão e edição de grupos.
  * 
  * @author Gabriel Henrique
  *
@@ -56,7 +56,7 @@ public class EditGruposController implements Initializable {
 
 	private MainApp mainApp;
 	private Stage dialogStage;
-	private ObservableList<Produtos> produtos = FXCollections.observableArrayList();
+	//private ObservableList<Produtos> produtos = FXCollections.observableArrayList();
 
 	/**
 	 * Inicializa o controlador EditGruposController.
@@ -89,7 +89,6 @@ public class EditGruposController implements Initializable {
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 		gruposTable.setItems(mainApp.getGruposData());
-		
 	}
 
 	/**

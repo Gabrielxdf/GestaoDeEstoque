@@ -23,7 +23,7 @@
         <tabs>
           <Tab fx:id="principal" text="Principal">
             <content>
-              <AnchorPane fx:id="tel2TextField" minHeight="0.0" minWidth="0.0" prefHeight="502.0" prefWidth="0.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="502.0" prefWidth="0.0">
                      <children>
                         <Label layoutX="58.0" layoutY="14.0" text="Fornecedor">
                            <font>
@@ -67,10 +67,10 @@
                            </font>
                         </Label>
                         <TextField fx:id="tel2TextField" layoutX="198.0" layoutY="167.0" style="-fx-background-radius: 100;" />
-                        <TableView fx:id="principalFornecedorTable" layoutX="10.0" layoutY="234.0" prefHeight="267.0" prefWidth="746.0">
+                        <TableView fx:id="fornecedorTable" layoutX="10.0" layoutY="234.0" prefHeight="267.0" prefWidth="746.0">
                           <columns>
-                            <TableColumn fx:id="principalCodigoColumn" prefWidth="37.0" text="Cód" />
-                            <TableColumn fx:id="principalNomeColumn" prefWidth="204.0" text="Nome" />
+                            <TableColumn fx:id="codigoColumn" prefWidth="37.0" text="Cód" />
+                            <TableColumn fx:id="nomeColumn" prefWidth="204.0" text="Nome" />
                               <TableColumn fx:id="cnpjColumn" prefWidth="76.0" text="CNPJ" />
                               <TableColumn fx:id="razaoColumn" prefWidth="129.0" text="Razão Social" />
                               <TableColumn fx:id="emailColumn" prefWidth="138.0" text="E-mail" />
@@ -109,12 +109,12 @@
                            </font>
                         </Label>
                         <TextField fx:id="enderecoTextField" layoutX="206.0" layoutY="37.0" style="-fx-background-radius: 100;" />
-                        <Label layoutX="401.0" layoutY="79.0" text="Estado">
+                        <Label layoutX="411.0" layoutY="79.0" text="Estado">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="estadosComboBox" layoutX="401.0" layoutY="104.0" prefHeight="25.0" prefWidth="36.0" style="-fx-background-radius: 100;" />
+                        <ComboBox fx:id="estadosComboBox" layoutX="401.0" layoutY="104.0" prefHeight="26.0" prefWidth="70.0" style="-fx-background-radius: 100;" />
                         <Label layoutX="266.0" layoutY="79.0" text="Cidade">
                            <font>
                               <Font name="System Bold" size="13.0" />
@@ -142,7 +142,10 @@
                         <ToggleButtonGroup selectionType="SINGLE" />
                         <ToggleButton fx:id="enderecoPesquisaPorNomeToggleButton" layoutX="480.0" layoutY="172.0" selected="true" text="Pesquisa por nome" />
                         <ToggleButton fx:id="enderecoPesquisaPorCodigoToggleButton" layoutX="597.0" layoutY="172.0" prefHeight="26.0" prefWidth="159.0" text="Pesquisa por código" />
-                        <Label fx:id="cepLabel" layoutX="58.0" layoutY="62.0" textFill="#ff0202" />
+                        <Label fx:id="cepLabel" layoutX="14.0" layoutY="63.0" textFill="#ff0202">
+                           <font>
+                              <Font size="10.0" />
+                           </font></Label>
                      </children>
                   </AnchorPane>
             </content>
@@ -160,7 +163,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="okButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Ok">
+            <Button fx:id="okButton" mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="62.0" text="Ok">
                <graphic>
                   <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -6,13 +6,11 @@ import java.util.ResourceBundle;
 import br.com.parg.viacep.ViaCEP;
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Fornecedor;
-import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Estados;
 import gestaoDeEstoque.util.Telefones;
 import gestaoDeEstoque.util.Verifica;
 import gestaoDeEstoque.util.factory.FactoryFornecedores;
-import gestaoDeEstoque.util.factory.FactoryGrupos;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -23,7 +21,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
@@ -134,9 +131,10 @@ public class EditFornecedorController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	carregarEstadosComboBox();
+    	
     	//inicializa as colunas da tabela
-    	codigoColumn.setCellValueFactory(cellData -> cellData.getValue().getFornecedorProperty());
-		nomeColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty());
+    	codigoColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty());
+		nomeColumn.setCellValueFactory(cellData -> cellData.getValue().getFornecedorProperty());
 		cnpjColumn.setCellValueFactory(cellData -> cellData.getValue().getCnpjProperty());
 		razaoColumn.setCellValueFactory(cellData -> cellData.getValue().getRazaoSocialProperty());
 		emailColumn.setCellValueFactory(cellData -> cellData.getValue().getEmailProperty());
@@ -154,6 +152,8 @@ public class EditFornecedorController implements Initializable{
 		
 		fornecedorTable.getSelectionModel().selectedItemProperty()
 		.addListener((observable, oldValue, newValue) -> showFornecedores(newValue));
+		enderecoFornecedorTable.getSelectionModel().selectedItemProperty()
+		.addListener((observable, oldValue, newValue) -> showFornecedores(newValue));
 		
     }
     /**
@@ -164,17 +164,17 @@ public class EditFornecedorController implements Initializable{
 	 */
     private void showFornecedores(Fornecedor fornecedor) {
     	if(fornecedor != null) {
-    		fornecedorTextField.setText(fornecedor.getFornecedorProperty().getName());
-    		cnpjTextField.setText(fornecedor.getCnpjProperty().getName());
-    		codigoTextField.setText(fornecedor.getCodigoProperty().getName());
-    		razaoTextField.setText(fornecedor.getRazaoSocialProperty().getName());
-    		emailTextField.setText(fornecedor.getEmailProperty().getName());
-    		tel1TextField.setText(fornecedor.getTelefone().getTelefonesFornecedoresProperty().get(0).getName());
-    		tel2TextField.setText(fornecedor.getTelefone().getTelefonesFornecedoresProperty().get(1).getName());
-    		cepTextField.setText(fornecedor.getEndereco().getCepProperty().getName());
-    		enderecoTextField.setText(fornecedor.getEndereco().getEnderecoProperty().getName());
-    		bairroTextField.setText(fornecedor.getEndereco().getBairroProperty().getName());
-    		cidadeTextField.setText(fornecedor.getEndereco().getCidadeProperty().getName());
+    		fornecedorTextField.setText(fornecedor.getFornecedorProperty().get());
+    		cnpjTextField.setText(fornecedor.getCnpjProperty().get());
+    		codigoTextField.setText(fornecedor.getCodigoProperty().get());
+    		razaoTextField.setText(fornecedor.getRazaoSocialProperty().get());
+    		emailTextField.setText(fornecedor.getEmailProperty().get());
+    		tel1TextField.setText(fornecedor.getTelefone().getTelefonesFornecedoresProperty().get(0).get());
+    		tel2TextField.setText(fornecedor.getTelefone().getTelefonesFornecedoresProperty().get(1).get());
+    		cepTextField.setText(fornecedor.getEndereco().getCepProperty().get());
+    		enderecoTextField.setText(fornecedor.getEndereco().getEnderecoProperty().get());
+    		bairroTextField.setText(fornecedor.getEndereco().getBairroProperty().get());
+    		cidadeTextField.setText(fornecedor.getEndereco().getCidadeProperty().get());
     	}else {
     		fornecedorTextField.setText("");
     		cnpjTextField.setText("");
@@ -216,11 +216,12 @@ public class EditFornecedorController implements Initializable{
 			Fornecedor tempFornecedor = FactoryFornecedores.getFornecedor(fornecedorTextField.getText(), cnpjTextField.getText(),
 			codigoTextField.getText(), emailTextField.getText(), new Telefones(tel1TextField.getText(), tel2TextField.getText()),
 			new Enderecos(cepTextField.getText(), bairroTextField.getText(), cidadeTextField.getText(), enderecoTextField.getText(),
-					estadosComboBox.getSelectionModel().getSelectedItem().name()), razaoTextField.getText());
+					estadosComboBox.getSelectionModel().getSelectedItem().toString()), razaoTextField.getText());
 			
 			if(tempFornecedor != null) {
 				mainApp.getFornecedoresData().add(tempFornecedor);
 				fornecedorTable.setItems(mainApp.getFornecedoresData());
+				enderecoFornecedorTable.setItems(mainApp.getFornecedoresData());
 			}else {
 				errorMessage += "Alguns dados obrigatórios estão inválidos e/ou vazios.";
 				Alert alert = new Alert(AlertType.ERROR);
@@ -234,19 +235,23 @@ public class EditFornecedorController implements Initializable{
 		
 		@FXML
 		private boolean verificaCep() {
+			if(cepTextField.getText().length() >= 8) {
 			Verifica cep = new Verifica();
 			cep.validaCep(cepTextField.getText());
 			ViaCEP cepObjeto = cep.getCep();
 			if(cepObjeto != null) {
-				enderecoTextField.setText(cepObjeto.getLogradouro() + cepObjeto.getComplemento());
+				enderecoTextField.setText(cepObjeto.getLogradouro() + " " + cepObjeto.getComplemento());
 				bairroTextField.setText(cepObjeto.getBairro());
 				cidadeTextField.setText(cepObjeto.getLocalidade());
+				cepLabel.setText("");
 				return true;
 			}else {
 				cepLabel.setText("CEP não encontrado ou inválido.");
 				return false;
 			}
-			
+			}else {
+				return false;
+			}
 		}
     
     
@@ -261,12 +266,14 @@ public class EditFornecedorController implements Initializable{
     	this.dialogStage = dialogStage;
     }
     /**
-	 * Uma inst�ncia do MainApp para o Controller poder usar os m�todos do MainApp
+	 * Uma instância do MainApp para o Controller poder usar os métodos do MainApp
 	 * 
-	 * @param {@link EditFornecedorController#mainApp} uma refer�ncia � Aplica��o
+	 * @param {@link EditFornecedorController#mainApp} uma referência à Aplicação
 	 *               principal.
 	 */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+        fornecedorTable.setItems(mainApp.getFornecedoresData());
+		enderecoFornecedorTable.setItems(mainApp.getFornecedoresData());
     }
 }

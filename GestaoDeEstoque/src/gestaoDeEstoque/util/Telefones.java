@@ -2,26 +2,31 @@ package gestaoDeEstoque.util;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 
 public class Telefones {
 	private List<StringProperty> telefonesFornecedores;
 	private StringProperty celular;
 	private StringProperty residencial;
 
-	public Telefones(StringProperty celular, StringProperty residencial) {
+	public Telefones(StringProperty celular, String residencial) {
 		super();
-		this.celular = celular;
-		this.residencial = residencial;
+		//this.celular = new SimpleStringProperty(celular);
+		this.residencial = new SimpleStringProperty(residencial);
 	}
 	
-	public Telefones (String...telefone) {
-		for(String x : telefone) {
-			telefonesFornecedores.add(new SimpleStringProperty(x));
+	public Telefones (String... telefone) {
+		this.telefonesFornecedores = new ArrayList<StringProperty>();
+		
+		for(int x = 0; x < telefone.length; x++ ) {
+			telefonesFornecedores.add(x, new SimpleStringProperty(telefone[x]));
 		}
+		
 	}
 
 	public StringProperty getCelularProperty() {

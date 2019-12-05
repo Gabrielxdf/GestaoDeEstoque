@@ -3,8 +3,6 @@ package gestaoDeEstoque.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 import gestaoDeEstoque.MainApp;
-import gestaoDeEstoque.model.estoque.Grupos;
-import gestaoDeEstoque.model.estoque.Produtos;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -55,14 +53,14 @@ public class RootLayoutController implements Initializable {
 	/**
 	 * Uma inst�ncia do MainApp para o Controller poder usar os m�todos do MainApp
 	 * 
-	 * @param mainApp. uma refer�ncia � Aplica��o principal.
+	 * @param mainApp. uma referência à Aplicação principal.
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
 
 	/**
-	 * Chamado quando o usu�rio clica no bot�o "Grupos". Abre uma janela para criar,
+	 * Chamado quando o usuário clica no botão "Grupos". Abre uma janela para criar,
 	 * editar e excluir grupos.
 	 */
 	@FXML

@@ -13,14 +13,14 @@ public class Verifica implements ViaCEPEvents {
 	
 	public static boolean stringVazia(String string) {
 		if (string.length() > 0) {
-			return true;
-		} else {
 			return false;
+		} else {
+			return true;
 		}
 	}
 
 	public static boolean objetoNulo(Object objeto) {
-		if (objeto != null) {
+		if (objeto == null) {
 			return true;
 		} else {
 			return false;

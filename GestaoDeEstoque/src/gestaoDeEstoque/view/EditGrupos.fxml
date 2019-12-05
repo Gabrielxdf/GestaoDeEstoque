@@ -23,7 +23,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <TextField fx:id="nomeTextField" layoutX="112.0" layoutY="39.0" prefHeight="26.0" prefWidth="376.0" promptText="Digite aqui o nome do grupo a ser adicionado" />
+      <TextField fx:id="nomeTextField" layoutX="112.0" layoutY="39.0" prefHeight="26.0" prefWidth="376.0" promptText="Digite aqui o nome do grupo." />
       <TableView fx:id="gruposTable" layoutX="12.0" layoutY="114.0" prefHeight="231.0" prefWidth="578.0">
         <columns>
           <TableColumn fx:id="nomeColumn" prefWidth="170.0" text="Nome" />
@@ -72,7 +72,7 @@
             </ToggleButton>
          </toggles>
       </ToggleButtonGroup>
-      <Button fx:id="exclurButton" layoutX="297.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleDelete" text="Excluir">
+      <Button fx:id="excluirButton" layoutX="297.0" layoutY="357.0" mnemonicParsing="false" onAction="#handleDelete" text="Excluir">
          <graphic>
             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
