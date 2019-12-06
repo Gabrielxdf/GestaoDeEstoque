@@ -165,7 +165,7 @@ public class EditFornecedorController implements Initializable {
 
 	/**
 	 * Preenche todos os campos de texto com o os dados do Fornecedor selecionado.
-	 * Se o grupo especificado for null, limpa todos os campos de texto.
+	 * Se o Fornecedor especificado for null, limpa todos os campos de texto.
 	 * 
 	 * @param fornecedor ou null
 	 */
@@ -182,18 +182,12 @@ public class EditFornecedorController implements Initializable {
 			enderecoTextField.setText(fornecedor.getEndereco().getEnderecoProperty().get());
 			bairroTextField.setText(fornecedor.getEndereco().getBairroProperty().get());
 			cidadeTextField.setText(fornecedor.getEndereco().getCidadeProperty().get());
+			estadosComboBox.setPromptText(fornecedor.getEndereco().getEstadoProperty().get());
 		} else {
-			fornecedorTextField.setText("");
-			cnpjTextField.setText("");
-			codigoTextField.setText("");
-			razaoTextField.setText("");
-			emailTextField.setText("");
-			tel1TextField.setText("");
-			tel2TextField.setText("");
-			cepTextField.setText("");
-			enderecoTextField.setText("");
-			bairroTextField.setText("");
-			cidadeTextField.setText("");
+			Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField,
+					emailTextField, tel1TextField, tel2TextField, cepTextField, enderecoTextField,
+					bairroTextField, cidadeTextField);
+			estadosComboBox.setPromptText("");
 		}
 	}
 
@@ -221,8 +215,13 @@ public class EditFornecedorController implements Initializable {
 			if (!verificaCep()) {
 				errorMessage += "CEP não encontrado ou inválido.\n";
 			}
+			if(errorMessage.length() == 0) {
 			adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", errorMessage,
 					"ERROR", -1);
+			}else {
+				AlertUtil.criaUmAlert("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", errorMessage,
+						"ERROR");
+			}
 		}
 		if (alterarToggleButton.isSelected()) {
 			int selectedIndex;
@@ -243,12 +242,10 @@ public class EditFornecedorController implements Initializable {
 							"O nome não pode estar vazio!", "ERROR", selectedIndex);
 				}
 			} else {
-				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Grupo Selecionado",
+				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Fornecedor Selecionado",
 						"Por favor, Selecione um grupo na tabela.", "WARNING");
 			}
 		}
-		Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField, emailTextField,
-				tel1TextField, tel2TextField, cepTextField, enderecoTextField, bairroTextField, cidadeTextField);
 	}
 
 	/**
@@ -305,10 +302,14 @@ public class EditFornecedorController implements Initializable {
 				mainApp.getFornecedoresData().set(index, tempFornecedor);
 				fornecedorTable.setItems(mainApp.getFornecedoresData());
 				enderecoFornecedorTable.setItems(mainApp.getFornecedoresData());
+				Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField, emailTextField,
+						tel1TextField, tel2TextField, cepTextField, enderecoTextField, bairroTextField, cidadeTextField);
 			} else {
 				mainApp.getFornecedoresData().add(tempFornecedor);
 				fornecedorTable.setItems(mainApp.getFornecedoresData());
 				enderecoFornecedorTable.setItems(mainApp.getFornecedoresData());
+				Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField, emailTextField,
+						tel1TextField, tel2TextField, cepTextField, enderecoTextField, bairroTextField, cidadeTextField);
 			}
 		} else {
 			String errorMessage = content + "Alguns dados obrigatórios estão inválidos e/ou vazios.";
@@ -336,7 +337,41 @@ public class EditFornecedorController implements Initializable {
 			return false;
 		}
 	}
+	
+	
+	/**
+	 * Cria um Alert com as informações de ajuda da tela.
+	 */
+	@FXML
+	private void helpButton() {
+		String content = "CAMPO FORNECEDOR - Nome/Título do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO CNPJ - CNPJ do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO CÓDIGO - Código do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO RAZÃO SOCIAL - Razão Social do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO E-MAIL - E-mail de contato do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO TELEFONE 1 - Primeiro telefone de contato do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO TELEFONE 2 - Segundo telefone de contato do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO CEP - CEP do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO ENDEREÇO - Lougradouro e Complemento do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO BAIRRO - Bairro do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO CIDADE - Cidade do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO ESTADO - Estado do Fornecedor.\n";
+		content += "\n";
+		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Fornecedores", content, "INFORMATION");
+	}
 
+	
 	/**
 	 * Método de pesquisar na tabela pelo nome, ou código do Fornecedor, atualizando a tabela apenas
 	 * com os Fornecedor que contém a String passada no campo de texto no nome ou código.

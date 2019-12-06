@@ -5,6 +5,9 @@ import java.io.IOException;
 import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
+import gestaoDeEstoque.util.Enderecos;
+import gestaoDeEstoque.util.Telefones;
+import gestaoDeEstoque.util.factory.FactoryFornecedores;
 import gestaoDeEstoque.util.factory.FactoryGrupos;
 import gestaoDeEstoque.view.EditFornecedorController;
 import gestaoDeEstoque.view.EditGruposController;
@@ -35,6 +38,8 @@ public class MainApp extends Application {
 	public MainApp() {
 		// alguns dados de exemplo
 		gruposData.add(FactoryGrupos.getGrupo("Indefinido"));
+		fornecedoresData.add(new Fornecedor("Indefinido", "00000000", "0000", "example@example.com",
+				new Telefones("0", "0"), new Enderecos("", "", "", "", ""), "example"));
 		
 	}
 

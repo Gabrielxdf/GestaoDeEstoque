@@ -1,23 +1,22 @@
 package gestaoDeEstoque.view;
 
 import java.net.URL;
-import java.util.Optional;
+
 import java.util.ResourceBundle;
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Grupos;
-import gestaoDeEstoque.model.estoque.Produtos;
+
 import gestaoDeEstoque.util.AlertUtil;
 import gestaoDeEstoque.util.Limpa;
 import gestaoDeEstoque.util.factory.FactoryGrupos;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
-import javafx.collections.FXCollections;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
@@ -58,8 +57,6 @@ public class EditGruposController implements Initializable {
 
 	private MainApp mainApp;
 	private Stage dialogStage;
-	// private ObservableList<Produtos> produtos =
-	// FXCollections.observableArrayList();
 
 	/**
 	 * Inicializa o controlador EditGruposController.
@@ -104,7 +101,7 @@ public class EditGruposController implements Initializable {
 		if (grupo != null) {
 			nomeTextField.setText(grupo.getNome());
 		} else {
-			nomeTextField.setText("");
+			Limpa.limpaTextField(nomeTextField);
 		}
 	}
 
@@ -143,7 +140,6 @@ public class EditGruposController implements Initializable {
 						"Por favor, Selecione um grupo na tabela.", "WARNING");
 			}
 		}
-		Limpa.limpaTextField(nomeTextField);
 	}
 
 	/**
@@ -186,15 +182,30 @@ public class EditGruposController implements Initializable {
 			if (index >= 0) {
 				mainApp.getGruposData().set(index, tempGrupo);
 				gruposTable.setItems(mainApp.getGruposData());
+				Limpa.limpaTextField(nomeTextField);
 			} else {
 				mainApp.getGruposData().add(tempGrupo);
 				gruposTable.setItems(mainApp.getGruposData());
+				Limpa.limpaTextField(nomeTextField);
 			}
 		} else {
 			AlertUtil.criaUmAlert(title, header, content, type);
 		}
 	}
 
+	/**
+	 * Cria um Alert com as informações de ajuda da tela.
+	 */
+	@FXML
+	private void helpButton() {
+		String content = "CAMPO NOME DO GRUPO - Nome do Grupo.\n";
+		content += "\n";
+		content += "COLUNA QTD. DE PRODUTOS - Quantidade de Produtos naquele Grupo.\n";
+		content += "\n";
+		content += "COLUNA VALOR TOTAL - Valor total do Grupo.";
+		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Grupos", content, "INFORMATION");
+	}
+	
 	/**
 	 * Método de pesquisar na tabela pelo nome do Grupo, atualizando a tabela apenas
 	 * com os grupos que contém a String passada no campo de texto no nome.

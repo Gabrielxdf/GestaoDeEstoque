@@ -1,5 +1,8 @@
 package gestaoDeEstoque.model.estoque;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import gestaoDeEstoque.util.pesquisa.Pesquisavel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -8,6 +11,7 @@ public class Grupos implements Pesquisavel{
 	private StringProperty nome;
 	private StringProperty quantidadeProdutos;
 	private StringProperty valorTotal;
+	private List<Produtos> listaProdutos = new ArrayList<>();
 
 	public Grupos() {
 		this(null);
@@ -20,8 +24,6 @@ public class Grupos implements Pesquisavel{
 	}
 
 	
-	
-	// Getters and Setters para Property e não-Property
 	public void setNome(StringProperty nome) {
 		this.nome = nome;
 	}
@@ -45,29 +47,14 @@ public class Grupos implements Pesquisavel{
 	public StringProperty getValorTotalProperty() {
 		return valorTotal;
 	}
+	
+	public List<Produtos> getListaProdutos(){
+		return listaProdutos;
+	}
+	
 	@Override
 	public String getNome() {
 		return nome.get();
-	}
-
-	public void setNome(String nome) {
-		this.nome.set(nome);
-	}
-
-	public String getQuantidadeProdutos() {
-		return quantidadeProdutos.get();
-	}
-
-	public void setQuantidadeProdutos(String quantidadeProdutos) {
-		this.quantidadeProdutos.set(quantidadeProdutos);
-	}
-
-	public String getValorTotal() {
-		return valorTotal.get();
-	}
-
-	public void setValorTotal(String valorTotal) {
-		this.valorTotal.set(valorTotal);
 	}
 
 	@Override

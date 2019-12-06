@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 
 public class AlertUtil {
@@ -43,7 +44,15 @@ public class AlertUtil {
 			} else {
 				return false;
 			}
-
+		case "INFORMATION":
+			alert.setAlertType(AlertType.INFORMATION);
+			alert.setTitle(title);
+			alert.setHeaderText(header);
+			//alert.setContentText(content);
+			alert.getDialogPane().setContent( new Label(content));
+			alert.showAndWait();
+			alert.setResizable(true);
+			return true;
 		}
 		return false;
 	}

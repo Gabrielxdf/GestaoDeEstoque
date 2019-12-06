@@ -1,11 +1,12 @@
 package gestaoDeEstoque.model.estoque;
 
+import gestaoDeEstoque.util.pesquisa.Pesquisavel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Produtos {
+public class Produtos implements Pesquisavel{
 	private StringProperty nome;
-	private Grupos nomeGrupo;
+	private Grupos grupo;
 	private StringProperty codigo;
 	private StringProperty valor;
 	private StringProperty codigoBarras;
@@ -16,13 +17,10 @@ public class Produtos {
 	private StringProperty classificacao;
 	private StringProperty descricao;
 
-	public Produtos() {
-		this(null, null, null, null, null, null, null, null, null, null);
-	}
 	public Produtos(String nome, String codigo, String valor, String codigoBarras, String estoqueMinimo,
 			String estoqueIdeal, String classificacao, String descricao, Fornecedor fornecedor, Grupos nomeGrupo) {
 		this.nome = new SimpleStringProperty(nome);
-		this.nomeGrupo = nomeGrupo;
+		this.grupo = nomeGrupo;
 		this.codigo = new SimpleStringProperty(codigo);
 		this.valor = new SimpleStringProperty(valor);
 		this.codigoBarras = new SimpleStringProperty(codigoBarras);
@@ -32,94 +30,110 @@ public class Produtos {
 		this.classificacao = new SimpleStringProperty(classificacao);
 		this.descricao = new SimpleStringProperty(descricao);
 	}
-	// Getters and Setters retornando Strings
-
-	// Getters and Setters retornando Property
-	public StringProperty getNome() {
+	
+	public StringProperty getNomeProperty() {
 		return nome;
 	}
-
-	public void setNome(StringProperty nome) {
-		this.nome = nome;
-	}
-
-	public Grupos getNomeGrupo() {
-		return nomeGrupo;
-	}
-
-	public void setNomeGrupo(Grupos nomeGrupo) {
-		this.nomeGrupo = nomeGrupo;
-	}
-
-	public StringProperty getCodigo() {
+	
+	public StringProperty getCodigoProperty() {
 		return codigo;
 	}
-
-	public void setCodigo(StringProperty codigo) {
-		this.codigo = codigo;
+	
+	public Grupos getGrupo() {
+		return grupo;
 	}
 
 	public StringProperty getValor() {
 		return valor;
 	}
 
-	public void setValor(StringProperty valor) {
-		this.valor = valor;
-	}
-
 	public StringProperty getCodigoBarras() {
 		return codigoBarras;
-	}
-
-	public void setCodigoBarras(StringProperty codigoBarras) {
-		this.codigoBarras = codigoBarras;
 	}
 
 	public StringProperty getEstoqueMinimo() {
 		return estoqueMinimo;
 	}
 
-	public void setEstoqueMinimo(StringProperty estoqueMinimo) {
-		this.estoqueMinimo = estoqueMinimo;
-	}
-
 	public StringProperty getEstoqueIdeal() {
 		return estoqueIdeal;
-	}
-
-	public void setEstoqueIdeal(StringProperty estoqueIdeal) {
-		this.estoqueIdeal = estoqueIdeal;
 	}
 
 	public StringProperty getEstoqueAtual() {
 		return estoqueAtual;
 	}
 
-	public void setEstoqueAtual(StringProperty estoqueAtual) {
-		this.estoqueAtual = estoqueAtual;
-	}
-
 	public Fornecedor getFornecedor() {
 		return fornecedor;
-	}
-
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
 	}
 
 	public StringProperty getClassificacao() {
 		return classificacao;
 	}
 
-	public void setClassificacao(StringProperty classificacao) {
-		this.classificacao = classificacao;
-	}
-
 	public StringProperty getDescricao() {
 		return descricao;
+	}
+
+	public void setNome(StringProperty nome) {
+		this.nome = nome;
+	}
+
+	public void setGrupo(Grupos grup) {
+		this.grupo = grupo;
+	}
+
+	public void setCodigo(StringProperty codigo) {
+		this.codigo = codigo;
+	}
+
+	public void setValor(StringProperty valor) {
+		this.valor = valor;
+	}
+
+	public void setCodigoBarras(StringProperty codigoBarras) {
+		this.codigoBarras = codigoBarras;
+	}
+
+	public void setEstoqueMinimo(StringProperty estoqueMinimo) {
+		this.estoqueMinimo = estoqueMinimo;
+	}
+
+	public void setEstoqueIdeal(StringProperty estoqueIdeal) {
+		this.estoqueIdeal = estoqueIdeal;
+	}
+
+	public void setEstoqueAtual(StringProperty estoqueAtual) {
+		this.estoqueAtual = estoqueAtual;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
+	public void setClassificacao(StringProperty classificacao) {
+		this.classificacao = classificacao;
 	}
 
 	public void setDescricao(StringProperty descricao) {
 		this.descricao = descricao;
 	}
+
+	@Override
+	public String getNome() {
+		return nome.get();
+	}
+
+	@Override
+	public String getCodigo() {
+		return codigo.get();
+	}
+
+	@Override
+	public String toString() {
+		return getNome();
+	}
+	
+	
 }
+

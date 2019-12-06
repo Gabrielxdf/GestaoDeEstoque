@@ -1,5 +1,8 @@
 package gestaoDeEstoque.model.estoque;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
 import gestaoDeEstoque.util.pesquisa.Pesquisavel;
@@ -15,6 +18,7 @@ public class Fornecedor implements Pesquisavel{
 	private StringProperty razaoSocial;
 	private Telefones telefone;
 	private Enderecos endereco;
+	private List<Produtos> listaProdutos = new ArrayList<>();
 
 	public Fornecedor(String fornecedor, String cnpj, String codigo, String email, Telefones telefone,
 			Enderecos endereco, String razao) {
@@ -83,7 +87,11 @@ public class Fornecedor implements Pesquisavel{
 	public void setEndereco(Enderecos endereco) {
 		this.endereco = endereco;
 	}
-
+	
+	public List<Produtos> getListaProdutos(){
+		return listaProdutos;
+	}
+	
 	@Override
 	public String getNome() {
 		return fornecedor.get();
@@ -92,6 +100,11 @@ public class Fornecedor implements Pesquisavel{
 	@Override
 	public String getCodigo() {
 		return codigo.get();
+	}
+	
+	@Override
+	public String toString() {
+		return getNome();
 	}
 
 }
