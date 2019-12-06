@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
+import gestaoDeEstoque.util.AlertUtil;
 import gestaoDeEstoque.util.factory.FactoryGrupos;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.collections.FXCollections;
@@ -56,7 +57,8 @@ public class EditGruposController implements Initializable {
 
 	private MainApp mainApp;
 	private Stage dialogStage;
-	//private ObservableList<Produtos> produtos = FXCollections.observableArrayList();
+	// private ObservableList<Produtos> produtos =
+	// FXCollections.observableArrayList();
 
 	/**
 	 * Inicializa o controlador EditGruposController.
@@ -123,41 +125,21 @@ public class EditGruposController implements Initializable {
 	@FXML
 	private void handleOk() {
 		if (cadastrarToggleButton.isSelected()) {
-			String errorMessage = "";
-			Grupos tempGrupo = FactoryGrupos.getGrupo(nomeTextField.getText());
-			if(tempGrupo != null) {
-				mainApp.getGruposData().add(tempGrupo);
-				gruposTable.setItems(mainApp.getGruposData());
-			}else {
-				errorMessage += "Alguns campos estão vazios.\n";
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Dados inválidos");
-				alert.setHeaderText("Alguns dados obrigatórios estão inválidos e/ou vazios.");
-				alert.setContentText("");
-				alert.showAndWait();
-			}
+			adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
+					"O nome não pode estar vazio!", "ERROR", -1);
 		}
 		if (alterarToggleButton.isSelected()) {
 			int selectedIndex = gruposTable.getSelectionModel().getSelectedIndex();
 			if (selectedIndex >= 0) {
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Confirmação");
-				alert.setHeaderText("Você deseja mesmo fazer essa alteração ?");
-				alert.setContentText(
-						"Alteração no Grupo: " + "'" + mainApp.getGruposData().get(selectedIndex).getNome() + "'");
-				Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == ButtonType.OK) {
-					gruposTable.getItems().get(selectedIndex).setNome(nomeTextField.getText());
-				} else {
-
+				if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa alteração ?",
+						"Alteração no Grupo: " + "'" + mainApp.getGruposData().get(selectedIndex).getNome() + "'",
+						"CONFIRMATION")) {
+					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
+							"O nome não pode estar vazio!", "ERROR", selectedIndex);
 				}
-
 			} else {
-				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Nenhuma seleção");
-				alert.setHeaderText("Nenhuma Grupo Selecionado");
-				alert.setContentText("Por favor, selecione um grupo na tabela.");
-				alert.showAndWait();
+				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Grupo Selecionado",
+						"Por favor, Selecione um grupo na tabela.", "WARNING");
 			}
 		}
 		nomeTextField.setText("");
@@ -178,34 +160,48 @@ public class EditGruposController implements Initializable {
 	private void handleDelete() {
 		int selectedIndex = gruposTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Confirmação");
-			alert.setHeaderText("Você deseja mesmo fazer essa exclusão ?");
-			alert.setContentText(
-					"Excluir o Grupo: " + "'" + mainApp.getGruposData().get(selectedIndex).getNome() + "'");
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.OK) {
+			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
+					"Excluir o Grupo: " + "'" + mainApp.getGruposData().get(selectedIndex).getNome() + "'" + " ?",
+					"CONFIRMATION")) {
 				gruposTable.getItems().remove(selectedIndex);
-			} else {
-
 			}
-
 		} else {
-
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Nenhuma seleção");
-			alert.setHeaderText("Nenhuma Grupo Selecionado");
-			alert.setContentText("Por favor, selecione um grupo na tabela.");
-			alert.showAndWait();
+			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Grupo Selecionado",
+					"Por favor, Selecione um grupo na tabela.", "WARNING");
 		}
 	}
+
 	/**
-	 * Função de pesquisar na tabela pelo nome do Grupo, atualizando a tabela apenas com os grupos
-	 * que contém a String passada no campo de texto no nome.
+	 * Adiciona um novo grupo na Tabela ou altera um existente.
+	 * 
+	 * @param title   o título para criar um Alert
+	 * @param header  o header para criar um Alert
+	 * @param content o content para criar um Alert
+	 * @param type    o type para criar um Alert
+	 */
+	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
+		Grupos tempGrupo = FactoryGrupos.getGrupo(nomeTextField.getText());
+		if (tempGrupo != null) {
+			if (index >= 0) {
+				mainApp.getGruposData().set(index, tempGrupo);
+				gruposTable.setItems(mainApp.getGruposData());
+			} else {
+				mainApp.getGruposData().add(tempGrupo);
+				gruposTable.setItems(mainApp.getGruposData());
+			}
+		} else {
+			AlertUtil.criaUmAlert(title, header, content, type);
+		}
+	}
+
+	/**
+	 * Método de pesquisar na tabela pelo nome do Grupo, atualizando a tabela apenas
+	 * com os grupos que contém a String passada no campo de texto no nome.
 	 */
 	@FXML
 	private void pesquisar() {
-		ObservableList<Grupos> a = Pesquisa.pesquisarPorNome(mainApp.getGruposData(), pesquisaTextField.getText());
-		gruposTable.setItems(a);
+		ObservableList<Grupos> pesquisa = Pesquisa.pesquisarPorNome(mainApp.getGruposData(),
+				pesquisaTextField.getText());
+		gruposTable.setItems(pesquisa);
 	}
 }

@@ -45,7 +45,7 @@ public class MainApp extends Application {
 
 		initRootLayout();
 
-		showLogin();
+		//showLogin();
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class MainApp extends Application {
 			AnchorPane login = (AnchorPane) loader.load();
 
 			// Define o person overview dentro do root layout.
-			rootLayout.setCenter(login);
+			//rootLayout.setCenter(login);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
