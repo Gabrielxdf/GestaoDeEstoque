@@ -82,11 +82,11 @@
                               </TableColumn>
                           </columns>
                         </TableView>
-                        <TextField fx:id="principalPesquisaTextField" layoutX="282.0" layoutY="208.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
+                        <TextField fx:id="pesquisaTextField" layoutX="282.0" layoutY="208.0" onKeyReleased="#pesquisar" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
                         <ToggleButtonGroup layoutX="455.0" layoutY="208.0" selectionType="SINGLE">
                            <toggles>
-                              <ToggleButton fx:id="principalPesquisaPorNomeToggleButton" selected="true" text="Pesquisa por nome" />
-                              <ToggleButton fx:id="principalPesquisaPorCodigoToggleButton" prefHeight="26.0" prefWidth="159.0" text="Pesquisa por código" />
+                              <ToggleButton fx:id="pesquisaPorNomeToggleButton" selected="true" text="Pesquisa por nome" />
+                              <ToggleButton fx:id="pesquisaPorCodigoToggleButton" prefHeight="26.0" prefWidth="159.0" text="Pesquisa por código" />
                            </toggles>
                         </ToggleButtonGroup>
                      </children>
@@ -138,7 +138,7 @@
                               <TableColumn fx:id="estadoColumn" prefWidth="57.0" text="Estado" />
                            </columns>
                         </TableView>
-                        <TextField fx:id="enderecoPesquisaTextField" layoutX="305.0" layoutY="172.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
+                        <TextField fx:id="enderecoPesquisaTextField" layoutX="305.0" layoutY="172.0" onKeyReleased="#pesquisar" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
                         <ToggleButtonGroup selectionType="SINGLE" />
                         <ToggleButton fx:id="enderecoPesquisaPorNomeToggleButton" layoutX="480.0" layoutY="172.0" selected="true" text="Pesquisa por nome" />
                         <ToggleButton fx:id="enderecoPesquisaPorCodigoToggleButton" layoutX="597.0" layoutY="172.0" prefHeight="26.0" prefWidth="159.0" text="Pesquisa por código" />
@@ -154,7 +154,7 @@
       </TabPane>
       <Group layoutX="603.0" layoutY="539.0">
          <children>
-            <Button fx:id="cancelarButton" layoutX="62.0" mnemonicParsing="false" text="Cancelar">
+            <Button fx:id="cancelarButton" layoutX="62.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancelar">
                <graphic>
                   <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -197,7 +197,7 @@
             </ToggleButton>
          </toggles>
       </ToggleButtonGroup>
-      <Button fx:id="excluirButton" layoutX="422.0" layoutY="539.0" mnemonicParsing="false" text="Excluir">
+      <Button fx:id="excluirButton" layoutX="422.0" layoutY="539.0" mnemonicParsing="false" onAction="#handleDelete" text="Excluir">
          <graphic>
             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                <image>

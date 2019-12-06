@@ -7,6 +7,7 @@ import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
 import gestaoDeEstoque.util.AlertUtil;
+import gestaoDeEstoque.util.Limpa;
 import gestaoDeEstoque.util.factory.FactoryGrupos;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.collections.FXCollections;
@@ -142,7 +143,7 @@ public class EditGruposController implements Initializable {
 						"Por favor, Selecione um grupo na tabela.", "WARNING");
 			}
 		}
-		nomeTextField.setText("");
+		Limpa.limpaTextField(nomeTextField);
 	}
 
 	/**

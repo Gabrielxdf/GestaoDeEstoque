@@ -2,11 +2,12 @@ package gestaoDeEstoque.model.estoque;
 
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
+import gestaoDeEstoque.util.pesquisa.Pesquisavel;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Fornecedor {
+public class Fornecedor implements Pesquisavel{
 	private StringProperty fornecedor;
 	private StringProperty cnpj;
 	private StringProperty codigo;
@@ -81,6 +82,16 @@ public class Fornecedor {
 
 	public void setEndereco(Enderecos endereco) {
 		this.endereco = endereco;
+	}
+
+	@Override
+	public String getNome() {
+		return fornecedor.get();
+	}
+
+	@Override
+	public String getCodigo() {
+		return codigo.get();
 	}
 
 }

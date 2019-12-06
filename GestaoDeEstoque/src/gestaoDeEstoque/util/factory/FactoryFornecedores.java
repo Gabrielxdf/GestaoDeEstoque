@@ -17,8 +17,7 @@ public class FactoryFornecedores {
 		Fornecedor retorno = null;
 		
 		if (!Verifica.stringVazia(fornecedor) && !Verifica.stringVazia(codigo)
-				&& !Verifica.stringVazia(email) && !Verifica.objetoNulo(telefone)) {
-			
+				&& !Verifica.stringVazia(email) &&!Verifica.objetoNulo(telefone)) {
 			retorno = new Fornecedor(fornecedor, cnpj, codigo, email, telefone, endereco, razao);
 		}else {
 			
