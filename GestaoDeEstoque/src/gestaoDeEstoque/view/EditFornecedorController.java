@@ -127,10 +127,10 @@ public class EditFornecedorController implements Initializable {
 	private Stage dialogStage;
 
 	/**
-	 * Initializes the controller class.
+	 * Inicializa o controlador EditFornecedorController.
 	 * 
-	 * @param url
-	 * @param rb
+	 * @param URL            location
+	 * @param ResourceBundle resources
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -183,9 +183,8 @@ public class EditFornecedorController implements Initializable {
 			bairroTextField.setText(fornecedor.getEndereco().getBairroProperty().get());
 			cidadeTextField.setText(fornecedor.getEndereco().getCidadeProperty().get());
 		} else {
-			Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField,
-					emailTextField, tel1TextField, tel2TextField, cepTextField, enderecoTextField,
-					bairroTextField, cidadeTextField);
+			Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField, emailTextField,
+					tel1TextField, tel2TextField, cepTextField, enderecoTextField, bairroTextField, cidadeTextField);
 			Limpa.limpaComboBox(estadosComboBox);
 		}
 	}
@@ -197,6 +196,7 @@ public class EditFornecedorController implements Initializable {
 		for (Estados x : Estados.values()) {
 			estadosComboBox.getItems().add(x);
 		}
+
 	}
 
 	/**
@@ -214,12 +214,12 @@ public class EditFornecedorController implements Initializable {
 			if (!verificaCep()) {
 				errorMessage += "CEP não encontrado ou inválido.\n";
 			}
-			if(errorMessage.length() == 0) {
-			adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", errorMessage,
-					"ERROR", -1);
-			}else {
-				AlertUtil.criaUmAlert("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", errorMessage,
-						"ERROR");
+			if (errorMessage.length() == 0) {
+				adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
+						errorMessage, "ERROR", -1);
+			} else {
+				AlertUtil.criaUmAlert("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
+						errorMessage, "ERROR");
 			}
 		}
 		if (alterarToggleButton.isSelected()) {
@@ -238,7 +238,7 @@ public class EditFornecedorController implements Initializable {
 										+ mainApp.getFornecedoresData().get(selectedIndex).getNome() + "'",
 								"CONFIRMATION")) {
 					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-							"O nome não pode estar vazio!", "ERROR", selectedIndex);
+							"", "ERROR", selectedIndex);
 				}
 			} else {
 				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Fornecedor Selecionado",
@@ -261,11 +261,11 @@ public class EditFornecedorController implements Initializable {
 		}
 
 		if (selectedIndex >= 0) {
-			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
-					"Excluir o Fornecedor: " + "'" + mainApp.getFornecedoresData().get(selectedIndex).getNome() + "'" + " ?",
+			if (AlertUtil.criaUmAlert(
+					"Confirmação", "Você deseja mesmo fazer essa exclusão ?", "Excluir o Fornecedor: " + "'"
+							+ mainApp.getFornecedoresData().get(selectedIndex).getNome() + "'" + " ?",
 					"CONFIRMATION")) {
 				fornecedorTable.getItems().remove(selectedIndex);
-				enderecoFornecedorTable.getItems().remove(selectedIndex);
 			}
 		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Fornecedor Selecionado",
@@ -282,7 +282,7 @@ public class EditFornecedorController implements Initializable {
 	}
 
 	/**
-	 * Adiciona um novo grupo na Tabela ou altera um existente.
+	 * Adiciona um novo Fornecedor na Tabela ou altera um existente.
 	 * 
 	 * @param title   o título para criar um Alert
 	 * @param header  o header para criar um Alert
@@ -300,16 +300,16 @@ public class EditFornecedorController implements Initializable {
 			if (index >= 0) {
 				mainApp.getFornecedoresData().set(index, tempFornecedor);
 				fornecedorTable.setItems(mainApp.getFornecedoresData());
-				enderecoFornecedorTable.setItems(mainApp.getFornecedoresData());
-				Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField, emailTextField,
-						tel1TextField, tel2TextField, cepTextField, enderecoTextField, bairroTextField, cidadeTextField);
+				Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField,
+						emailTextField, tel1TextField, tel2TextField, cepTextField, enderecoTextField, bairroTextField,
+						cidadeTextField);
 				Limpa.limpaComboBox(estadosComboBox);
 			} else {
 				mainApp.getFornecedoresData().add(tempFornecedor);
 				fornecedorTable.setItems(mainApp.getFornecedoresData());
-				enderecoFornecedorTable.setItems(mainApp.getFornecedoresData());
-				Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField, emailTextField,
-						tel1TextField, tel2TextField, cepTextField, enderecoTextField, bairroTextField, cidadeTextField);
+				Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField,
+						emailTextField, tel1TextField, tel2TextField, cepTextField, enderecoTextField, bairroTextField,
+						cidadeTextField);
 				Limpa.limpaComboBox(estadosComboBox);
 			}
 		} else {
@@ -317,7 +317,12 @@ public class EditFornecedorController implements Initializable {
 			AlertUtil.criaUmAlert(title, header, errorMessage, type);
 		}
 	}
-
+	
+	/**
+	 * Verifica o CEP passado, e fazendo um Auto-Complete nos campos relevantes.
+	 * @API <a href="https://viacep.com.br">ViaCep</a>
+	 * @return true caso o CEP seja validado, false caso contrário.
+	 */
 	@FXML
 	private boolean verificaCep() {
 		if (cepTextField.getText().length() >= 8) {
@@ -338,8 +343,7 @@ public class EditFornecedorController implements Initializable {
 			return false;
 		}
 	}
-	
-	
+
 	/**
 	 * Cria um Alert com as informações de ajuda da tela.
 	 */
@@ -372,10 +376,10 @@ public class EditFornecedorController implements Initializable {
 		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Fornecedores", content, "INFORMATION");
 	}
 
-	
 	/**
-	 * Método de pesquisar na tabela pelo nome, ou código do Fornecedor, atualizando a tabela apenas
-	 * com os Fornecedor que contém a String passada no campo de texto no nome ou código.
+	 * Método de pesquisar na tabela pelo nome, ou código do Fornecedor, atualizando
+	 * a tabela apenas com os Fornecedor que contém a String passada no campo de
+	 * texto no nome ou código.
 	 */
 	@FXML
 	private void pesquisar() {
@@ -393,11 +397,13 @@ public class EditFornecedorController implements Initializable {
 		}
 		if (endereco.isSelected()) {
 			if (pesquisaPorNomeToggleButton.isSelected()) {
-				pesquisa = Pesquisa.pesquisarPorNome(mainApp.getFornecedoresData(), enderecoPesquisaTextField.getText());
+				pesquisa = Pesquisa.pesquisarPorNome(mainApp.getFornecedoresData(),
+						enderecoPesquisaTextField.getText());
 				enderecoFornecedorTable.setItems(pesquisa);
 			}
 			if (pesquisaPorCodigoToggleButton.isSelected()) {
-				pesquisa = Pesquisa.pesquisarPorCodigo(mainApp.getFornecedoresData(), enderecoPesquisaTextField.getText());
+				pesquisa = Pesquisa.pesquisarPorCodigo(mainApp.getFornecedoresData(),
+						enderecoPesquisaTextField.getText());
 				enderecoFornecedorTable.setItems(pesquisa);
 			}
 		}

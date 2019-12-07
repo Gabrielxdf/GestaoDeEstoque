@@ -2,13 +2,15 @@ package gestaoDeEstoque.model.pessoa;
 
 import java.time.LocalDate;
 
+import gestaoDeEstoque.util.DateUtil;
+import gestaoDeEstoque.util.pesquisa.Pesquisavel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 
-public abstract class Pessoa {
+public abstract class Pessoa implements Pesquisavel{
 	private StringProperty codigo;
 	private StringProperty nome;
 	private ObjectProperty<LocalDate> dataNascimento;
@@ -24,7 +26,7 @@ public abstract class Pessoa {
 		this.dataNascimento = new SimpleObjectProperty<LocalDate>(localdate);
 	}
 
-	public StringProperty getCodigo() {
+	public StringProperty getCodigoProperty() {
 		return codigo;
 	}
 
@@ -32,7 +34,7 @@ public abstract class Pessoa {
 		this.codigo = codigo;
 	}
 
-	public StringProperty getNome() {
+	public StringProperty getNomeProperty() {
 		return nome;
 	}
 
@@ -40,21 +42,40 @@ public abstract class Pessoa {
 		this.nome = nome;
 	}
 
-	public ObjectProperty<LocalDate> getDataNascimento() {
-		return dataNascimento;
+	public LocalDate getDataNascimentoProperty() {
+		return dataNascimento.get();
+	}
+	
+	public StringProperty getDataNascimentoStringProperty() {
+		return new SimpleStringProperty(DateUtil.format(getDataNascimentoProperty()));
 	}
 
 	public void setDataNascimento(ObjectProperty<LocalDate> dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public StringProperty getEmail() {
+	public StringProperty getEmailProperty() {
 		return email;
 	}
 
 	public void setEmail(StringProperty email) {
 		this.email = email;
 	}
+	
+	@Override
+	public String getNome() {
+		return nome.get();
+	}
+	
+	@Override
+	public String getCodigo() {
+		return codigo.get();
+	}
 
+	@Override
+	public String toString() {
+		return getNome();
+	}
+	
 	
 }

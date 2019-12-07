@@ -4,10 +4,11 @@ import java.time.LocalDate;
 
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
+import gestaoDeEstoque.util.pesquisa.Pesquisavel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Cliente extends Pessoa {
+public class Cliente extends Pessoa{
 
 	private StringProperty cpf;
 	private Enderecos endereco;
@@ -22,25 +23,31 @@ public class Cliente extends Pessoa {
 		this.telefone = telefone;
 	}
 
-	public StringProperty getCpf() {
+
+	public StringProperty getCpfProperty() {
 		return cpf;
 	}
+
 
 	public void setCpf(StringProperty cpf) {
 		this.cpf = cpf;
 	}
 
+
 	public Enderecos getEndereco() {
 		return endereco;
 	}
+
 
 	public void setEndereco(Enderecos endereco) {
 		this.endereco = endereco;
 	}
 
+
 	public Telefones getTelefone() {
 		return telefone;
 	}
+
 
 	public void setTelefone(Telefones telefone) {
 		this.telefone = telefone;

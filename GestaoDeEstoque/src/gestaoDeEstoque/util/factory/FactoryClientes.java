@@ -7,24 +7,18 @@ import gestaoDeEstoque.util.Telefones;
 import gestaoDeEstoque.util.Verifica;
 
 public class FactoryClientes {
-	private static String errorMessage = "";
-	public static Cliente getCliente(String codigo, String nome, String cpf, Enderecos endereco, Telefones telefone,
-			String email, String dataNascimento) {
-		String errorMessage = "";
+
+	public static Cliente getCliente(String nome, String cpf, String codigo, String email, Telefones telefone,
+			Enderecos endereco, String dataNascimento) {
 		Cliente retorno = null;
-		if (!Verifica.stringVazia(codigo) && !Verifica.stringVazia(nome) && !Verifica.stringVazia(email)
-				&& !Verifica.stringVazia(dataNascimento) && !Verifica.objetoNulo(telefone)
+		if (!Verifica.stringVazia(codigo) && !Verifica.stringVazia(nome) && !Verifica.stringVazia(email) && !Verifica.objetoNulo(telefone)
 				&& !Verifica.objetoNulo(endereco)) {
 			if (!DateUtil.validDate(dataNascimento)) {
-				errorMessage += "Data de Nascimento inválida, use o formato dd/mm/aaaa!\n";
-				errorMessage += "Alguns campos estão vazios.\n";
+				
 			} else {
 				retorno = new Cliente(codigo, nome, cpf, endereco, telefone, email, DateUtil.parse(dataNascimento));
 			}
 		}
 		return retorno;
-	}
-	public static String getErrorMessage() {
-		return errorMessage;
 	}
 }

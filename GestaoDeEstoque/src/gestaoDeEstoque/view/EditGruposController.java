@@ -169,7 +169,7 @@ public class EditGruposController implements Initializable {
 	}
 
 	/**
-	 * Adiciona um novo grupo na Tabela ou altera um existente.
+	 * Adiciona um novo Grupo na Tabela ou altera um existente.
 	 * 
 	 * @param title   o título para criar um Alert
 	 * @param header  o header para criar um Alert

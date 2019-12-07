@@ -15,8 +15,8 @@ public class Telefones {
 	private StringProperty residencial;
 
 	public Telefones(StringProperty celular, String residencial) {
-		super();
 		//this.celular = new SimpleStringProperty(celular);
+		this.celular = celular;
 		this.residencial = new SimpleStringProperty(residencial);
 	}
 	
@@ -30,7 +30,7 @@ public class Telefones {
 	}
 
 	public StringProperty getCelularProperty() {
-		return celular;
+		return this.celular;
 	}
 
 	public void setCelular(StringProperty celular) {

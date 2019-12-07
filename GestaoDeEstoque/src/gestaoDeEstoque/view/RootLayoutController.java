@@ -85,4 +85,12 @@ public class RootLayoutController implements Initializable {
 		mainApp.showEditProdutos();
 	}
 	
+	/**
+	 * Chamado quando o usuário clica no botão "Clientes". Abre uma janela para criar, editar e excluir clientes.
+	 */
+	@FXML
+	private void handleClientes() {
+		mainApp.showEditCliente();
+	}
+	
 }

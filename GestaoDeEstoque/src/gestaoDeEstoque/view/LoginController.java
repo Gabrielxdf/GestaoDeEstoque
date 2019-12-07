@@ -8,7 +8,8 @@ import gestaoDeEstoque.model.pessoa.Funcionarios;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
@@ -31,7 +32,11 @@ public class LoginController implements Initializable{
 	private Stage dialogStage;
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+		acessarButton.setOnKeyPressed((KeyEvent e)->{
+			if(e.getCode() == KeyCode.ENTER) {
+				login();
+			}
+		});
 		
 	}
 	@FXML

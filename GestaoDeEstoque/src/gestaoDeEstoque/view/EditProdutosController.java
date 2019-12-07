@@ -217,7 +217,7 @@ public class EditProdutosController implements Initializable {
 	}
 	
 	/**
-	 * Adiciona um novo grupo na Tabela ou altera um existente.
+	 * Adiciona um novo Produto na Tabela ou altera um existente.
 	 * 
 	 * @param title   o título para criar um Alert
 	 * @param header  o header para criar um Alert
@@ -287,7 +287,7 @@ public class EditProdutosController implements Initializable {
 		content += "CAMPO CLASSIFICAÇÃO - Classificação do Produto.\n";
 		content += "\n";
 		content += "CAMPO DESCRIÇÃO - Descrição do Produto.\n";
-		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Fornecedores", content, "INFORMATION");
+		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Produtos", content, "INFORMATION");
 	}
 
 	/**

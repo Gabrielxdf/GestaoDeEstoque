@@ -18,19 +18,19 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="90.0" prefWidth="695.0">
                      <children>
-                        <Button fx:id="produtosButton" layoutX="209.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleProdutos" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Produtos" textFill="WHITE">
+                        <Button fx:id="produtosButton" layoutX="228.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleProdutos" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Produtos" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
-                        <Button fx:id="fornecedoresButton" layoutX="121.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleFornecedores" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Fornecedores" textFill="WHITE">
+                        <Button fx:id="fornecedoresButton" layoutX="121.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleFornecedores" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Fornecedores" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
-                        <Button fx:id="clientesButton" layoutX="316.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Clientes" textFill="WHITE">
+                        <Button fx:id="clientesButton" layoutX="335.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleClientes" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Clientes" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
-                        <Button fx:id="funcionariosButton" layoutX="423.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Funcionários" textFill="WHITE">
+                        <Button fx:id="funcionariosButton" layoutX="442.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Funcionários" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
@@ -38,7 +38,7 @@
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
-                        <Button fx:id="principalAjudaButton" layoutX="530.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Ajuda" textFill="WHITE">
+                        <Button fx:id="principalAjudaButton" layoutX="549.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Ajuda" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>

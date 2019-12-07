@@ -5,11 +5,13 @@ import java.io.IOException;
 import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
+import gestaoDeEstoque.model.pessoa.Cliente;
 import gestaoDeEstoque.model.pessoa.Funcionarios;
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
 import gestaoDeEstoque.util.factory.FactoryFornecedores;
 import gestaoDeEstoque.util.factory.FactoryGrupos;
+import gestaoDeEstoque.view.EditClienteController;
 import gestaoDeEstoque.view.EditFornecedorController;
 import gestaoDeEstoque.view.EditGruposController;
 import gestaoDeEstoque.view.RootLayoutController;
@@ -30,7 +32,9 @@ public class MainApp extends Application {
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
+
 	private ObservableList<Grupos> gruposData = FXCollections.observableArrayList();
+	private ObservableList<Cliente> clientesData = FXCollections.observableArrayList();
 	private ObservableList<Produtos> produtosData = FXCollections.observableArrayList();
 	private ObservableList<Fornecedor> fornecedoresData = FXCollections.observableArrayList();
 	private ObservableList<Funcionarios> funcionariosData = FXCollections.observableArrayList();
@@ -43,17 +47,17 @@ public class MainApp extends Application {
 		gruposData.add(FactoryGrupos.getGrupo("Indefinido"));
 		fornecedoresData.add(new Fornecedor("Indefinido", "00000000", "0000", "example@example.com",
 				new Telefones("0", "0"), new Enderecos("", "", "", "", ""), "example"));
-		funcionariosData.add(new Funcionarios("010", "Gabriel", "gabrielxdf16@gmail.com",
-				"Gabrielxdf16", "1234", "1234"));
-		
+		funcionariosData.add(new Funcionarios("000", "admiin", "example@example.com", "admin", "admin", "admin"));
+
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("MyStock");
+		primaryStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/root-icon.png"));
 		showLogin();
-		
+
 	}
 
 	/**
@@ -73,19 +77,24 @@ public class MainApp extends Application {
 	public ObservableList<Produtos> getProdutosData() {
 		return produtosData;
 	}
-	
+
 	/**
 	 * Retorna a ObservableList de Fornecedores
+	 * 
 	 * @return
 	 */
-	public ObservableList<Fornecedor> getFornecedoresData(){
+	public ObservableList<Fornecedor> getFornecedoresData() {
 		return fornecedoresData;
 	}
-	
-	public ObservableList<Funcionarios> getFuncionariosData(){
+
+	public ObservableList<Funcionarios> getFuncionariosData() {
 		return funcionariosData;
 	}
-	
+
+	public ObservableList<Cliente> getClientesData() {
+		return clientesData;
+	}
+
 	/**
 	 * Inicializa o RootLayout
 	 */
@@ -109,7 +118,7 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * Mostra a tela de Login.
+	 * Exibe a tela de Login.
 	 * 
 	 */
 	public void showLogin() {
@@ -128,9 +137,10 @@ public class MainApp extends Application {
 			LoginController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setMainApp(this);
-			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/password-icon.png"));
+			dialogStage.getIcons()
+					.add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/password-icon.png"));
 			dialogStage.showAndWait();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -163,6 +173,7 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * Exibe a tela de Produtos.
 	 */
@@ -171,24 +182,26 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/EditProdutos.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
-			
+
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Produtos");
 			dialogStage.initModality(Modality.NONE);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
-			
+
 			EditProdutosController controller = loader.getController();
 			controller.setMainApp(this);
 			controller.setStage(dialogStage);
-			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/products-icon.png"));
+			dialogStage.getIcons()
+					.add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/products-icon.png"));
 			dialogStage.showAndWait();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * Exibe a tela de Fornecedores.
 	 */
@@ -197,27 +210,56 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/EditFornecedor.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
-			
+
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Fornecedores");
 			dialogStage.initModality(Modality.NONE);
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
-			
+
 			EditFornecedorController controller = loader.getController();
 			controller.setMainApp(this);
 			controller.setStage(dialogStage);
-			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/provider-icon.png"));
+			dialogStage.getIcons()
+					.add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/provider-icon.png"));
 			dialogStage.showAndWait();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
+	 * Exibe a tela de clientes.
+	 */
+	public void showEditCliente() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/EditCliente.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Clientes");
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			EditClienteController controller = loader.getController();
+			controller.setMainApp(this);
+			controller.setStage(dialogStage);
+			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/client-icon.png"));
+			dialogStage.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
 	 * Retorna o palco principal.
+	 * 
 	 * @return primaryStage
 	 */
 	public Stage getPrimaryStage() {
