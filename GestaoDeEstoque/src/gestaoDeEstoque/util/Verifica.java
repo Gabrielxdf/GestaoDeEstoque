@@ -7,6 +7,7 @@ import br.com.caelum.stella.validation.CPFValidator;
 import br.com.parg.viacep.ViaCEP;
 import br.com.parg.viacep.ViaCEPEvents;
 import br.com.parg.viacep.ViaCEPException;
+import javafx.scene.control.ComboBox;
 
 public class Verifica implements ViaCEPEvents {
 	ViaCEP cep = null;
@@ -26,6 +27,15 @@ public class Verifica implements ViaCEPEvents {
 			return false;
 		}
 	}
+	
+	public static boolean comboBoxVazia(ComboBox<?> comboBox) {
+		if(comboBox.getSelectionModel().getSelectedIndex() >= 0) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
 
 	/**
 	 * Valida CPF.

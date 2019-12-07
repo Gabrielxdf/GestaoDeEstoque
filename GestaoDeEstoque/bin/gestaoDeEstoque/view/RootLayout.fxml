@@ -105,9 +105,9 @@
       </ImageView>
    </center>
    <bottom>
-      <Label text="© Todos os direitos reservados . 2019" textFill="#ae593c" BorderPane.alignment="CENTER">
+      <Label text="© Todos os direitos reservados - 2019" textFill="#ae593c" BorderPane.alignment="CENTER">
          <font>
-            <Font size="20.0" />
+            <Font size="15.0" />
          </font>
       </Label>
    </bottom>

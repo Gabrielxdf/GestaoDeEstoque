@@ -18,7 +18,7 @@
    <children>
       <TextField fx:id="usuarioTextField" layoutX="76.0" layoutY="60.0" promptText="Usuário" style="-fx-background-radius: 100;" />
       <PasswordField fx:id="senhaPasswordField" layoutX="76.0" layoutY="113.0" promptText="Senha" style="-fx-background-radius: 100;" />
-      <Button fx:id="acessarButton" layoutX="76.0" layoutY="165.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 100;" text="Acessar" />
+      <Button fx:id="acessarButton" layoutX="76.0" layoutY="165.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="171.0" style="-fx-background-radius: 100;" text="Acessar" />
       <ImageView fitHeight="26.0" fitWidth="26.0" layoutX="247.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/user-icon.png" />
@@ -46,6 +46,11 @@
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor>
+      </Label>
+      <Label fx:id="messageLabel" layoutX="104.0" layoutY="209.0" textFill="RED">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
       </Label>
    </children>
 </AnchorPane>

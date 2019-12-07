@@ -5,6 +5,7 @@ import java.io.IOException;
 import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
+import gestaoDeEstoque.model.pessoa.Funcionarios;
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
 import gestaoDeEstoque.util.factory.FactoryFornecedores;
@@ -13,6 +14,7 @@ import gestaoDeEstoque.view.EditFornecedorController;
 import gestaoDeEstoque.view.EditGruposController;
 import gestaoDeEstoque.view.RootLayoutController;
 import gestaoDeEstoque.view.EditProdutosController;
+import gestaoDeEstoque.view.LoginController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +33,7 @@ public class MainApp extends Application {
 	private ObservableList<Grupos> gruposData = FXCollections.observableArrayList();
 	private ObservableList<Produtos> produtosData = FXCollections.observableArrayList();
 	private ObservableList<Fornecedor> fornecedoresData = FXCollections.observableArrayList();
+	private ObservableList<Funcionarios> funcionariosData = FXCollections.observableArrayList();
 
 	/**
 	 * Construtor
@@ -40,6 +43,8 @@ public class MainApp extends Application {
 		gruposData.add(FactoryGrupos.getGrupo("Indefinido"));
 		fornecedoresData.add(new Fornecedor("Indefinido", "00000000", "0000", "example@example.com",
 				new Telefones("0", "0"), new Enderecos("", "", "", "", ""), "example"));
+		funcionariosData.add(new Funcionarios("010", "Gabriel", "gabrielxdf16@gmail.com",
+				"Gabrielxdf16", "1234", "1234"));
 		
 	}
 
@@ -47,10 +52,8 @@ public class MainApp extends Application {
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("MyStock");
-
-		initRootLayout();
-
-		//showLogin();
+		showLogin();
+		
 	}
 
 	/**
@@ -70,6 +73,7 @@ public class MainApp extends Application {
 	public ObservableList<Produtos> getProdutosData() {
 		return produtosData;
 	}
+	
 	/**
 	 * Retorna a ObservableList de Fornecedores
 	 * @return
@@ -77,6 +81,11 @@ public class MainApp extends Application {
 	public ObservableList<Fornecedor> getFornecedoresData(){
 		return fornecedoresData;
 	}
+	
+	public ObservableList<Funcionarios> getFuncionariosData(){
+		return funcionariosData;
+	}
+	
 	/**
 	 * Inicializa o RootLayout
 	 */
@@ -105,13 +114,23 @@ public class MainApp extends Application {
 	 */
 	public void showLogin() {
 		try {
-			// Carrega a tela de Login.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/Login.fxml"));
-			AnchorPane login = (AnchorPane) loader.load();
+			AnchorPane page = (AnchorPane) loader.load();
 
-			// Define o person overview dentro do root layout.
-			//rootLayout.setCenter(login);
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Login");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			LoginController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
+			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/password-icon.png"));
+			dialogStage.showAndWait();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

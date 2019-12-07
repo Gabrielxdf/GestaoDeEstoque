@@ -7,8 +7,8 @@ import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
 import gestaoDeEstoque.util.AlertUtil;
-import gestaoDeEstoque.util.Estados;
 import gestaoDeEstoque.util.Limpa;
+import gestaoDeEstoque.util.factory.FactoryProdutos;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -125,18 +125,73 @@ public class EditProdutosController implements Initializable {
 			minimoTextField.setText(produto.getEstoqueMinimo().get());
 			idealTextField.setText(produto.getEstoqueIdeal().get());
 			descricaoTextField.setText(produto.getDescricao().get());
-			grupoComboBox.setPromptText(produto.getGrupo().getNome());
-			fornecedorComboBox.setPromptText(produto.getFornecedor().getNome());
-			classificacaoComboBox.setPromptText(produto.getClassificacao().get());
+			grupoComboBox.getSelectionModel().select(produto.getGrupo());
+			fornecedorComboBox.getSelectionModel().select(produto.getFornecedor());
+			classificacaoComboBox.getSelectionModel().select(produto.getClassificacao().get());
 			
 		} else {
 			Limpa.limpaTextField(nomeTextField, codigoTextField, valorTextField, codigoBarrasTextField,
 					minimoTextField, idealTextField, descricaoTextField);
-			grupoComboBox.setPromptText("");
-			fornecedorComboBox.setPromptText("");
-			classificacaoComboBox.setPromptText("");
+			Limpa.limpaComboBox(classificacaoComboBox, fornecedorComboBox, grupoComboBox);
 		}
 	}
+	
+	/**
+	 * Chamado quando o usuário clica em "Ok". De acordo com o que ele está
+	 * selecionando no ToggleButton, o método adiciona um novo Produto, ou edita
+	 * um Produto selecionado.
+	 */
+	@FXML
+	private void handleOk() {
+		if (cadastrarToggleButton.isSelected()) {
+				adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
+						"", "ERROR", -1);
+		}
+		if (alterarToggleButton.isSelected()) {
+			int selectedIndex;
+			selectedIndex = produtosTable.getSelectionModel().getSelectedIndex();
+			if (selectedIndex >= 0) {
+				if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa alteração ?",
+								"Alteração no Produto: " + "'"
+										+ mainApp.getProdutosData().get(selectedIndex).getNome() + "'",
+								"CONFIRMATION")) {
+					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
+							"", "ERROR", selectedIndex);
+				}
+			} else {
+				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
+						"Por favor, Selecione um Produto na tabela.", "WARNING");
+			}
+		}
+	}
+	
+	/**
+	 * Método para deletar algum item da Tabela.
+	 */
+	@FXML
+	private void handleDelete() {
+		int selectedIndex;
+		selectedIndex = produtosTable.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
+					"Excluir o Produto: " + "'" + mainApp.getProdutosData().get(selectedIndex).getNome() + "'" + " ?",
+					"CONFIRMATION")) {
+				produtosTable.getItems().remove(selectedIndex);
+			}
+		} else {
+			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
+					"Por favor, Selecione um Produto na tabela.", "WARNING");
+		}
+	}
+
+	/**
+	 * Chamado quando o usuário clica em "Cancelar".
+	 */
+	@FXML
+	private void handleCancel() {
+		dialogStage.close();
+	}
+
 	
 	/**
 	 * Carrega a ComboBox dos Grupos
@@ -159,6 +214,53 @@ public class EditProdutosController implements Initializable {
 		classificacaoComboBox.getItems().add("A");
 		classificacaoComboBox.getItems().add("B");
 		classificacaoComboBox.getItems().add("C");
+	}
+	
+	/**
+	 * Adiciona um novo grupo na Tabela ou altera um existente.
+	 * 
+	 * @param title   o título para criar um Alert
+	 * @param header  o header para criar um Alert
+	 * @param content o content para criar um Alert
+	 * @param type    o type para criar um Alert
+	 */
+	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
+		Produtos tempProduto = FactoryProdutos.getProduto(nomeTextField.getText(), codigoTextField.getText(),
+				valorTextField.getText(), codigoBarrasTextField.getText(), minimoTextField.getText(), 
+				idealTextField.getText(), classificacaoComboBox, descricaoTextField.getText(), 
+				fornecedorComboBox, grupoComboBox);
+				
+		if (tempProduto != null) {
+			if (index >= 0) {
+				mainApp.getProdutosData().set(index, tempProduto);
+				produtosTable.setItems(mainApp.getProdutosData());
+				tempProduto.getGrupo().getListaProdutos().add(tempProduto);
+				tempProduto.getFornecedor().getListaProdutos().add(tempProduto);
+				/*mainApp.getGruposData().get(grupoComboBox.getSelectionModel()
+						.getSelectedIndex()).getListaProdutos().add(index, tempProduto);
+				mainApp.getFornecedoresData().get(fornecedorComboBox.getSelectionModel().getSelectedIndex())
+				.getListaProdutos().add(index, tempProduto);*/
+				Limpa.limpaTextField(nomeTextField, valorTextField, codigoTextField, minimoTextField, idealTextField,
+						codigoBarrasTextField, descricaoTextField);
+				Limpa.limpaComboBox(classificacaoComboBox, fornecedorComboBox, grupoComboBox);
+				
+			} else {
+				mainApp.getProdutosData().add(tempProduto);
+				produtosTable.setItems(mainApp.getProdutosData());
+				tempProduto.getGrupo().getListaProdutos().add(tempProduto);
+				tempProduto.getFornecedor().getListaProdutos().add(tempProduto);
+				/*mainApp.getGruposData().get(grupoComboBox.getSelectionModel()
+						.getSelectedIndex()).getListaProdutos().add(tempProduto);
+				mainApp.getFornecedoresData().get(fornecedorComboBox.getSelectionModel().getSelectedIndex())
+				.getListaProdutos().add(tempProduto);*/
+				Limpa.limpaTextField(nomeTextField, valorTextField, codigoTextField, minimoTextField, idealTextField,
+						codigoBarrasTextField, descricaoTextField);
+				Limpa.limpaComboBox(classificacaoComboBox, fornecedorComboBox, grupoComboBox);
+			}
+		} else {
+			String errorMessage = content + "Alguns dados obrigatórios estão inválidos e/ou vazios.";
+			AlertUtil.criaUmAlert(title, header, errorMessage, type);
+		}
 	}
 
 	/**

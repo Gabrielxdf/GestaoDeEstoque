@@ -51,7 +51,7 @@ public class RootLayoutController implements Initializable {
 	}
 
 	/**
-	 * Uma inst�ncia do MainApp para o Controller poder usar os m�todos do MainApp
+	 * Uma instância do MainApp para o Controller poder usar os métodos do MainApp
 	 * 
 	 * @param mainApp. uma referência à Aplicação principal.
 	 */

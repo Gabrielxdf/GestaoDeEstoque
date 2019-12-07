@@ -182,12 +182,11 @@ public class EditFornecedorController implements Initializable {
 			enderecoTextField.setText(fornecedor.getEndereco().getEnderecoProperty().get());
 			bairroTextField.setText(fornecedor.getEndereco().getBairroProperty().get());
 			cidadeTextField.setText(fornecedor.getEndereco().getCidadeProperty().get());
-			estadosComboBox.setPromptText(fornecedor.getEndereco().getEstadoProperty().get());
 		} else {
 			Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField,
 					emailTextField, tel1TextField, tel2TextField, cepTextField, enderecoTextField,
 					bairroTextField, cidadeTextField);
-			estadosComboBox.setPromptText("");
+			Limpa.limpaComboBox(estadosComboBox);
 		}
 	}
 
@@ -243,7 +242,7 @@ public class EditFornecedorController implements Initializable {
 				}
 			} else {
 				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Fornecedor Selecionado",
-						"Por favor, Selecione um grupo na tabela.", "WARNING");
+						"Por favor, Selecione um Fornecedor na tabela.", "WARNING");
 			}
 		}
 	}
@@ -263,14 +262,14 @@ public class EditFornecedorController implements Initializable {
 
 		if (selectedIndex >= 0) {
 			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
-					"Excluir o Fornecedor: " + "'" + mainApp.getGruposData().get(selectedIndex).getNome() + "'" + " ?",
+					"Excluir o Fornecedor: " + "'" + mainApp.getFornecedoresData().get(selectedIndex).getNome() + "'" + " ?",
 					"CONFIRMATION")) {
 				fornecedorTable.getItems().remove(selectedIndex);
 				enderecoFornecedorTable.getItems().remove(selectedIndex);
 			}
 		} else {
-			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Grupo Selecionado",
-					"Por favor, Selecione um grupo na tabela.", "WARNING");
+			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Fornecedor Selecionado",
+					"Por favor, Selecione um Fornecedor na tabela.", "WARNING");
 		}
 	}
 
@@ -304,12 +303,14 @@ public class EditFornecedorController implements Initializable {
 				enderecoFornecedorTable.setItems(mainApp.getFornecedoresData());
 				Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField, emailTextField,
 						tel1TextField, tel2TextField, cepTextField, enderecoTextField, bairroTextField, cidadeTextField);
+				Limpa.limpaComboBox(estadosComboBox);
 			} else {
 				mainApp.getFornecedoresData().add(tempFornecedor);
 				fornecedorTable.setItems(mainApp.getFornecedoresData());
 				enderecoFornecedorTable.setItems(mainApp.getFornecedoresData());
 				Limpa.limpaTextField(fornecedorTextField, cnpjTextField, codigoTextField, razaoTextField, emailTextField,
 						tel1TextField, tel2TextField, cepTextField, enderecoTextField, bairroTextField, cidadeTextField);
+				Limpa.limpaComboBox(estadosComboBox);
 			}
 		} else {
 			String errorMessage = content + "Alguns dados obrigatórios estão inválidos e/ou vazios.";
