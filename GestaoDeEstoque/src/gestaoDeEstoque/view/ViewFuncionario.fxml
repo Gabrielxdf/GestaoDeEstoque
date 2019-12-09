@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaoDeEstoque.view.ViewFuncionarioController">
+   <children>
+      <Label layoutX="133.0" layoutY="65.0" text="Nome">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nomeTextField" editable="false" layoutX="25.0" layoutY="81.0" prefHeight="26.0" prefWidth="265.0" style="-fx-background-radius: 100;" />
+      <TextField fx:id="codigoTextField" editable="false" layoutX="332.0" layoutY="81.0" prefHeight="26.0" prefWidth="62.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="338.0" layoutY="65.0" text="Código">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="126.0" layoutY="196.0" text="Usuário">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="usuarioTextField" editable="false" layoutX="25.0" layoutY="212.0" prefHeight="26.0" prefWidth="265.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="135.0" layoutY="134.0" text="E-mail">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="emailTextField" editable="false" layoutX="25.0" layoutY="150.0" prefHeight="26.0" prefWidth="265.0" style="-fx-background-radius: 100;" />
+   </children>
+   <effect>
+      <DropShadow />
+   </effect>
+</AnchorPane>

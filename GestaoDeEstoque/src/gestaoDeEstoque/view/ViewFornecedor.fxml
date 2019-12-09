@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="635.0" prefWidth="787.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaoDeEstoque.view.ViewFornecedorController">
+   <children>
+      <Label layoutX="90.0" layoutY="21.0" text="Fornecedor">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="fornecedorTextField" editable="false" layoutX="15.0" layoutY="39.0" prefHeight="26.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="410.0" layoutY="21.0" text="CNPJ">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="cnpjTextField" editable="false" layoutX="307.0" layoutY="39.0" prefHeight="26.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="582.0" layoutY="21.0" text="Código">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="codigoTextField" editable="false" layoutX="572.0" layoutY="39.0" prefHeight="26.0" prefWidth="70.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="381.0" layoutY="86.0" text="Razão Social">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="razaoTextField" editable="false" layoutX="307.0" layoutY="103.0" prefHeight="26.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="109.0" layoutY="78.0" text="E-mail">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="emailTextField" editable="false" layoutX="14.0" layoutY="103.0" prefHeight="26.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="93.0" layoutY="144.0" text="Telefone 1">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tel1TextField" editable="false" layoutX="14.0" layoutY="168.0" prefHeight="26.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="389.0" layoutY="144.0" text="Telefone 2">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tel2TextField" editable="false" layoutX="308.0" layoutY="168.0" prefHeight="26.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="118.0" layoutY="210.0" text="CEP">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="cepTextField" editable="false" layoutX="14.0" layoutY="234.0" onKeyReleased="#verificaCep" prefHeight="26.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="393.0" layoutY="210.0" text="Endereço">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+            <TextField fx:id="pesquisaTextField" layoutX="279.0" layoutY="179.0" onKeyReleased="#pesquisar" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
+      <TableView fx:id="produtosTable" layoutX="7.0" layoutY="203.0" prefHeight="375.0" prefWidth="744.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0">
+              <columns>
+                <TableColumn fx:id="codigoColumn" prefWidth="44.0" text="Cód" />
+                <TableColumn fx:id="nomeColumn" minWidth="0.0" prefWidth="160.0" text="Nome" />
+                  <TableColumn fx:id="valorColumn" minWidth="9.0" prefWidth="60.0" text="Valor" />
+                  <TableColumn fx:id="codigoBarrasColumn" prefWidth="92.0" text="Cód. Barras" />
+                  <TableColumn fx:id="minimoColumn" minWidth="0.0" prefWidth="63.0" text="Mínimo" />
+                  <TableColumn fx:id="idealColumn" minWidth="3.0" prefWidth="50.0" text="Ideal" />
+                  <TableColumn fx:id="atualColumn" prefWidth="58.0" text="Atual" />
+                  <TableColumn fx:id="grupoColumn" prefWidth="94.0" text="Grupos" />
+                  <TableColumn fx:id="classificacaoColumn" prefWidth="120.0" text="Classificação" />
+              </columns>
+            </TableView>
+      <TextField fx:id="enderecoTextField" editable="false" layoutX="308.0" layoutY="234.0" prefHeight="25.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="106.0" layoutY="275.0" text="Cidade">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="cidadeTextField" editable="false" layoutX="14.0" layoutY="296.0" prefHeight="26.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="406.0" layoutY="275.0" text="Bairro">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="bairroTextField" editable="false" layoutX="308.0" layoutY="296.0" prefHeight="25.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
+      <Label layoutX="583.0" layoutY="275.0" text="Estado">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="estadoTextField" editable="false" layoutX="573.0" layoutY="296.0" prefHeight="26.0" prefWidth="70.0" style="-fx-background-radius: 100;" />
+   </children>
+   <effect>
+      <DropShadow />
+   </effect>
+</AnchorPane>

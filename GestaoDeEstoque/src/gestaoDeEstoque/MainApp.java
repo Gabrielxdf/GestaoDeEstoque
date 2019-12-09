@@ -2,7 +2,6 @@ package gestaoDeEstoque;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.prefs.Preferences;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;

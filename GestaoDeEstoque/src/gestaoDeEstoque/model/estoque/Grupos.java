@@ -1,17 +1,17 @@
 package gestaoDeEstoque.model.estoque;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import gestaoDeEstoque.util.pesquisa.Pesquisavel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Grupos implements Pesquisavel{
 	private StringProperty quantidadeProdutos;
 	private StringProperty nome;
 	private StringProperty valorTotal;
-	private List<Produtos> listaProdutos = new ArrayList<>();
+	private ObservableList<Produtos> listaProdutos = FXCollections.observableArrayList();
 
 	public Grupos() {
 		this(null);
