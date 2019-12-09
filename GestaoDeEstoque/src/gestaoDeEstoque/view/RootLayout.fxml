@@ -30,7 +30,7 @@
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
-                        <Button fx:id="funcionariosButton" layoutX="442.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Funcionários" textFill="WHITE">
+                        <Button fx:id="funcionariosButton" layoutX="442.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleFuncionarios" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Funcionários" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
@@ -38,7 +38,7 @@
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
-                        <Button fx:id="principalAjudaButton" layoutX="549.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Ajuda" textFill="WHITE">
+                        <Button fx:id="principalAjudaButton" layoutX="549.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleAjuda" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Ajuda" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
@@ -58,7 +58,7 @@
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
-                        <Button fx:id="acoesAjudaButton" layoutX="228.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Ajuda" textFill="WHITE">
+                        <Button fx:id="acoesAjudaButton" layoutX="228.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleAjuda" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Ajuda" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
@@ -86,7 +86,7 @@
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
-                        <Button fx:id="relatoriosAjudaButton" layoutX="442.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Ajuda" textFill="WHITE">
+                        <Button fx:id="relatoriosAjudaButton" layoutX="442.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleAjuda" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Ajuda" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>

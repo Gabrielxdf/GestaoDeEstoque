@@ -8,8 +8,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Grupos implements Pesquisavel{
-	private StringProperty nome;
 	private StringProperty quantidadeProdutos;
+	private StringProperty nome;
 	private StringProperty valorTotal;
 	private List<Produtos> listaProdutos = new ArrayList<>();
 
@@ -19,27 +19,44 @@ public class Grupos implements Pesquisavel{
 
 	public Grupos(String nome) {
 		this.nome = new SimpleStringProperty(nome);
-		this.quantidadeProdutos = new SimpleStringProperty("0");
-		this.valorTotal = new SimpleStringProperty("0");
+		this.quantidadeProdutos = new SimpleStringProperty("10");
+		this.valorTotal = new SimpleStringProperty("10");
 	}
-
 	
-	public void setNome(StringProperty nome) {
-		this.nome = nome;
+	public Grupos(String nome, String quantidadeProdutos, String valorTotal) {
+		this.nome = new SimpleStringProperty(nome);
+		this.quantidadeProdutos = new SimpleStringProperty(quantidadeProdutos);
+		this.valorTotal = new SimpleStringProperty(valorTotal);
 	}
 
-	public void setQuantidadeProdutos(StringProperty quantidadeProdutos) {
-		this.quantidadeProdutos = quantidadeProdutos;
+	public void setNome(String nome) {
+		this.nome = new SimpleStringProperty(nome);
 	}
-
-	public void setValorTotal(StringProperty valorTotal) {
-		this.valorTotal = valorTotal;
+	
+	public void setQuantidadeProdutos() {
+		this.quantidadeProdutos = new SimpleStringProperty(Integer.toString(getListaProdutos().size()));
+	}
+	
+	public void setValorTotal() {
+		Double novoValor = 0.0;
+		for(Produtos x: getListaProdutos()) {
+			novoValor += Double.parseDouble(x.getValor().get());
+		}
+		this.valorTotal = new SimpleStringProperty(Double.toString(novoValor));
+	}
+	
+	public void setQuantidadeProdutos(String quantidade) {
+		this.quantidadeProdutos = new SimpleStringProperty(quantidade);
+	}
+	
+	public void setValorTotal(String valor) {
+		this.valorTotal = new SimpleStringProperty(valor);
 	}
 
 	public StringProperty getNomeProperty() {
 		return nome;
 	}
-
+	
 	public StringProperty getQuantidadeProdutosProperty() {
 		return quantidadeProdutos;
 	}
@@ -59,7 +76,6 @@ public class Grupos implements Pesquisavel{
 
 	@Override
 	public String getCodigo() {
-		
 		return null;
 	}
 

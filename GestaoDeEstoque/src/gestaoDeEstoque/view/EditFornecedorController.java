@@ -7,7 +7,6 @@ import br.com.parg.viacep.ViaCEP;
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.util.AlertUtil;
-import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Estados;
 import gestaoDeEstoque.util.Limpa;
 import gestaoDeEstoque.util.Telefones;
@@ -248,7 +247,7 @@ public class EditFornecedorController implements Initializable {
 	}
 
 	/**
-	 * Método para deletar algum item da Tabela.
+	 * Método para deletar algum item da Tabela por meio do botão "Excluir".
 	 */
 	@FXML
 	private void handleDelete() {
@@ -292,10 +291,9 @@ public class EditFornecedorController implements Initializable {
 	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
 		Fornecedor tempFornecedor = FactoryFornecedores.getFornecedor(fornecedorTextField.getText(),
 				cnpjTextField.getText(), codigoTextField.getText(), emailTextField.getText(),
-				new Telefones(tel1TextField.getText(), tel2TextField.getText()),
-				new Enderecos(cepTextField.getText(), bairroTextField.getText(), cidadeTextField.getText(),
-						enderecoTextField.getText(), estadosComboBox.getSelectionModel().getSelectedItem().toString()),
-				razaoTextField.getText());
+				new Telefones(tel1TextField.getText(), tel2TextField.getText()), razaoTextField.getText(),
+				cepTextField.getText(), enderecoTextField.getText(), cidadeTextField.getText(), bairroTextField.getText(),
+				estadosComboBox);
 		if (tempFornecedor != null) {
 			if (index >= 0) {
 				mainApp.getFornecedoresData().set(index, tempFornecedor);
@@ -319,7 +317,7 @@ public class EditFornecedorController implements Initializable {
 	}
 	
 	/**
-	 * Verifica o CEP passado, e fazendo um Auto-Complete nos campos relevantes.
+	 * Verifica o CEP passado chamando o método {@link Verifica#validaCep}, e faz um Auto-Complete nos campos relevantes.
 	 * @API <a href="https://viacep.com.br">ViaCep</a>
 	 * @return true caso o CEP seja validado, false caso contrário.
 	 */

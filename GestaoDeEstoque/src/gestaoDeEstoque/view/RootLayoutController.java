@@ -3,6 +3,7 @@ package gestaoDeEstoque.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 import gestaoDeEstoque.MainApp;
+import gestaoDeEstoque.util.AlertUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -93,4 +94,38 @@ public class RootLayoutController implements Initializable {
 		mainApp.showEditCliente();
 	}
 	
+	/**
+	 * Chamado quando o usuário clica no botão "Funcionários". Abre uma janela para criar, editar e excluir funcionários.
+	 */
+	@FXML
+	private void handleFuncionarios() {
+		mainApp.showEditFuncionario();
+	}
+	
+	/**
+	 * Chamado quando o usuário clica no botão "Ajuda". Abre uma janela com algumas informações de ajuda para o usuário.
+	 */
+	@FXML
+	private void handleAjuda() {
+		String content = "";
+		if(principal.isSelected()) {
+			content += "GRUPOS - Cria, deleta e edita Grupos de produtos.\n";
+			content += "\n";
+			content += "FORNECEDORES - Cria, deleta e edita Fornecedores de produtos.\n";
+			content += "\n";
+			content += "PRODUTOS - Cria, deleta e edita Produtos do sistema.\n";
+			content += "\n";
+			content += "CLIENTES - Cria, deleta e edita Clientes do sistema.\n";
+			content += "\n";
+			content += "FUNCIONÁRIOS - Cria, deleta e edita Funcionários que têm acesso ao sistema.\n";
+			
+			AlertUtil.criaUmAlert("Ajuda - Principal", "Ajuda na aba Principal", content, "INFORMATION");
+		}
+		if(acoes.isSelected()) {
+			AlertUtil.criaUmAlert("Ajuda - Ações", "Ajuda na aba Ações", content, "INFORMATION");
+		}
+		if(relatorios.isSelected()) {
+			AlertUtil.criaUmAlert("Ajuda - Relatórios", "Ajuda na aba Relatórios", content, "INFORMATION");
+		}
+	}
 }

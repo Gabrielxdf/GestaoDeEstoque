@@ -14,9 +14,9 @@ public class FactoryProdutos {
 		Produtos retorno = null;
 		if (!Verifica.stringVazia(nome) && !Verifica.stringVazia(codigo) && !Verifica.stringVazia(valor)
 				&& !Verifica.stringVazia(codigoBarras) && !Verifica.stringVazia(estoqueMinimo)
-				&& !Verifica.stringVazia(estoqueIdeal) && !Verifica.comboBoxVazia(classificacao)
-				&& !Verifica.stringVazia(descricao) && !Verifica.comboBoxVazia(fornecedor)
-				&& !Verifica.comboBoxVazia(grupo)) {
+				&& !Verifica.stringVazia(estoqueIdeal) && !Verifica.comboBoxSemSeleção(classificacao)
+				&& !Verifica.stringVazia(descricao) && !Verifica.comboBoxSemSeleção(fornecedor)
+				&& !Verifica.comboBoxSemSeleção(grupo)) {
 			retorno = new Produtos(nome, codigo, valor, codigoBarras, estoqueMinimo, estoqueIdeal, classificacao.getSelectionModel().getSelectedItem().toString(),
 					descricao, fornecedor.getSelectionModel().getSelectedItem(), grupo.getSelectionModel().getSelectedItem());
 		}

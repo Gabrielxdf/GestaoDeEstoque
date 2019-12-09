@@ -7,7 +7,6 @@ import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.pessoa.Cliente;
 import gestaoDeEstoque.util.AlertUtil;
 import gestaoDeEstoque.util.DateUtil;
-import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Estados;
 import gestaoDeEstoque.util.Limpa;
 import gestaoDeEstoque.util.Telefones;
@@ -238,7 +237,7 @@ public class EditClienteController implements Initializable {
 	}
 
 	/**
-	 * Método para deletar algum item da Tabela.
+	 * Método para deletar algum item da Tabela por meio do botão "Excluir".
 	 */
 	@FXML
 	private void handleDelete() {
@@ -283,10 +282,8 @@ public class EditClienteController implements Initializable {
 		Cliente tempCliente = FactoryClientes.getCliente(
 				nomeTextField.getText(), cpfTextField.getText(), codigoTextField.getText(), emailTextField.getText(),
 				new Telefones(new SimpleStringProperty(celularTextField.getText()), residencialTextField.getText()),
-				new Enderecos(cepTextField.getText(), bairroTextField.getText(), cidadeTextField.getText(),
-						enderecoTextField.getText(), estadosComboBox.getSelectionModel().getSelectedItem().toString()),
-				dataTextField.getText()
-				);
+				dataTextField.getText(), cepTextField.getText(), enderecoTextField.getText(), cidadeTextField.getText(),
+				bairroTextField.getText(), estadosComboBox);
 		if (tempCliente != null) {
 			if (index >= 0) {
 				mainApp.getClientesData().set(index, tempCliente);
@@ -310,8 +307,7 @@ public class EditClienteController implements Initializable {
 	}
 
 	/**
-	 * Verifica o CEP passado, e fazendo um Auto-Complete nos campos relevantes.
-	 * 
+	 * Verifica o CEP passado, e faz um Auto-Complete nos campos relevantes.
 	 * @API <a href="https://viacep.com.br">ViaCep</a>
 	 * @return true caso o CEP seja validado, false caso contrário.
 	 */

@@ -57,7 +57,7 @@
             <PasswordField fx:id="confirmarSenhaPasswordField" layoutX="383.0" layoutY="116.0" style="-fx-background-radius: 100;" />
             <Group layoutX="482.0" layoutY="445.0">
                <children>
-                  <Button fx:id="cancelarButton" layoutX="62.0" mnemonicParsing="false" text="Cancelar">
+                  <Button fx:id="cancelarButton" layoutX="62.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancelar">
                      <graphic>
                         <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -66,7 +66,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="okButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Ok">
+                  <Button fx:id="okButton" mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="62.0" text="Ok">
                      <graphic>
                         <ImageView fitHeight="14.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -85,7 +85,7 @@
                   <TableColumn fx:id="emailColumn" prefWidth="177.0" text="E-mail" />
               </columns>
             </TableView>
-            <Button fx:id="helpButton" layoutX="17.0" layoutY="443.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('http://icons.iconarchive.com/icons/hopstarter/button/32/Button-Help-icon.png'); -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-border-radius: 100; -fx-background-radius: 100;" />
+            <Button fx:id="helpButton" layoutX="17.0" layoutY="443.0" mnemonicParsing="false" onAction="#helpButton" prefHeight="32.0" prefWidth="32.0" style="-fx-background-image: url('http://icons.iconarchive.com/icons/hopstarter/button/32/Button-Help-icon.png'); -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-border-radius: 100; -fx-background-radius: 100;" />
             <ToggleButtonGroup layoutX="153.0" layoutY="446.0" selectionType="SINGLE">
                <toggles>
                   <ToggleButton fx:id="cadastrarToggleButton" selected="true" text="Cadastrar">
@@ -108,7 +108,7 @@
                   </ToggleButton>
                </toggles>
             </ToggleButtonGroup>
-            <Button layoutX="336.0" layoutY="446.0" mnemonicParsing="false" text="Excluir">
+            <Button layoutX="336.0" layoutY="446.0" mnemonicParsing="false" onAction="#handleDelete" text="Excluir">
                <graphic>
                   <ImageView fx:id="excluirButton" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -117,7 +117,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <TextField fx:id="pesquisaTextField" layoutX="175.0" layoutY="167.0" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
+            <TextField fx:id="pesquisaTextField" layoutX="175.0" layoutY="167.0" onKeyReleased="#pesquisar" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
             <ToggleButtonGroup layoutX="350.0" layoutY="167.0" prefHeight="26.0" prefWidth="283.0" selectionType="SINGLE">
                <toggles>
                   <ToggleButton fx:id="pesquisaPorNomeToggleButton" selected="true" text="Pesquisa por nome" />

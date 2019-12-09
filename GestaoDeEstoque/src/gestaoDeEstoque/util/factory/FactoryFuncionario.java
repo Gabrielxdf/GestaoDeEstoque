@@ -5,7 +5,7 @@ import gestaoDeEstoque.util.Verifica;
 
 public class FactoryFuncionario {
 	private static String errorMessage = "";
-	public static Funcionarios getFuncionario(String codigo, String nome, String email, String usuario, String senha,
+	public static Funcionarios getFuncionario(String codigo, String email, String nome, String usuario, String senha,
 			String confirmaSenha) {
 		Funcionarios retorno = null;
 		if (!Verifica.stringVazia(codigo) && !Verifica.stringVazia(nome) && !Verifica.stringVazia(email)

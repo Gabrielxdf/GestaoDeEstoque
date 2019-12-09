@@ -8,10 +8,19 @@ import br.com.parg.viacep.ViaCEP;
 import br.com.parg.viacep.ViaCEPEvents;
 import br.com.parg.viacep.ViaCEPException;
 import javafx.scene.control.ComboBox;
-
+/**
+ * Uma classe utilitária para verificação.
+ * @author Gabriel Henrique
+ *
+ */
 public class Verifica implements ViaCEPEvents {
 	ViaCEP cep = null;
 	
+	/**
+	 * Verifica se uma String é vazia.
+	 * @param string
+	 * @return true se for vazia, false se não for vazia.
+	 */
 	public static boolean stringVazia(String string) {
 		if (string.length() > 0) {
 			return false;
@@ -19,7 +28,12 @@ public class Verifica implements ViaCEPEvents {
 			return true;
 		}
 	}
-
+	
+	/**
+	 * Verifica se um objeto é nulo.
+	 * @param objeto
+	 * @return true se for nulo, false se não for nulo.
+	 */
 	public static boolean objetoNulo(Object objeto) {
 		if (objeto == null) {
 			return true;
@@ -28,7 +42,12 @@ public class Verifica implements ViaCEPEvents {
 		}
 	}
 	
-	public static boolean comboBoxVazia(ComboBox<?> comboBox) {
+	/**
+	 * Verifica se uma ComboBox está sem nada selecionado nela.
+	 * @param comboBox
+	 * @return true se não estiver nada selecionado, false caso tenha algo selecionado.
+	 */
+	public static boolean comboBoxSemSeleção(ComboBox<?> comboBox) {
 		if(comboBox.getSelectionModel().getSelectedIndex() >= 0) {
 			return false;
 		}else {
@@ -38,8 +57,8 @@ public class Verifica implements ViaCEPEvents {
 	
 
 	/**
-	 * Valida CPF.
-	 * 
+	 * Valida o CPF.
+	 * @API <a href="https://github.com/caelum/caelum-stella"> Caelum-Stella
 	 * @param cpf
 	 * @return true se o CPF for válido, caso contrário false.
 	 */
@@ -54,9 +73,9 @@ public class Verifica implements ViaCEPEvents {
 	}
 
 	/**
-	 * Valida CNPJ.
-	 * 
-	 * @param cpf
+	 * Valida o CNPJ.
+	 * @API <a href="https://github.com/caelum/caelum-stella"> Caelum-Stella
+	 * @param cnpj
 	 * @return true se o CNPJ for válido, caso contrário false.
 	 */
 	public static boolean validaCnpj(String cnpj) {
@@ -69,8 +88,8 @@ public class Verifica implements ViaCEPEvents {
 		}
 	}
 	/**
-	 * Valida o CEP
-	 * @param cep
+	 * Valida o CEP.
+	 * @API <a href="https://viacep.com.br">ViaCep</a>
 	 */
 	public void validaCep(String cep) {
 		ViaCEP viaCEP = new ViaCEP(this);

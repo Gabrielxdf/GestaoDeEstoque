@@ -10,6 +10,7 @@ import gestaoDeEstoque.util.AlertUtil;
 import gestaoDeEstoque.util.Limpa;
 import gestaoDeEstoque.util.factory.FactoryProdutos;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
+import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
@@ -143,6 +145,14 @@ public class EditProdutosController implements Initializable {
 	 */
 	@FXML
 	private void handleOk() {
+		String errorMessage = "";
+		try {
+			Double.parseDouble(valorTextField.getText());
+		} catch (NumberFormatException e) {
+			errorMessage += "Erro! digite o valor do produto em apenas números e pontos(.) depois das casas decimais. Digite o valor em R$\n";
+			errorMessage += "Exemplo: 12.5";
+		}
+		if(errorMessage.length() <= 0) {
 		if (cadastrarToggleButton.isSelected()) {
 				adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
 						"", "ERROR", -1);
@@ -163,10 +173,13 @@ public class EditProdutosController implements Initializable {
 						"Por favor, Selecione um Produto na tabela.", "WARNING");
 			}
 		}
+		}else {
+			AlertUtil.criaUmAlert("Erro", "Alguns dados obrigatórios estão inválidos e/ou vazios.", errorMessage, "ERROR");
+		}
 	}
 	
 	/**
-	 * Método para deletar algum item da Tabela.
+	 * Método para deletar algum item da Tabela por meio do botão "Excluir".
 	 */
 	@FXML
 	private void handleDelete() {
@@ -176,7 +189,12 @@ public class EditProdutosController implements Initializable {
 			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
 					"Excluir o Produto: " + "'" + mainApp.getProdutosData().get(selectedIndex).getNome() + "'" + " ?",
 					"CONFIRMATION")) {
+				produtosTable.getItems().get(selectedIndex).getGrupo().getListaProdutos().remove
+				(produtosTable.getSelectionModel().getSelectedItem());
 				produtosTable.getItems().remove(selectedIndex);
+				produtosTable.getSelectionModel().getSelectedItem().getGrupo().setQuantidadeProdutos();
+				produtosTable.getSelectionModel().getSelectedItem().getGrupo().setValorTotal();
+				mainApp.saveDataToFile();
 			}
 		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
@@ -235,27 +253,25 @@ public class EditProdutosController implements Initializable {
 				mainApp.getProdutosData().set(index, tempProduto);
 				produtosTable.setItems(mainApp.getProdutosData());
 				tempProduto.getGrupo().getListaProdutos().add(tempProduto);
+				tempProduto.getGrupo().setQuantidadeProdutos();
+				tempProduto.getGrupo().setValorTotal();
 				tempProduto.getFornecedor().getListaProdutos().add(tempProduto);
-				/*mainApp.getGruposData().get(grupoComboBox.getSelectionModel()
-						.getSelectedIndex()).getListaProdutos().add(index, tempProduto);
-				mainApp.getFornecedoresData().get(fornecedorComboBox.getSelectionModel().getSelectedIndex())
-				.getListaProdutos().add(index, tempProduto);*/
 				Limpa.limpaTextField(nomeTextField, valorTextField, codigoTextField, minimoTextField, idealTextField,
 						codigoBarrasTextField, descricaoTextField);
 				Limpa.limpaComboBox(classificacaoComboBox, fornecedorComboBox, grupoComboBox);
+				mainApp.saveDataToFile();
 				
 			} else {
 				mainApp.getProdutosData().add(tempProduto);
 				produtosTable.setItems(mainApp.getProdutosData());
 				tempProduto.getGrupo().getListaProdutos().add(tempProduto);
+				tempProduto.getGrupo().setQuantidadeProdutos();
+				tempProduto.getGrupo().setValorTotal();
 				tempProduto.getFornecedor().getListaProdutos().add(tempProduto);
-				/*mainApp.getGruposData().get(grupoComboBox.getSelectionModel()
-						.getSelectedIndex()).getListaProdutos().add(tempProduto);
-				mainApp.getFornecedoresData().get(fornecedorComboBox.getSelectionModel().getSelectedIndex())
-				.getListaProdutos().add(tempProduto);*/
 				Limpa.limpaTextField(nomeTextField, valorTextField, codigoTextField, minimoTextField, idealTextField,
 						codigoBarrasTextField, descricaoTextField);
 				Limpa.limpaComboBox(classificacaoComboBox, fornecedorComboBox, grupoComboBox);
+				mainApp.saveDataToFile();
 			}
 		} else {
 			String errorMessage = content + "Alguns dados obrigatórios estão inválidos e/ou vazios.";
@@ -310,7 +326,6 @@ public class EditProdutosController implements Initializable {
 	/**
 	 * Uma instância do MainApp para o Controller poder usar os métodos do
 	 * MainApp
-	 * 
 	 * @param {@link EditProdutosController#mainApp} uma referência à
 	 *               Aplicação principal.
 	 */

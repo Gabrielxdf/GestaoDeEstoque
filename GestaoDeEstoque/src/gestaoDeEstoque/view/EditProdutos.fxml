@@ -43,7 +43,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="valorTextField" layoutX="94.0" layoutY="93.0" prefHeight="26.0" prefWidth="86.0" promptText="0,00" style="-fx-background-radius: 100;" />
+            <TextField fx:id="valorTextField" layoutX="94.0" layoutY="93.0" prefHeight="26.0" prefWidth="86.0" promptText="0.00" style="-fx-background-radius: 100;" />
             <Label layoutX="193.0" layoutY="78.0" text="Cód. Barras">
                <font>
                   <Font name="System Bold" size="12.0" />

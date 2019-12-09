@@ -151,7 +151,7 @@ public class EditGruposController implements Initializable {
 	}
 
 	/**
-	 * Método para deletar algum item da Tabela.
+	 * Método para deletar algum item da Tabela por meio do botão "Excluir".
 	 */
 	@FXML
 	private void handleDelete() {
@@ -161,6 +161,7 @@ public class EditGruposController implements Initializable {
 					"Excluir o Grupo: " + "'" + mainApp.getGruposData().get(selectedIndex).getNome() + "'" + " ?",
 					"CONFIRMATION")) {
 				gruposTable.getItems().remove(selectedIndex);
+				mainApp.saveDataToFile();
 			}
 		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Grupo Selecionado",
@@ -183,10 +184,12 @@ public class EditGruposController implements Initializable {
 				mainApp.getGruposData().set(index, tempGrupo);
 				gruposTable.setItems(mainApp.getGruposData());
 				Limpa.limpaTextField(nomeTextField);
+				mainApp.saveDataToFile();
 			} else {
 				mainApp.getGruposData().add(tempGrupo);
 				gruposTable.setItems(mainApp.getGruposData());
 				Limpa.limpaTextField(nomeTextField);
+				mainApp.saveDataToFile();
 			}
 		} else {
 			AlertUtil.criaUmAlert(title, header, content, type);
