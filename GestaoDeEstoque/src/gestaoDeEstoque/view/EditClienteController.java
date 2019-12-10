@@ -6,14 +6,12 @@ import br.com.parg.viacep.ViaCEP;
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.pessoa.Cliente;
 import gestaoDeEstoque.util.AlertUtil;
-import gestaoDeEstoque.util.DateUtil;
 import gestaoDeEstoque.util.Estados;
 import gestaoDeEstoque.util.Limpa;
-import gestaoDeEstoque.util.Telefones;
 import gestaoDeEstoque.util.Verifica;
-import gestaoDeEstoque.util.factory.FactoryClientes;
+import gestaoDeEstoque.util.exception.DadosInvalidosException;
+import gestaoDeEstoque.util.factory.FactoryPessoa;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -119,7 +117,7 @@ public class EditClienteController implements Initializable {
 
 	private MainApp mainApp;
 	private Stage dialogStage;
-	
+
 	/**
 	 * Inicializa o controlador EditClienteController.
 	 * 
@@ -129,7 +127,7 @@ public class EditClienteController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		carregarEstadosComboBox();
-		//inicializa as colunas da tabela
+		// inicializa as colunas da tabela
 		codigoColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty());
 		nomeColumn.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
 		cpfColumn.setCellValueFactory(cellData -> cellData.getValue().getCpfProperty());
@@ -179,33 +177,23 @@ public class EditClienteController implements Initializable {
 			Limpa.limpaComboBox(estadosComboBox);
 		}
 	}
-	
+
 	/**
 	 * Chamado quando o usuário clica em "Ok". De acordo com o que ele está
-	 * selecionando no ToggleButton, o método adiciona um novo Cliente, ou edita
-	 * um Cliente selecionado.
+	 * selecionando no ToggleButton, o método adiciona um novo Cliente, ou edita um
+	 * Cliente selecionado.
 	 */
 	@FXML
 	private void handleOk() {
 		if (cadastrarToggleButton.isSelected()) {
 			String errorMessage = "";
-			if (!Verifica.validaCpf(cpfTextField.getText())) {
-				errorMessage += "CPF Inválido!\n";
-			}
 			if (!verificaCep()) {
 				errorMessage += "CEP não encontrado ou inválido.\n";
 			}
-			if (dataTextField.getText() == null || dataTextField.getText().length() == 0) {
-	            errorMessage += "Data inválida!\n";
-	        } else {
-	            if (!DateUtil.validDate(dataTextField.getText())) {
-	                errorMessage += "Data inválida. Use o formato dd/mm/aaaa!\n";
-	            }
-	        }
-			
+
 			if (errorMessage.length() == 0) {
 				adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-						errorMessage, "ERROR", -1);
+						"", "ERROR", -1);
 			} else {
 				AlertUtil.criaUmAlert("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
 						errorMessage, "ERROR");
@@ -221,13 +209,17 @@ public class EditClienteController implements Initializable {
 			}
 
 			if (selectedIndex >= 0) {
-				if (AlertUtil
-						.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa alteração ?",
-								"Alteração no Cliente: " + "'"
-										+ mainApp.getClientesData().get(selectedIndex).getNome() + "'",
-								"CONFIRMATION")) {
+
+				String errorMessage = "";
+				if (!verificaCep()) {
+					errorMessage += "CEP não encontrado ou inválido.\n";
+				}
+
+				if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa alteração ?",
+						"Alteração no Cliente: " + "'" + mainApp.getClientesData().get(selectedIndex).getNome() + "'",
+						"CONFIRMATION")) {
 					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-							"", "ERROR", selectedIndex);
+							errorMessage, "ERROR", selectedIndex);
 				}
 			} else {
 				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Cliente Selecionado",
@@ -250,9 +242,8 @@ public class EditClienteController implements Initializable {
 		}
 
 		if (selectedIndex >= 0) {
-			if (AlertUtil.criaUmAlert(
-					"Confirmação", "Você deseja mesmo fazer essa exclusão ?", "Excluir o Cliente: " + "'"
-							+ mainApp.getClientesData().get(selectedIndex).getNome() + "'" + " ?",
+			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
+					"Excluir o Cliente: " + "'" + mainApp.getClientesData().get(selectedIndex).getNome() + "'" + " ?",
 					"CONFIRMATION")) {
 				clienteTable.getItems().remove(selectedIndex);
 			}
@@ -269,7 +260,7 @@ public class EditClienteController implements Initializable {
 	private void handleCancel() {
 		dialogStage.close();
 	}
-	
+
 	/**
 	 * Adiciona um novo Cliente na Tabela ou altera um existente.
 	 * 
@@ -277,14 +268,16 @@ public class EditClienteController implements Initializable {
 	 * @param header  o header para criar um Alert
 	 * @param content o content para criar um Alert
 	 * @param type    o type para criar um Alert
+	 * @param index o index do Cliente a ser alterado.
 	 */
 	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
-		Cliente tempCliente = FactoryClientes.getCliente(
-				nomeTextField.getText(), cpfTextField.getText(), codigoTextField.getText(), emailTextField.getText(),
-				new Telefones(new SimpleStringProperty(celularTextField.getText()), residencialTextField.getText()),
-				dataTextField.getText(), cepTextField.getText(), enderecoTextField.getText(), cidadeTextField.getText(),
-				bairroTextField.getText(), estadosComboBox);
-		if (tempCliente != null) {
+		Cliente tempCliente;
+		try {
+			tempCliente = (Cliente) FactoryPessoa.getPessoa("C", codigoTextField.getText(), nomeTextField.getText(),
+					emailTextField.getText(), "", "", "", dataTextField.getText(), cpfTextField.getText(),
+					celularTextField.getText(), residencialTextField.getText(), cepTextField.getText(),
+					enderecoTextField.getText(), cidadeTextField.getText(), bairroTextField.getText(), estadosComboBox);
+
 			if (index >= 0) {
 				mainApp.getClientesData().set(index, tempCliente);
 				clienteTable.setItems(mainApp.getClientesData());
@@ -300,14 +293,18 @@ public class EditClienteController implements Initializable {
 						cidadeTextField);
 				Limpa.limpaComboBox(estadosComboBox);
 			}
-		} else {
-			String errorMessage = content + "Alguns dados obrigatórios estão inválidos e/ou vazios.";
+
+		} catch (DadosInvalidosException e) {
+			e.printStackTrace();
+			String errorMessage = content + "\n";
+			errorMessage += e.getMessage();
 			AlertUtil.criaUmAlert(title, header, errorMessage, type);
 		}
 	}
 
 	/**
 	 * Verifica o CEP passado, e faz um Auto-Complete nos campos relevantes.
+	 * 
 	 * @API <a href="https://viacep.com.br">ViaCep</a>
 	 * @return true caso o CEP seja validado, false caso contrário.
 	 */
@@ -360,6 +357,8 @@ public class EditClienteController implements Initializable {
 		content += "CAMPO CIDADE - Cidade do Cliente.\n";
 		content += "\n";
 		content += "CAMPO ESTADO - Estado do Cliente.\n";
+		content += "\n";
+		content += "CAMPO DE PESQUISA - Pesquisa um Cliente na tabela, de acordo com o nome ou o código.\n";
 		content += "\n";
 		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Clientes", content, "INFORMATION");
 	}

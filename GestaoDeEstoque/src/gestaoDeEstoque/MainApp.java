@@ -13,7 +13,6 @@ import gestaoDeEstoque.model.pessoa.Cliente;
 import gestaoDeEstoque.model.pessoa.Funcionarios;
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
-import gestaoDeEstoque.util.factory.FactoryGrupos;
 import gestaoDeEstoque.view.EditClienteController;
 import gestaoDeEstoque.view.EditFornecedorController;
 import gestaoDeEstoque.view.EditFuncionarioController;
@@ -50,12 +49,12 @@ public class MainApp extends Application {
 	 */
 	public MainApp() {
 		// alguns dados de exemplo
-		gruposData.add(FactoryGrupos.getGrupo("Indefinido"));
-		gruposData.get(0).setQuantidadeProdutos("10");
-		gruposData.get(0).setValorTotal("500.0");
+		//gruposData.add(new Grupos("Indefinido"));
+		//gruposData.get(0).setQuantidadeProdutos("10");
+		//gruposData.get(0).setValorTotal("500.0");
 		fornecedoresData.add(new Fornecedor("Indefinido", "00000000", "0000", "example@example.com",
 				new Telefones("0", "0"), new Enderecos("", "", "", "", ""), "example"));
-		funcionariosData.add(new Funcionarios("000", "admiin", "example@example.com", "admin", "admin", "admin"));
+		funcionariosData.add(new Funcionarios("000", "admin", "example@example.com", "admin", "admin", "admin"));
 		loadDataFromFile(new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/save.xml"));
 	}
 

@@ -24,6 +24,7 @@ public class AlertUtil {
 			alert.setTitle(title);
 			alert.setHeaderText(header);
 			alert.setContentText(content);
+			alert.setResizable(true);
 			alert.showAndWait();
 			return true;
 		case "WARNING":
@@ -31,6 +32,7 @@ public class AlertUtil {
 			alert.setTitle(title);
 			alert.setHeaderText(header);
 			alert.setContentText(content);
+			alert.setResizable(true);
 			alert.showAndWait();
 			return true;
 		case "CONFIRMATION":
@@ -38,6 +40,7 @@ public class AlertUtil {
 			alert.setTitle(title);
 			alert.setHeaderText(header);
 			alert.setContentText(content);
+			alert.setResizable(true);
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
 				return true;

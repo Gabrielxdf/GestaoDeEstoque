@@ -30,19 +30,6 @@ public class Verifica implements ViaCEPEvents {
 	}
 	
 	/**
-	 * Verifica se um objeto é nulo.
-	 * @param objeto
-	 * @return true se for nulo, false se não for nulo.
-	 */
-	public static boolean objetoNulo(Object objeto) {
-		if (objeto == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
 	 * Verifica se uma ComboBox está sem nada selecionado nela.
 	 * @param comboBox
 	 * @return true se não estiver nada selecionado, false caso tenha algo selecionado.

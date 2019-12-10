@@ -9,8 +9,8 @@ import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.util.AlertUtil;
 import gestaoDeEstoque.util.Estados;
 import gestaoDeEstoque.util.Limpa;
-import gestaoDeEstoque.util.Telefones;
 import gestaoDeEstoque.util.Verifica;
+import gestaoDeEstoque.util.exception.DadosInvalidosException;
 import gestaoDeEstoque.util.factory.FactoryFornecedores;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.collections.ObservableList;
@@ -207,15 +207,12 @@ public class EditFornecedorController implements Initializable {
 	private void handleOk() {
 		if (cadastrarToggleButton.isSelected()) {
 			String errorMessage = "";
-			if (!Verifica.validaCnpj(cnpjTextField.getText())) {
-				errorMessage += "CNPJ Inválido!\n";
-			}
 			if (!verificaCep()) {
 				errorMessage += "CEP não encontrado ou inválido.\n";
 			}
 			if (errorMessage.length() == 0) {
 				adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-						errorMessage, "ERROR", -1);
+						"", "ERROR", -1);
 			} else {
 				AlertUtil.criaUmAlert("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
 						errorMessage, "ERROR");
@@ -287,14 +284,17 @@ public class EditFornecedorController implements Initializable {
 	 * @param header  o header para criar um Alert
 	 * @param content o content para criar um Alert
 	 * @param type    o type para criar um Alert
+	 * @param index o index do Fornecedor a ser alterado.
 	 */
 	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
-		Fornecedor tempFornecedor = FactoryFornecedores.getFornecedor(fornecedorTextField.getText(),
-				cnpjTextField.getText(), codigoTextField.getText(), emailTextField.getText(),
-				new Telefones(tel1TextField.getText(), tel2TextField.getText()), razaoTextField.getText(),
-				cepTextField.getText(), enderecoTextField.getText(), cidadeTextField.getText(), bairroTextField.getText(),
-				estadosComboBox);
-		if (tempFornecedor != null) {
+		Fornecedor tempFornecedor;
+		try {
+			tempFornecedor = FactoryFornecedores.getFornecedor(fornecedorTextField.getText(),
+					cnpjTextField.getText(), codigoTextField.getText(), emailTextField.getText(),
+					tel1TextField.getText(), tel2TextField.getText(), razaoTextField.getText(),
+					cepTextField.getText(), enderecoTextField.getText(), cidadeTextField.getText(), bairroTextField.getText(),
+					estadosComboBox);
+			
 			if (index >= 0) {
 				mainApp.getFornecedoresData().set(index, tempFornecedor);
 				fornecedorTable.setItems(mainApp.getFornecedoresData());
@@ -310,8 +310,9 @@ public class EditFornecedorController implements Initializable {
 						cidadeTextField);
 				Limpa.limpaComboBox(estadosComboBox);
 			}
-		} else {
-			String errorMessage = content + "Alguns dados obrigatórios estão inválidos e/ou vazios.";
+		} catch (DadosInvalidosException e) {
+			e.printStackTrace();
+			String errorMessage = content + "\n" + e.getMessage();
 			AlertUtil.criaUmAlert(title, header, errorMessage, type);
 		}
 	}
@@ -370,6 +371,8 @@ public class EditFornecedorController implements Initializable {
 		content += "CAMPO CIDADE - Cidade do Fornecedor.\n";
 		content += "\n";
 		content += "CAMPO ESTADO - Estado do Fornecedor.\n";
+		content += "\n";
+		content += "CAMPO DE PESQUISA - Pesquisa um Fornecedor na tabela, de acordo com o nome ou o código.\n";
 		content += "\n";
 		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Fornecedores", content, "INFORMATION");
 	}

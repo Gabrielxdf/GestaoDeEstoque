@@ -8,6 +8,7 @@ import gestaoDeEstoque.model.estoque.Grupos;
 
 import gestaoDeEstoque.util.AlertUtil;
 import gestaoDeEstoque.util.Limpa;
+import gestaoDeEstoque.util.exception.DadosInvalidosException;
 import gestaoDeEstoque.util.factory.FactoryGrupos;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 
@@ -124,7 +125,7 @@ public class EditGruposController implements Initializable {
 	private void handleOk() {
 		if (cadastrarToggleButton.isSelected()) {
 			adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-					"O nome não pode estar vazio!", "ERROR", -1);
+					"", "ERROR", -1);
 		}
 		if (alterarToggleButton.isSelected()) {
 			int selectedIndex = gruposTable.getSelectionModel().getSelectedIndex();
@@ -133,7 +134,7 @@ public class EditGruposController implements Initializable {
 						"Alteração no Grupo: " + "'" + mainApp.getGruposData().get(selectedIndex).getNome() + "'",
 						"CONFIRMATION")) {
 					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-							"O nome não pode estar vazio!", "ERROR", selectedIndex);
+							"", "ERROR", selectedIndex);
 				}
 			} else {
 				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Grupo Selecionado",
@@ -176,10 +177,13 @@ public class EditGruposController implements Initializable {
 	 * @param header  o header para criar um Alert
 	 * @param content o content para criar um Alert
 	 * @param type    o type para criar um Alert
+	 * @param index o index do Grupo a ser alterado.
 	 */
 	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
-		Grupos tempGrupo = FactoryGrupos.getGrupo(nomeTextField.getText());
-		if (tempGrupo != null) {
+		Grupos tempGrupo;
+		try {
+			tempGrupo = FactoryGrupos.getGrupo(nomeTextField.getText());
+			
 			if (index >= 0) {
 				mainApp.getGruposData().set(index, tempGrupo);
 				gruposTable.setItems(mainApp.getGruposData());
@@ -191,8 +195,11 @@ public class EditGruposController implements Initializable {
 				Limpa.limpaTextField(nomeTextField);
 				mainApp.saveDataToFile();
 			}
-		} else {
-			AlertUtil.criaUmAlert(title, header, content, type);
+		} catch (DadosInvalidosException e) {
+			e.printStackTrace();
+			String errorMessage = content + "\n" + e.getMessage();
+			AlertUtil.criaUmAlert(title, header, errorMessage, type);
+			
 		}
 	}
 
@@ -206,6 +213,9 @@ public class EditGruposController implements Initializable {
 		content += "COLUNA QTD. DE PRODUTOS - Quantidade de Produtos naquele Grupo.\n";
 		content += "\n";
 		content += "COLUNA VALOR TOTAL - Valor total do Grupo.";
+		content += "\n";
+		content += "CAMPO DE PESQUISA - Pesquisa um Grupo na tabela, de acordo com o nome ou o código.\n";
+		content += "\n";
 		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Grupos", content, "INFORMATION");
 	}
 	

@@ -6,7 +6,8 @@ import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.pessoa.Funcionarios;
 import gestaoDeEstoque.util.AlertUtil;
 import gestaoDeEstoque.util.Limpa;
-import gestaoDeEstoque.util.factory.FactoryFuncionario;
+import gestaoDeEstoque.util.exception.DadosInvalidosException;
+import gestaoDeEstoque.util.factory.FactoryPessoa;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -65,7 +66,11 @@ public class EditFuncionarioController implements Initializable {
 	private MainApp mainApp;
 	private Stage dialogStage;
 
-	/**
+	/**	if (tempFuncionario != null) {
+			 
+		} else {
+			
+		}
 	 * Inicializa o controlador EditFuncionariorController.
 	 * 
 	 * @param URL            location
@@ -168,24 +173,29 @@ public class EditFuncionarioController implements Initializable {
 	 * @param header  o header para criar um Alert
 	 * @param content o content para criar um Alert
 	 * @param type    o type para criar um Alert
+	 * @param index o index do Funcionário a ser alterado.
 	 */
 	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
-		Funcionarios tempFuncionario = FactoryFuncionario.getFuncionario(codigoTextField.getText(), emailTextField.getText(), 
-				nomeTextField.getText(), usuarioTextField.getText(), senhaPasswordField.getText(), confirmarSenhaPasswordField.getText());
-		if (tempFuncionario != null) {
+		Funcionarios tempFuncionario;
+		try {
+			tempFuncionario = (Funcionarios) FactoryPessoa.getPessoa("F", codigoTextField.getText(), nomeTextField.getText(), emailTextField.getText(),
+					usuarioTextField.getText(), senhaPasswordField.getText(), confirmarSenhaPasswordField.getText(), "","",
+					"", "", "", "", "", "", null);
+			
 			if (index >= 0) {
 				mainApp.getFuncionariosData().set(index, tempFuncionario);
 				funcionarioTable.setItems(mainApp.getFuncionariosData());
 				Limpa.limpaTextField(nomeTextField, usuarioTextField, codigoTextField, emailTextField,
 						senhaPasswordField, confirmarSenhaPasswordField);
-			} else {
+			}else {
 				mainApp.getFuncionariosData().add(tempFuncionario);
 				funcionarioTable.setItems(mainApp.getFuncionariosData());
 				Limpa.limpaTextField(nomeTextField, usuarioTextField, codigoTextField, emailTextField,
 						senhaPasswordField, confirmarSenhaPasswordField);
 			}
-		} else {
-			String errorMessage = content + "Alguns dados obrigatórios estão inválidos e/ou vazios.";
+		} catch (DadosInvalidosException e) {
+			e.printStackTrace();
+			String errorMessage = content + "\n" + e.getMessage();
 			AlertUtil.criaUmAlert(title, header, errorMessage, type);
 		}
 	}
@@ -206,6 +216,9 @@ public class EditFuncionarioController implements Initializable {
 		content += "CAMPO SENHA DE ACESSO - Senha de acesso do Funcionário.\n";
 		content += "\n";
 		content += "CAMPO CONFIRME A SENHA - Campo para confirmar a senha de acesso do Funcionário.\n";
+		content += "\n";
+		content += "CAMPO DE PESQUISA - Pesquisa um Funcionário na tabela, de acordo com o nome ou o código.\n";
+		content += "\n";
 		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Funcionários", content, "INFORMATION");
 	}
 

@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.gluonhq.charm.glisten.control.ToggleButtonGroup?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="635.0" prefWidth="787.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaoDeEstoque.view.ViewFornecedorController">
+<AnchorPane id="AnchorPane" prefHeight="696.0" prefWidth="787.0" style="-fx-background-color: #90ee90;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaoDeEstoque.view.ViewFornecedorController">
    <children>
       <Label layoutX="90.0" layoutY="21.0" text="Fornecedor">
          <font>
@@ -61,20 +65,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-            <TextField fx:id="pesquisaTextField" layoutX="279.0" layoutY="179.0" onKeyReleased="#pesquisar" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
-      <TableView fx:id="produtosTable" layoutX="7.0" layoutY="203.0" prefHeight="375.0" prefWidth="744.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0">
-              <columns>
-                <TableColumn fx:id="codigoColumn" prefWidth="44.0" text="Cód" />
-                <TableColumn fx:id="nomeColumn" minWidth="0.0" prefWidth="160.0" text="Nome" />
-                  <TableColumn fx:id="valorColumn" minWidth="9.0" prefWidth="60.0" text="Valor" />
-                  <TableColumn fx:id="codigoBarrasColumn" prefWidth="92.0" text="Cód. Barras" />
-                  <TableColumn fx:id="minimoColumn" minWidth="0.0" prefWidth="63.0" text="Mínimo" />
-                  <TableColumn fx:id="idealColumn" minWidth="3.0" prefWidth="50.0" text="Ideal" />
-                  <TableColumn fx:id="atualColumn" prefWidth="58.0" text="Atual" />
-                  <TableColumn fx:id="grupoColumn" prefWidth="94.0" text="Grupos" />
-                  <TableColumn fx:id="classificacaoColumn" prefWidth="120.0" text="Classificação" />
-              </columns>
-            </TableView>
+            <TextField fx:id="pesquisaTextField" layoutX="302.0" layoutY="369.0" onKeyReleased="#pesquisar" prefHeight="26.0" prefWidth="175.0" promptText="Digite sua pesquisa" style="-fx-background-image: url('https://www.iconfinder.com/icons/314478/download/png/24'); -fx-background-repeat: no-repeat; -fx-background-position: right center;" />
       <TextField fx:id="enderecoTextField" editable="false" layoutX="308.0" layoutY="234.0" prefHeight="25.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
       <Label layoutX="106.0" layoutY="275.0" text="Cidade">
          <font>
@@ -94,6 +85,25 @@
          </font>
       </Label>
       <TextField fx:id="estadoTextField" editable="false" layoutX="573.0" layoutY="296.0" prefHeight="26.0" prefWidth="70.0" style="-fx-background-radius: 100;" />
+      <TableView fx:id="produtosTable" layoutX="7.0" layoutY="395.0" prefHeight="287.0" prefWidth="773.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0">
+              <columns>
+                <TableColumn fx:id="codigoColumn" prefWidth="44.0" text="Cód" />
+                <TableColumn fx:id="nomeColumn" minWidth="0.0" prefWidth="160.0" text="Nome" />
+                  <TableColumn fx:id="valorColumn" minWidth="9.0" prefWidth="60.0" text="Valor" />
+                  <TableColumn fx:id="codigoBarrasColumn" prefWidth="92.0" text="Cód. Barras" />
+                  <TableColumn fx:id="minimoColumn" minWidth="0.0" prefWidth="63.0" text="Mínimo" />
+                  <TableColumn fx:id="idealColumn" minWidth="3.0" prefWidth="50.0" text="Ideal" />
+                  <TableColumn fx:id="atualColumn" prefWidth="58.0" text="Atual" />
+                  <TableColumn fx:id="grupoColumn" prefWidth="94.0" text="Grupo" />
+                  <TableColumn fx:id="classificacaoColumn" prefWidth="120.0" text="Classificação" />
+              </columns>
+            </TableView>
+      <ToggleButtonGroup layoutX="477.0" layoutY="369.0" selectionType="SINGLE">
+          <toggles>
+            <ToggleButton fx:id="pesquisaPorNomeToggleButton" selected="true" text="Pesquisa por nome" />
+            <ToggleButton fx:id="pesquisaPorCodigoToggleButton" prefHeight="26.0" prefWidth="154.0" text="Pesquisa por código" />
+         </toggles>
+      </ToggleButtonGroup>
    </children>
    <effect>
       <DropShadow />
