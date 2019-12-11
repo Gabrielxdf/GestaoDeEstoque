@@ -3,11 +3,11 @@
     <grupo>
         <nome>Indefinido</nome>
         <quantidadeProdutos>1</quantidadeProdutos>
-        <valorTotal>123.0</valorTotal>
+        <valorTotal>312.0</valorTotal>
     </grupo>
     <grupo>
-        <nome>a</nome>
-        <quantidadeProdutos>10</quantidadeProdutos>
-        <valorTotal>10</valorTotal>
+        <nome>312</nome>
+        <quantidadeProdutos>1</quantidadeProdutos>
+        <valorTotal>312.0</valorTotal>
     </grupo>
 </grupos>

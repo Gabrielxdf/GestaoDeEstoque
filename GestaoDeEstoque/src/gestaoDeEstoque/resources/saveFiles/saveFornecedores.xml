@@ -1,7 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <fornecedores>
     <fornecedor>
-        <endereco/>
-        <telefone/>
+        <cnpj>00000000</cnpj>
+        <codigo>0000</codigo>
+        <email>example@example.com</email>
+        <endereco>
+            <bairro></bairro>
+            <cep></cep>
+            <cidade></cidade>
+            <endereco></endereco>
+            <estado></estado>
+        </endereco>
+        <fornecedor>Indefinido</fornecedor>
+        <razaoSocial>example</razaoSocial>
+        <telefone>
+            <telefoneFornecedores>0</telefoneFornecedores>
+            <telefoneFornecedores>0</telefoneFornecedores>
+        </telefone>
+    </fornecedor>
+    <fornecedor>
+        <cnpj>05075964000112</cnpj>
+        <codigo>321</codigo>
+        <email>312</email>
+        <endereco>
+            <bairro>Vila João Luiz de Oliveira</bairro>
+            <cep>75125760</cep>
+            <cidade>Anápolis</cidade>
+            <endereco>Avenida Miguel Rodrigues </endereco>
+            <estado>BA</estado>
+        </endereco>
+        <fornecedor>aaaa</fornecedor>
+        <razaoSocial>312</razaoSocial>
+        <telefone>
+            <telefoneFornecedores>312</telefoneFornecedores>
+            <telefoneFornecedores>132</telefoneFornecedores>
+        </telefone>
     </fornecedor>
 </fornecedores>

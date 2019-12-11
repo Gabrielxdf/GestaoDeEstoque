@@ -1,14 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <produtos>
     <produto>
+        <classificacao>A</classificacao>
+        <codigo>eqw</codigo>
+        <codigoBarras>312</codigoBarras>
+        <descricao>312</descricao>
+        <estoqueAtual>0</estoqueAtual>
+        <estoqueIdeal>312</estoqueIdeal>
+        <estoqueMinimo>312</estoqueMinimo>
         <fornecedor>
-            <endereco/>
-            <telefone/>
+            <cnpj>05075964000112</cnpj>
+            <codigo>321</codigo>
+            <email>312</email>
+            <endereco>
+                <bairro>Vila João Luiz de Oliveira</bairro>
+                <cep>75125760</cep>
+                <cidade>Anápolis</cidade>
+                <endereco>Avenida Miguel Rodrigues </endereco>
+                <estado>BA</estado>
+            </endereco>
+            <fornecedor>aaaa</fornecedor>
+            <razaoSocial>312</razaoSocial>
+            <telefone>
+                <telefoneFornecedores>312</telefoneFornecedores>
+                <telefoneFornecedores>132</telefoneFornecedores>
+            </telefone>
+        </fornecedor>
+        <grupo>
+            <nome>312</nome>
+            <quantidadeProdutos>1</quantidadeProdutos>
+            <valorTotal>312.0</valorTotal>
+        </grupo>
+        <nome>asdczx</nome>
+        <valor>312</valor>
+    </produto>
+    <produto>
+        <classificacao>A</classificacao>
+        <codigo>eqw</codigo>
+        <codigoBarras>312</codigoBarras>
+        <descricao>312</descricao>
+        <estoqueAtual>0</estoqueAtual>
+        <estoqueIdeal>312</estoqueIdeal>
+        <estoqueMinimo>312</estoqueMinimo>
+        <fornecedor>
+            <cnpj>05075964000112</cnpj>
+            <codigo>321</codigo>
+            <email>312</email>
+            <endereco>
+                <bairro>Vila João Luiz de Oliveira</bairro>
+                <cep>75125760</cep>
+                <cidade>Anápolis</cidade>
+                <endereco>Avenida Miguel Rodrigues </endereco>
+                <estado>BA</estado>
+            </endereco>
+            <fornecedor>aaaa</fornecedor>
+            <razaoSocial>312</razaoSocial>
+            <telefone>
+                <telefoneFornecedores>312</telefoneFornecedores>
+                <telefoneFornecedores>132</telefoneFornecedores>
+            </telefone>
         </fornecedor>
         <grupo>
             <nome>Indefinido</nome>
             <quantidadeProdutos>1</quantidadeProdutos>
-            <valorTotal>123.0</valorTotal>
+            <valorTotal>312.0</valorTotal>
         </grupo>
+        <nome>asdczx</nome>
+        <valor>312</valor>
     </produto>
 </produtos>
