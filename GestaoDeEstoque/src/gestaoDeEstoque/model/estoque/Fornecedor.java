@@ -1,5 +1,7 @@
 package gestaoDeEstoque.model.estoque;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
 import gestaoDeEstoque.util.pesquisa.Pesquisavel;
@@ -18,9 +20,11 @@ public class Fornecedor implements Pesquisavel{
 	private Enderecos endereco;
 	private ObservableList<Produtos> listaProdutos = FXCollections.observableArrayList();
 
+	public Fornecedor() {
+		
+	}
 	public Fornecedor(String fornecedor, String cnpj, String codigo, String email, Telefones telefone,
 			Enderecos endereco, String razao) {
-		super();
 		this.fornecedor = new SimpleStringProperty(fornecedor);
 		this.cnpj = new SimpleStringProperty(cnpj);
 		this.codigo = new SimpleStringProperty(codigo);
@@ -89,20 +93,34 @@ public class Fornecedor implements Pesquisavel{
 	public ObservableList<Produtos> getListaProdutos(){
 		return listaProdutos;
 	}
-	
+	@XmlElement(name = "fornecedor")
 	@Override
 	public String getNome() {
 		return fornecedor.get();
 	}
-
+	@XmlElement(name = "codigo")
 	@Override
 	public String getCodigo() {
 		return codigo.get();
 	}
 	
+	@XmlElement(name = "cnpj")
+	public String getCnpj() {
+		return cnpj.get();
+	}
+	@XmlElement(name = "email")
+	public String getEmail() {
+		return email.get();
+	}
+	@XmlElement(name = "razaoSocial")
+	public String getRazaoSocial() {
+		return razaoSocial.get();
+	}
 	@Override
 	public String toString() {
 		return getNome();
 	}
+	
+	
 
 }

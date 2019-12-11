@@ -1,7 +1,6 @@
 package gestaoDeEstoque.model.estoque;
 
 import java.util.List;
-
 import gestaoDeEstoque.util.pesquisa.Pesquisavel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -65,7 +64,7 @@ public class Grupos implements Pesquisavel{
 	public StringProperty getValorTotalProperty() {
 		return valorTotal;
 	}
-	
+
 	public List<Produtos> getListaProdutos(){
 		return listaProdutos;
 	}

@@ -32,8 +32,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -62,7 +60,7 @@ public class MainApp extends Application {
 		fornecedoresData.add(new Fornecedor("Indefinido", "00000000", "0000", "example@example.com",
 				new Telefones("0", "0"), new Enderecos("", "", "", "", ""), "example"));
 		funcionariosData.add(new Funcionarios("000", "admin", "example@example.com", "admin", "admin", "admin"));
-		//loadDataFromFile();
+		loadDataFromFile();
 	}
 
 	@Override
@@ -445,33 +443,39 @@ public class MainApp extends Application {
 	        JAXBContext grupoContext = JAXBContext
 	                .newInstance(GruposListWrapper.class);
 	        Unmarshaller grupoUnmarshaller = grupoContext.createUnmarshaller();
-
+	        
+	        JAXBContext funcionarioContext = JAXBContext
+	                .newInstance(FornecedoresListWrapper.class);
+	        Unmarshaller fornecedorUnmarshaller = funcionarioContext.createUnmarshaller();
+	        
 	        JAXBContext produtoContext = JAXBContext
 	                .newInstance(ProdutosListWrapper.class);
 	        Unmarshaller produtoUnmarshaller = produtoContext.createUnmarshaller();
 
-	        JAXBContext funcionarioContext = JAXBContext
-	                .newInstance(FornecedoresListWrapper.class);
-	        Unmarshaller fornecedorUnmarshaller = funcionarioContext.createUnmarshaller();
+	        
 
 	        // Reading XML from the file and unmarshalling.
 	        GruposListWrapper grupoWrapper = (GruposListWrapper) grupoUnmarshaller.unmarshal
 	        		(new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveGrupos.xml"));
+	      
+	        FornecedoresListWrapper fornecedorWrapper = (FornecedoresListWrapper) fornecedorUnmarshaller.unmarshal
+	        		(new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveFornecedores.xml"));
 	        
 	        ProdutosListWrapper produtoWrapper = (ProdutosListWrapper) produtoUnmarshaller.unmarshal
 	        		(new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveProdutos.xml"));
 	        
-	        FornecedoresListWrapper fornecedorWrapper = (FornecedoresListWrapper) fornecedorUnmarshaller.unmarshal
-	        		(new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveFornecedores.xml"));
+	        
 	        
 	        gruposData.clear();
 	        gruposData.addAll(grupoWrapper.getGrupos());
 	        
+	        fornecedoresData.clear();
+	        fornecedoresData.addAll(fornecedorWrapper.getFornecedor());
+	        
 	        produtosData.clear();
 	       produtosData.addAll(produtoWrapper.getProdutos());
 	        
-	        fornecedoresData.clear();
-	        fornecedoresData.addAll(fornecedorWrapper.getFornecedor());
+	        
 
 	    } catch (Exception e) { // catches ANY exception
 	    	e.printStackTrace();
@@ -490,30 +494,35 @@ public class MainApp extends Application {
 	        Marshaller grupoMarshal = grupoContext.createMarshaller();
 	        grupoMarshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 	        
+	        JAXBContext fornecedorContext = JAXBContext
+	                .newInstance(FornecedoresListWrapper.class);
+	        Marshaller fornecedorMarshal = fornecedorContext.createMarshaller();
+	        fornecedorMarshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	        
 	        JAXBContext produtoContext = JAXBContext
 	                .newInstance(ProdutosListWrapper.class);
 	        Marshaller produtoMarshal = produtoContext.createMarshaller();
 	        produtoMarshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 	        
-	        JAXBContext fornecedorContext = JAXBContext
-	                .newInstance(FornecedoresListWrapper.class);
-	        Marshaller fornecedorMarshal = fornecedorContext.createMarshaller();
-	        fornecedorMarshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	        
 	    
 	        // Envolvendo nossos dados da pessoa.
 	        GruposListWrapper grupoWrapper = new GruposListWrapper();
 	        grupoWrapper.setGrupos(gruposData);
 	        
-	        ProdutosListWrapper produtoWrapper = new ProdutosListWrapper();
-	        produtoWrapper.setProdutos(produtosData);
-	        
 	        FornecedoresListWrapper fornecedorWrapper = new FornecedoresListWrapper();
 	        fornecedorWrapper.setFornecedor(fornecedoresData);
 	        
+	        ProdutosListWrapper produtoWrapper = new ProdutosListWrapper();
+	        produtoWrapper.setProdutos(produtosData);
+	        
+	        
+	        
 	        // Enpacotando e salvando XML  no arquivo.
 	        grupoMarshal.marshal(grupoWrapper, new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveGrupos.xml"));
-	        produtoMarshal.marshal(produtoWrapper, new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveProdutos.xml"));
 	        fornecedorMarshal.marshal(fornecedorWrapper, new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveFornecedores.xml"));
+	        produtoMarshal.marshal(produtoWrapper, new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveProdutos.xml"));
+	        
 	    } catch (Exception e) { // catches ANY exception
 	    	e.printStackTrace();
 	    }

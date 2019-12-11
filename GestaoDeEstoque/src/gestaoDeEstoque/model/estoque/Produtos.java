@@ -1,5 +1,7 @@
 package gestaoDeEstoque.model.estoque;
 
+import javax.xml.bind.annotation.XmlElement;
+
 import gestaoDeEstoque.util.pesquisa.Pesquisavel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -16,6 +18,25 @@ public class Produtos implements Pesquisavel{
 	private Fornecedor fornecedor;
 	private StringProperty classificacao;
 	private StringProperty descricao;
+	
+	public Produtos() {
+		this(null, null, null, null, null, null, null ,null ,null, null);
+	}
+	
+	public Produtos(String classificacao, String codigo, String codigoBarras, String descricao, String estoqueAtual, String estoqueIdeal,
+			String estoqueMinimo, Fornecedor fornecedor, Grupos grupo, String nome, String valor) {
+		this.nome = new SimpleStringProperty(nome);
+		this.grupo = grupo;
+		this.codigo = new SimpleStringProperty(codigo);
+		this.valor = new SimpleStringProperty(valor);
+		this.codigoBarras = new SimpleStringProperty(codigoBarras);
+		this.estoqueMinimo = new SimpleStringProperty(estoqueMinimo);
+		this.estoqueIdeal = new SimpleStringProperty(estoqueIdeal);
+		this.fornecedor = fornecedor;
+		this.classificacao = new SimpleStringProperty(classificacao);
+		this.descricao = new SimpleStringProperty(descricao);
+		this.estoqueAtual = new SimpleStringProperty("0");
+	}
 
 	public Produtos(String nome, String codigo, String valor, String codigoBarras, String estoqueMinimo,
 			String estoqueIdeal, String classificacao, String descricao, Fornecedor fornecedor, Grupos nomeGrupo) {
@@ -119,48 +140,49 @@ public class Produtos implements Pesquisavel{
 	public void setDescricao(StringProperty descricao) {
 		this.descricao = descricao;
 	}
-
+	@XmlElement(name = "nome")
 	@Override
 	public String getNome() {
 		return nome.get();
 	}
-
+	@XmlElement(name = "codigo")
 	@Override
 	public String getCodigo() {
 		return codigo.get();
 	}
 
-	@Override
-	public String toString() {
-		return getNome();
-	}
-
+	@XmlElement(name = "valor")
 	public String getValor() {
 		return valor.get();
 	}
-
+	@XmlElement(name = "codigoBarras")
 	public String getCodigoBarras() {
 		return codigoBarras.get();
 	}
-
+	@XmlElement(name = "estoqueMinimo")
 	public String getEstoqueMinimo() {
 		return estoqueMinimo.get();
 	}
-
+	@XmlElement(name = "estoqueIdeal")
 	public String getEstoqueIdeal() {
 		return estoqueIdeal.get();
 	}
-
+	@XmlElement(name = "estoqueAtual")
 	public String getEstoqueAtual() {
 		return estoqueAtual.get();
 	}
-
+	@XmlElement(name = "classificacao")
 	public String getClassificacao() {
 		return classificacao.get();
 	}
-
+	@XmlElement(name = "descricao")
 	public String getDescricao() {
 		return descricao.get();
+	}
+	
+	@Override
+	public String toString() {
+		return getNome();
 	}
 	
 	
