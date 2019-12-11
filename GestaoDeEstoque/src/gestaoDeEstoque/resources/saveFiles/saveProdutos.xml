@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<produtos>
+    <produto>
+        <fornecedor>
+            <endereco/>
+            <telefone/>
+        </fornecedor>
+        <grupo>
+            <nome>Indefinido</nome>
+            <quantidadeProdutos>1</quantidadeProdutos>
+            <valorTotal>123.0</valorTotal>
+        </grupo>
+    </produto>
+</produtos>

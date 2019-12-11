@@ -2,7 +2,6 @@ package gestaoDeEstoque.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import br.com.parg.viacep.ViaCEP;
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Fornecedor;
@@ -14,17 +13,21 @@ import gestaoDeEstoque.util.exception.DadosInvalidosException;
 import gestaoDeEstoque.util.factory.FactoryFornecedores;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 
 /**
  * Controlador da view EditFornecedor
@@ -159,6 +162,25 @@ public class EditFornecedorController implements Initializable {
 				.addListener((observable, oldValue, newValue) -> showFornecedores(newValue));
 		enderecoFornecedorTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showFornecedores(newValue));
+		
+		//Abre uma janela só deste fornecedor específico selecionado, ao dar doubleclick no mouse.
+				fornecedorTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+				    @SuppressWarnings("unchecked")
+					@Override 
+				    public void handle(MouseEvent event) {
+				        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+				            Node node = ((Node) event.getTarget()).getParent();
+				            TableRow<Fornecedor> row;
+				            if (node instanceof TableRow) {
+				                row = (TableRow<Fornecedor>) node;
+				            } else {
+				                // clicking on text part
+				                row = (TableRow<Fornecedor>) node.getParent();
+				            }
+				            mainApp.showViewFornecedor(row.getItem());
+				        }
+				    }
+				});
 
 	}
 

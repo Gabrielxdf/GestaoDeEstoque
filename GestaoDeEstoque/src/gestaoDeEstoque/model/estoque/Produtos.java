@@ -29,6 +29,7 @@ public class Produtos implements Pesquisavel{
 		this.fornecedor = fornecedor;
 		this.classificacao = new SimpleStringProperty(classificacao);
 		this.descricao = new SimpleStringProperty(descricao);
+		this.estoqueAtual = new SimpleStringProperty("0");
 	}
 	
 	public StringProperty getNomeProperty() {
@@ -43,23 +44,23 @@ public class Produtos implements Pesquisavel{
 		return grupo;
 	}
 
-	public StringProperty getValor() {
+	public StringProperty getValorProperty() {
 		return valor;
 	}
 
-	public StringProperty getCodigoBarras() {
+	public StringProperty getCodigoBarrasProperty() {
 		return codigoBarras;
 	}
 
-	public StringProperty getEstoqueMinimo() {
+	public StringProperty getEstoqueMinimoProperty() {
 		return estoqueMinimo;
 	}
 
-	public StringProperty getEstoqueIdeal() {
+	public StringProperty getEstoqueIdealProperty() {
 		return estoqueIdeal;
 	}
 
-	public StringProperty getEstoqueAtual() {
+	public StringProperty getEstoqueAtualProperty() {
 		return estoqueAtual;
 	}
 
@@ -67,11 +68,11 @@ public class Produtos implements Pesquisavel{
 		return fornecedor;
 	}
 
-	public StringProperty getClassificacao() {
+	public StringProperty getClassificacaoProperty() {
 		return classificacao;
 	}
 
-	public StringProperty getDescricao() {
+	public StringProperty getDescricaoProperty() {
 		return descricao;
 	}
 
@@ -79,7 +80,7 @@ public class Produtos implements Pesquisavel{
 		this.nome = nome;
 	}
 
-	public void setGrupo(Grupos grup) {
+	public void setGrupo(Grupos grupo) {
 		this.grupo = grupo;
 	}
 
@@ -132,6 +133,34 @@ public class Produtos implements Pesquisavel{
 	@Override
 	public String toString() {
 		return getNome();
+	}
+
+	public String getValor() {
+		return valor.get();
+	}
+
+	public String getCodigoBarras() {
+		return codigoBarras.get();
+	}
+
+	public String getEstoqueMinimo() {
+		return estoqueMinimo.get();
+	}
+
+	public String getEstoqueIdeal() {
+		return estoqueIdeal.get();
+	}
+
+	public String getEstoqueAtual() {
+		return estoqueAtual.get();
+	}
+
+	public String getClassificacao() {
+		return classificacao.get();
+	}
+
+	public String getDescricao() {
+		return descricao.get();
 	}
 	
 	

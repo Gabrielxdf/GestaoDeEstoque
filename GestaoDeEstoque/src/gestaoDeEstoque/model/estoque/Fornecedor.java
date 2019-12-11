@@ -1,14 +1,12 @@
 package gestaoDeEstoque.model.estoque;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
 import gestaoDeEstoque.util.pesquisa.Pesquisavel;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Fornecedor implements Pesquisavel{
 	private StringProperty fornecedor;
@@ -18,7 +16,7 @@ public class Fornecedor implements Pesquisavel{
 	private StringProperty razaoSocial;
 	private Telefones telefone;
 	private Enderecos endereco;
-	private List<Produtos> listaProdutos = new ArrayList<>();
+	private ObservableList<Produtos> listaProdutos = FXCollections.observableArrayList();
 
 	public Fornecedor(String fornecedor, String cnpj, String codigo, String email, Telefones telefone,
 			Enderecos endereco, String razao) {
@@ -88,7 +86,7 @@ public class Fornecedor implements Pesquisavel{
 		this.endereco = endereco;
 	}
 	
-	public List<Produtos> getListaProdutos(){
+	public ObservableList<Produtos> getListaProdutos(){
 		return listaProdutos;
 	}
 	

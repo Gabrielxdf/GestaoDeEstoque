@@ -59,7 +59,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <TextField fx:id="cepTextField" editable="false" layoutX="14.0" layoutY="234.0" onKeyReleased="#verificaCep" prefHeight="26.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
+      <TextField fx:id="cepTextField" editable="false" layoutX="14.0" layoutY="234.0" prefHeight="26.0" prefWidth="240.0" style="-fx-background-radius: 100;" />
       <Label layoutX="393.0" layoutY="210.0" text="Endereço">
          <font>
             <Font name="System Bold" size="13.0" />

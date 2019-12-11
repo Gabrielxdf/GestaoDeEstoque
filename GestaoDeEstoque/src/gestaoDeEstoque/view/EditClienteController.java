@@ -13,17 +13,21 @@ import gestaoDeEstoque.util.exception.DadosInvalidosException;
 import gestaoDeEstoque.util.factory.FactoryPessoa;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 
 public class EditClienteController implements Initializable {
 	@FXML
@@ -149,6 +153,25 @@ public class EditClienteController implements Initializable {
 				.addListener((observable, oldValue, newValue) -> showClientes(newValue));
 		enderecoClienteTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showClientes(newValue));
+		
+		//Abre uma janela só deste cliente específico selecionado, ao dar doubleclick no mouse.
+				clienteTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+				    @SuppressWarnings("unchecked")
+					@Override 
+				    public void handle(MouseEvent event) {
+				        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+				            Node node = ((Node) event.getTarget()).getParent();
+				            TableRow<Cliente> row;
+				            if (node instanceof TableRow) {
+				                row = (TableRow<Cliente>) node;
+				            } else {
+				                // clicking on text part
+				                row = (TableRow<Cliente>) node.getParent();
+				            }
+				            mainApp.showViewCliente(row.getItem());
+				        }
+				    }
+				});
 	}
 
 	/**

@@ -12,15 +12,19 @@ import gestaoDeEstoque.util.exception.DadosInvalidosException;
 import gestaoDeEstoque.util.factory.FactoryProdutos;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 
 public class EditProdutosController implements Initializable {
 	@FXML
@@ -96,18 +100,37 @@ public class EditProdutosController implements Initializable {
 		// inicializa as colunas da tabela
 				codigoColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty());
 				nomeColumn.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
-				valorColumn.setCellValueFactory(cellData -> cellData.getValue().getValor());
-				codigoBarrasColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoBarras());
-				minimoColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueMinimo());
-				idealColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueIdeal());
-				atualColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueAtual());
+				valorColumn.setCellValueFactory(cellData -> cellData.getValue().getValorProperty());
+				codigoBarrasColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoBarrasProperty());
+				minimoColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueMinimoProperty());
+				idealColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueIdealProperty());
+				atualColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueAtualProperty());
 				fornecedorColumn.setCellValueFactory(cellData -> cellData.getValue().getFornecedor().getFornecedorProperty());
-				classificacaoColumn.setCellValueFactory(cellData -> cellData.getValue().getClassificacao());
+				classificacaoColumn.setCellValueFactory(cellData -> cellData.getValue().getClassificacaoProperty());
 				
 				showProdutos(null);
 
 				produtosTable.getSelectionModel().selectedItemProperty()
 						.addListener((observable, oldValue, newValue) -> showProdutos(newValue));
+				
+				//Abre uma janela só deste produto específico selecionado, ao dar doubleclick no mouse.
+				produtosTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+					@SuppressWarnings("unchecked")
+					@Override
+					public void handle(MouseEvent event) {
+						if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+							Node node = ((Node) event.getTarget()).getParent();
+							TableRow<Produtos> row;
+							if (node instanceof TableRow) {
+								row = (TableRow<Produtos>) node;
+							} else {
+								// clicking on text part
+								row = (TableRow<Produtos>) node.getParent();
+							}
+							mainApp.showViewProduto(row.getItem());
+						}
+					}
+				});
 
 	}
 	
@@ -121,14 +144,14 @@ public class EditProdutosController implements Initializable {
 		if (produto != null) {
 			nomeTextField.setText(produto.getNome());
 			codigoTextField.setText(produto.getCodigo());
-			valorTextField.setText(produto.getValor().get());
-			codigoBarrasTextField.setText(produto.getCodigoBarras().get());
-			minimoTextField.setText(produto.getEstoqueMinimo().get());
-			idealTextField.setText(produto.getEstoqueIdeal().get());
-			descricaoTextField.setText(produto.getDescricao().get());
+			valorTextField.setText(produto.getValorProperty().get());
+			codigoBarrasTextField.setText(produto.getCodigoBarrasProperty().get());
+			minimoTextField.setText(produto.getEstoqueMinimoProperty().get());
+			idealTextField.setText(produto.getEstoqueIdealProperty().get());
+			descricaoTextField.setText(produto.getDescricaoProperty().get());
 			grupoComboBox.getSelectionModel().select(produto.getGrupo());
 			fornecedorComboBox.getSelectionModel().select(produto.getFornecedor());
-			classificacaoComboBox.getSelectionModel().select(produto.getClassificacao().get());
+			classificacaoComboBox.getSelectionModel().select(produto.getClassificacaoProperty().get());
 			
 		} else {
 			Limpa.limpaTextField(nomeTextField, codigoTextField, valorTextField, codigoBarrasTextField,
@@ -180,9 +203,11 @@ public class EditProdutosController implements Initializable {
 					"CONFIRMATION")) {
 				produtosTable.getItems().get(selectedIndex).getGrupo().getListaProdutos().remove
 				(produtosTable.getSelectionModel().getSelectedItem());
+				produtosTable.getItems().get(selectedIndex).getFornecedor().getListaProdutos().remove
+				(produtosTable.getSelectionModel().getSelectedItem());
 				produtosTable.getSelectionModel().getSelectedItem().getGrupo().setQuantidadeProdutos();
 				produtosTable.getSelectionModel().getSelectedItem().getGrupo().setValorTotal();
-				produtosTable.getItems().remove(selectedIndex);
+				mainApp.getProdutosData().remove(selectedIndex);
 				mainApp.saveDataToFile();
 			}
 		} else {
@@ -242,6 +267,8 @@ public class EditProdutosController implements Initializable {
 			
 			if (index >= 0) {
 				mainApp.getProdutosData().set(index, tempProduto);
+				mainApp.getProdutosData().get(index).getFornecedor().getListaProdutos().set(index, tempProduto);
+				mainApp.getProdutosData().get(index).getGrupo().getListaProdutos().set(index, tempProduto);
 				mainApp.getProdutosData().get(index).getGrupo().setQuantidadeProdutos();
 				mainApp.getProdutosData().get(index).getGrupo().setValorTotal();
 				produtosTable.setItems(mainApp.getProdutosData());
@@ -252,6 +279,7 @@ public class EditProdutosController implements Initializable {
 				
 			} else {
 				mainApp.getProdutosData().add(tempProduto);
+				tempProduto.getFornecedor().getListaProdutos().add(tempProduto);
 				tempProduto.getGrupo().getListaProdutos().add(tempProduto);
 				tempProduto.getGrupo().setQuantidadeProdutos();
 				tempProduto.getGrupo().setValorTotal();

@@ -13,16 +13,19 @@ import gestaoDeEstoque.util.factory.FactoryGrupos;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 
 /**
  * Janela para adição, exclusão e edição de grupos.
@@ -76,8 +79,25 @@ public class EditGruposController implements Initializable {
 
 		gruposTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showGrupos(newValue));
-
-		// helpButton.setStyle("-fx-background-image: url('./HelpButton-icon.png');");
+		
+		//Abre uma janela só deste grupo específico selecionado, ao dar doubleclick no mouse.
+		gruposTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+		    @SuppressWarnings("unchecked")
+			@Override 
+		    public void handle(MouseEvent event) {
+		        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+		            Node node = ((Node) event.getTarget()).getParent();
+		            TableRow<Grupos> row;
+		            if (node instanceof TableRow) {
+		                row = (TableRow<Grupos>) node;
+		            } else {
+		                // clicking on text part
+		                row = (TableRow<Grupos>) node.getParent();
+		            }
+		            mainApp.showViewGrupos(row.getItem());
+		        }
+		    }
+		});
 
 	}
 
@@ -212,7 +232,7 @@ public class EditGruposController implements Initializable {
 		content += "\n";
 		content += "COLUNA QTD. DE PRODUTOS - Quantidade de Produtos naquele Grupo.\n";
 		content += "\n";
-		content += "COLUNA VALOR TOTAL - Valor total do Grupo.";
+		content += "COLUNA VALOR TOTAL - Valor total do Grupo.\n";
 		content += "\n";
 		content += "CAMPO DE PESQUISA - Pesquisa um Grupo na tabela, de acordo com o nome ou o código.\n";
 		content += "\n";

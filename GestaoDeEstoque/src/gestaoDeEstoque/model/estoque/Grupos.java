@@ -1,6 +1,7 @@
 package gestaoDeEstoque.model.estoque;
 
 import java.util.List;
+
 import gestaoDeEstoque.util.pesquisa.Pesquisavel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -40,7 +41,7 @@ public class Grupos implements Pesquisavel{
 	public void setValorTotal() {
 		Double novoValor = 0.0;
 		for(Produtos x: getListaProdutos()) {
-			novoValor += Double.parseDouble(x.getValor().get());
+			novoValor += Double.parseDouble(x.getValorProperty().get());
 		}
 		this.valorTotal = new SimpleStringProperty(Double.toString(novoValor));
 	}
@@ -83,6 +84,13 @@ public class Grupos implements Pesquisavel{
 	public String toString() {
 		return getNome();
 	}
-	
+
+	public String getQuantidadeProdutos() {
+		return quantidadeProdutos.get();
+	}
+
+	public String getValorTotal() {
+		return valorTotal.get();
+	}
 
 }

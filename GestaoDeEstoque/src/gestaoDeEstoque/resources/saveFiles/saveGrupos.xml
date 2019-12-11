@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<grupos>
+    <grupo>
+        <nome>Indefinido</nome>
+        <quantidadeProdutos>1</quantidadeProdutos>
+        <valorTotal>123.0</valorTotal>
+    </grupo>
+    <grupo>
+        <nome>a</nome>
+        <quantidadeProdutos>10</quantidadeProdutos>
+        <valorTotal>10</valorTotal>
+    </grupo>
+</grupos>

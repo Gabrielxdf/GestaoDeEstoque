@@ -6,9 +6,11 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import gestaoDeEstoque.model.estoque.Fornecedor;
+import gestaoDeEstoque.model.estoque.FornecedoresListWrapper;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.GruposListWrapper;
 import gestaoDeEstoque.model.estoque.Produtos;
+import gestaoDeEstoque.model.estoque.ProdutosListWrapper;
 import gestaoDeEstoque.model.pessoa.Cliente;
 import gestaoDeEstoque.model.pessoa.Funcionarios;
 import gestaoDeEstoque.util.Enderecos;
@@ -18,6 +20,11 @@ import gestaoDeEstoque.view.EditFornecedorController;
 import gestaoDeEstoque.view.EditFuncionarioController;
 import gestaoDeEstoque.view.EditGruposController;
 import gestaoDeEstoque.view.RootLayoutController;
+import gestaoDeEstoque.view.ViewClienteController;
+import gestaoDeEstoque.view.ViewFornecedorController;
+import gestaoDeEstoque.view.ViewFuncionarioController;
+import gestaoDeEstoque.view.ViewGrupoController;
+import gestaoDeEstoque.view.ViewProdutoController;
 import gestaoDeEstoque.view.EditProdutosController;
 import gestaoDeEstoque.view.LoginController;
 import javafx.application.Application;
@@ -49,13 +56,13 @@ public class MainApp extends Application {
 	 */
 	public MainApp() {
 		// alguns dados de exemplo
-		//gruposData.add(new Grupos("Indefinido"));
-		//gruposData.get(0).setQuantidadeProdutos("10");
-		//gruposData.get(0).setValorTotal("500.0");
+		gruposData.add(new Grupos("Indefinido"));
+		gruposData.get(0).setQuantidadeProdutos("10");
+		gruposData.get(0).setValorTotal("500.0");
 		fornecedoresData.add(new Fornecedor("Indefinido", "00000000", "0000", "example@example.com",
 				new Telefones("0", "0"), new Enderecos("", "", "", "", ""), "example"));
 		funcionariosData.add(new Funcionarios("000", "admin", "example@example.com", "admin", "admin", "admin"));
-		loadDataFromFile(new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/save.xml"));
+		//loadDataFromFile();
 	}
 
 	@Override
@@ -289,30 +296,185 @@ public class MainApp extends Application {
 	}
 	
 	/**
+	 * Exibe a tela do Grupo passado como argumento.
+	 * @param grupo
+	 */
+	public void showViewGrupos(Grupos grupo) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/ViewGrupo.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Grupo" + "-" + grupo.getNome());
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			ViewGrupoController controller = loader.getController();
+			controller.setGrupo(grupo);
+			controller.setMainApp(this);
+			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/groups-icon.png"));
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Exibe a tela do Produto passado como argumento.
+	 * @param produto.
+	 */
+	public void showViewProduto(Produtos produto) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/ViewProduto.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Produto" + "-" + produto.getNome());
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			ViewProdutoController controller = loader.getController();
+			controller.setProduto(produto);
+			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/products-icon.png"));
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Exibe a tela do Fornecedor passado como argumento.
+	 * @param fornecedor.
+	 */
+	public void showViewFornecedor(Fornecedor fornecedor) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/ViewFornecedor.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Fornecedor" + "-" + fornecedor.getNome());
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			ViewFornecedorController controller = loader.getController();
+			controller.setFornecedor(fornecedor);
+			controller.setMainApp(this);
+			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/provider-icon.png"));
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Exibe a tela do Funcionario passado como argumento.
+	 * @param funcionario.
+	 */
+	public void showViewFuncionario(Funcionarios funcionario) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/ViewFuncionario.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Funcionário" + "-" + funcionario.getNome());
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			ViewFuncionarioController controller = loader.getController();
+			controller.setFuncionario(funcionario);
+			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/employee-icon.png"));
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * Exibe a tela do Cliente passado como argumento.
+	 * @param cliente.
+	 */
+	public void showViewCliente(Cliente cliente) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/ViewCliente.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Cliente" + "-" + cliente.getNome());
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			ViewClienteController controller = loader.getController();
+			controller.setCliente(cliente);
+			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/client-icon.png"));
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
 	 * Carrega os dados do grupo do arquivo especificado. Os grupos atual
 	 * será substituída.
 	 * 
 	 * @param file
 	 */
-	public void loadDataFromFile(File file) {
+	public void loadDataFromFile() {
 	    try {
-	        JAXBContext context = JAXBContext
+	        JAXBContext grupoContext = JAXBContext
 	                .newInstance(GruposListWrapper.class);
-	        Unmarshaller um = context.createUnmarshaller();
+	        Unmarshaller grupoUnmarshaller = grupoContext.createUnmarshaller();
+
+	        JAXBContext produtoContext = JAXBContext
+	                .newInstance(ProdutosListWrapper.class);
+	        Unmarshaller produtoUnmarshaller = produtoContext.createUnmarshaller();
+
+	        JAXBContext funcionarioContext = JAXBContext
+	                .newInstance(FornecedoresListWrapper.class);
+	        Unmarshaller fornecedorUnmarshaller = funcionarioContext.createUnmarshaller();
 
 	        // Reading XML from the file and unmarshalling.
-	        GruposListWrapper wrapper = (GruposListWrapper) um.unmarshal(file);
-
+	        GruposListWrapper grupoWrapper = (GruposListWrapper) grupoUnmarshaller.unmarshal
+	        		(new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveGrupos.xml"));
+	        
+	        ProdutosListWrapper produtoWrapper = (ProdutosListWrapper) produtoUnmarshaller.unmarshal
+	        		(new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveProdutos.xml"));
+	        
+	        FornecedoresListWrapper fornecedorWrapper = (FornecedoresListWrapper) fornecedorUnmarshaller.unmarshal
+	        		(new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveFornecedores.xml"));
+	        
 	        gruposData.clear();
-	        gruposData.addAll(wrapper.getGrupos());
+	        gruposData.addAll(grupoWrapper.getGrupos());
+	        
+	        produtosData.clear();
+	       produtosData.addAll(produtoWrapper.getProdutos());
+	        
+	        fornecedoresData.clear();
+	        fornecedoresData.addAll(fornecedorWrapper.getFornecedor());
 
 	    } catch (Exception e) { // catches ANY exception
 	    	e.printStackTrace();
-	    	Alert alert = new Alert(AlertType.ERROR);
-	        alert.setTitle("Error");
-	        alert.setHeaderText("Could not load data");
-	        alert.setContentText("Could not load data from file:\n" + file.getPath());
-	        alert.showAndWait();
 	    }
 	}
 
@@ -323,24 +485,35 @@ public class MainApp extends Application {
 	 */
 	public void saveDataToFile() {
 	    try {
-	        JAXBContext context = JAXBContext
+	        JAXBContext grupoContext = JAXBContext
 	                .newInstance(GruposListWrapper.class);
-	        Marshaller m = context.createMarshaller();
-	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-	        for(Grupos x : gruposData) {
-	        	System.out.println(x.getNome());
-	        	System.out.println(x.getQuantidadeProdutosProperty().get());
-	        	System.out.println(x.getValorTotalProperty().get());
-	        	System.out.println(x.getListaProdutos());
-	        }
+	        Marshaller grupoMarshal = grupoContext.createMarshaller();
+	        grupoMarshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	        
+	        JAXBContext produtoContext = JAXBContext
+	                .newInstance(ProdutosListWrapper.class);
+	        Marshaller produtoMarshal = produtoContext.createMarshaller();
+	        produtoMarshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	        
+	        JAXBContext fornecedorContext = JAXBContext
+	                .newInstance(FornecedoresListWrapper.class);
+	        Marshaller fornecedorMarshal = fornecedorContext.createMarshaller();
+	        fornecedorMarshal.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	    
 	        // Envolvendo nossos dados da pessoa.
-	        GruposListWrapper wrapper = new GruposListWrapper();
-	        wrapper.setGrupos(gruposData);
+	        GruposListWrapper grupoWrapper = new GruposListWrapper();
+	        grupoWrapper.setGrupos(gruposData);
+	        
+	        ProdutosListWrapper produtoWrapper = new ProdutosListWrapper();
+	        produtoWrapper.setProdutos(produtosData);
+	        
+	        FornecedoresListWrapper fornecedorWrapper = new FornecedoresListWrapper();
+	        fornecedorWrapper.setFornecedor(fornecedoresData);
 	        
 	        // Enpacotando e salvando XML  no arquivo.
-	        m.marshal(wrapper, System.out);
-	        m.marshal(wrapper, new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/save.xml"));
-
+	        grupoMarshal.marshal(grupoWrapper, new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveGrupos.xml"));
+	        produtoMarshal.marshal(produtoWrapper, new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveProdutos.xml"));
+	        fornecedorMarshal.marshal(fornecedorWrapper, new File("GestaoDeEstoque/src/gestaoDeEstoque/resources/saveFiles/saveFornecedores.xml"));
 	    } catch (Exception e) { // catches ANY exception
 	    	e.printStackTrace();
 	    }

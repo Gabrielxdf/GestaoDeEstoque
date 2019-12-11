@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="328.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaoDeEstoque.view.ViewProdutoController">
+<AnchorPane prefHeight="303.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestaoDeEstoque.view.ViewProdutoController">
    <children>
-      <AnchorPane layoutX="20.0" layoutY="15.0" prefHeight="328.0" prefWidth="713.0" style="-fx-background-color: #90ee90;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="20.0" layoutY="15.0" prefHeight="296.0" prefWidth="713.0" style="-fx-background-color: #90ee90;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <effect>
             <DropShadow />
          </effect>
@@ -42,7 +42,7 @@
                </font>
             </Label>
             <TextField fx:id="codigoBarrasTextField" editable="false" layoutX="408.0" layoutY="93.0" prefHeight="26.0" prefWidth="294.0" style="-fx-background-radius: 100;" />
-            <Label layoutX="201.0" layoutY="78.0" text="Estoque Mínimo">
+            <Label layoutX="210.0" layoutY="78.0" text="Estoque Mínimo">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -53,13 +53,13 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <TextField fx:id="idealTextField" editable="false" layoutX="24.0" layoutY="148.0" prefHeight="26.0" prefWidth="101.0" style="-fx-background-radius: 100;" />
+            <TextField fx:id="idealTextField" editable="false" layoutX="16.0" layoutY="148.0" prefHeight="26.0" prefWidth="101.0" style="-fx-background-radius: 100;" />
             <Label layoutX="530.0" layoutY="133.0" text="Fornecedor">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="142.0" layoutY="133.0" text="Classificação ABC">
+            <Label layoutX="249.0" layoutY="133.0" text="Classificação ABC">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -76,8 +76,14 @@
                </font>
             </Label>
             <ComboBox fx:id="grupoComboBox" layoutX="408.0" layoutY="31.0" prefHeight="26.0" prefWidth="294.0" promptText="Não definido" style="-fx-background-radius: 100;" />
-            <ComboBox fx:id="classificacaoComboBox" layoutX="147.0" layoutY="148.0" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 100;" />
+            <ComboBox fx:id="classificacaoComboBox" layoutX="244.0" layoutY="148.0" prefHeight="26.0" prefWidth="109.0" style="-fx-background-radius: 100;" />
             <ComboBox fx:id="fornecedorComboBox" layoutX="410.0" layoutY="148.0" prefHeight="26.0" prefWidth="294.0" promptText="Não definido" style="-fx-background-radius: 100;" />
+            <TextField fx:id="atualTextField" editable="false" layoutX="130.0" layoutY="148.0" prefHeight="26.0" prefWidth="101.0" style="-fx-background-radius: 100;" />
+            <Label layoutX="141.0" layoutY="133.0" text="Estoque Atual">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

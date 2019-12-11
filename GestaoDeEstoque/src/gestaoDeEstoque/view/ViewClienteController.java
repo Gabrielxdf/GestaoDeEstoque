@@ -2,7 +2,7 @@ package gestaoDeEstoque.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import gestaoDeEstoque.model.pessoa.Cliente;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -49,6 +49,26 @@ public class ViewClienteController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 
 	}
-
+	
+	/**
+	 * Seta o Cliente dessa view.
+	 * 
+	 * @param cliente	
+	 */
+	public void setCliente(Cliente cliente) {
+		nomeTextField.setText(cliente.getNome());
+		codigoTextField.setText(cliente.getCodigo());
+		cpfTextField.setText(cliente.getCpfProperty().get());
+		dataTextField.setText(cliente.getDataNascimentoStringProperty().get());
+		emailTextField.setText(cliente.getEmailProperty().get());
+		celularTextField.setText(cliente.getTelefone().getCelularProperty().get());
+		residencialTextField.setText(cliente.getTelefone().getResidencialProperty().get());
+		cepTextField.setText(cliente.getEndereco().getCepProperty().get());
+		enderecoTextField.setText(cliente.getEndereco().getEnderecoProperty().get());
+		bairroTextField.setText(cliente.getEndereco().getBairroProperty().get());
+		cidadeTextField.setText(cliente.getEndereco().getCidadeProperty().get());
+		estadoTextField.setText(cliente.getEndereco().getEstadoProperty().get());
+	}
+	
 
 }
