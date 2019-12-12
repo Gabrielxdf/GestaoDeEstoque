@@ -16,6 +16,7 @@ import gestaoDeEstoque.model.pessoa.Funcionarios;
 import gestaoDeEstoque.util.Enderecos;
 import gestaoDeEstoque.util.Telefones;
 import gestaoDeEstoque.view.EditClienteController;
+import gestaoDeEstoque.view.EditEntradaController;
 import gestaoDeEstoque.view.EditFornecedorController;
 import gestaoDeEstoque.view.EditFuncionarioController;
 import gestaoDeEstoque.view.EditGruposController;
@@ -26,6 +27,7 @@ import gestaoDeEstoque.view.ViewFuncionarioController;
 import gestaoDeEstoque.view.ViewGrupoController;
 import gestaoDeEstoque.view.ViewProdutoController;
 import gestaoDeEstoque.view.EditProdutosController;
+import gestaoDeEstoque.view.EditSaidaController;
 import gestaoDeEstoque.view.LoginController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -57,10 +59,10 @@ public class MainApp extends Application {
 		gruposData.add(new Grupos("Indefinido"));
 		gruposData.get(0).setQuantidadeProdutos("10");
 		gruposData.get(0).setValorTotal("500.0");
-		fornecedoresData.add(new Fornecedor("Indefinido", "00000000", "0000", "example@example.com",
+		fornecedoresData.add(new Fornecedor("Indefinido", "05075964000112", "0000", "example@example.com",
 				new Telefones("0", "0"), new Enderecos("", "", "", "", ""), "example"));
 		funcionariosData.add(new Funcionarios("000", "admin", "example@example.com", "admin", "admin", "admin"));
-		loadDataFromFile();
+		//loadDataFromFile();
 	}
 
 	@Override
@@ -430,6 +432,65 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Exibe a tela de Entrada de produtos.
+	 *
+	 */
+	public void showEditEntrada() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/EditEntrada.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Entrada");
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			EditEntradaController controller = loader.getController();
+			controller.setMainApp(this);
+			controller.setStage(dialogStage);
+			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/add-icon.png"));
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * Exibe a tela de Saída de produtos.
+	 *
+	 */
+	public void showEditSaida() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/EditSaida.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Entrada");
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			EditSaidaController controller = loader.getController();
+			controller.setMainApp(this);
+			controller.setStage(dialogStage);
+			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/minus-icon.png"));
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	
 	/**

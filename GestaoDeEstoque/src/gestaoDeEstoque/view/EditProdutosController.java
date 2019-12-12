@@ -208,7 +208,7 @@ public class EditProdutosController implements Initializable {
 				produtosTable.getSelectionModel().getSelectedItem().getGrupo().setQuantidadeProdutos();
 				produtosTable.getSelectionModel().getSelectedItem().getGrupo().setValorTotal();
 				mainApp.getProdutosData().remove(selectedIndex);
-				mainApp.saveDataToFile();
+				//mainApp.saveDataToFile();
 			}
 		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
@@ -275,7 +275,7 @@ public class EditProdutosController implements Initializable {
 				Limpa.limpaTextField(nomeTextField, valorTextField, codigoTextField, minimoTextField, idealTextField,
 						codigoBarrasTextField, descricaoTextField);
 				Limpa.limpaComboBox(classificacaoComboBox, fornecedorComboBox, grupoComboBox);
-				mainApp.saveDataToFile();
+				//mainApp.saveDataToFile();
 				
 			} else {
 				mainApp.getProdutosData().add(tempProduto);
@@ -287,7 +287,7 @@ public class EditProdutosController implements Initializable {
 				Limpa.limpaTextField(nomeTextField, valorTextField, codigoTextField, minimoTextField, idealTextField,
 						codigoBarrasTextField, descricaoTextField);
 				Limpa.limpaComboBox(classificacaoComboBox, fornecedorComboBox, grupoComboBox);
-				mainApp.saveDataToFile();
+				//mainApp.saveDataToFile();
 			}
 		} catch (DadosInvalidosException e) {
 	
@@ -328,8 +328,8 @@ public class EditProdutosController implements Initializable {
 	}
 
 	/**
-	 * Método de pesquisar na tabela pelo nome, ou código do Fornecedor, atualizando a tabela apenas
-	 * com os Fornecedor que contém a String passada no campo de texto no nome ou código.
+	 * Método de pesquisar na tabela pelo nome, ou código do Produto, atualizando a tabela apenas
+	 * com os Produtos que contém a String passada no campo de texto no nome ou código.
 	 */
 	@FXML
 	private void pesquisar() {

@@ -102,6 +102,16 @@ public class RootLayoutController implements Initializable {
 		mainApp.showEditFuncionario();
 	}
 	
+	@FXML
+	private void handleEntrada() {
+		mainApp.showEditEntrada();
+	}
+	
+	@FXML
+	private void handleSaida() {
+		mainApp.showEditSaida();
+	}
+	
 	/**
 	 * Chamado quando o usuário clica no botão "Ajuda". Abre uma janela com algumas informações de ajuda para o usuário.
 	 */
@@ -122,6 +132,10 @@ public class RootLayoutController implements Initializable {
 			AlertUtil.criaUmAlert("Ajuda - Principal", "Ajuda na aba Principal", content, "INFORMATION");
 		}
 		if(acoes.isSelected()) {
+			content += "ENTRADA - Abre uma Janela para fazer entradas no estoque.\n";
+			content += "\n";
+			content += "SAÍDA - Abre uma janela para fazer saídas no estoque.\n";
+			content += "\n";
 			AlertUtil.criaUmAlert("Ajuda - Ações", "Ajuda na aba Ações", content, "INFORMATION");
 		}
 		if(relatorios.isSelected()) {

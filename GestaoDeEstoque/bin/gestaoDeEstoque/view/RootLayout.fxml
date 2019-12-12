@@ -50,11 +50,11 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="entradaButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Entrada" textFill="WHITE">
+                        <Button fx:id="entradaButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleEntrada" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Entrada" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
-                        <Button fx:id="saidaButton" layoutX="121.0" layoutY="8.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Saída" textFill="WHITE">
+                        <Button fx:id="saidaButton" layoutX="121.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleSaida" prefHeight="26.0" prefWidth="107.0" style="-fx-background-radius: 100; -fx-background-color: #E38E65;" text="Saída" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font></Button>
