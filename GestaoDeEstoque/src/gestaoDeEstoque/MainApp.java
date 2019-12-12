@@ -39,7 +39,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+/**
+ * Classe principal da aplicação.
+ * @author Gabriel Henrique
+ *
+ */
 public class MainApp extends Application {
 
 	private Stage primaryStage;
@@ -52,19 +56,17 @@ public class MainApp extends Application {
 	private ObservableList<Funcionarios> funcionariosData = FXCollections.observableArrayList();
 
 	/**
-	 * Construtor
+	 * Construtor do MainApp
 	 */
 	public MainApp() {
 		// alguns dados de exemplo
 		gruposData.add(new Grupos("Indefinido"));
-		gruposData.get(0).setQuantidadeProdutos("10");
-		gruposData.get(0).setValorTotal("500.0");
 		fornecedoresData.add(new Fornecedor("Indefinido", "05075964000112", "0000", "example@example.com",
 				new Telefones("0", "0"), new Enderecos("", "", "", "", ""), "example"));
 		funcionariosData.add(new Funcionarios("000", "admin", "example@example.com", "admin", "admin", "admin"));
 		//loadDataFromFile();
 	}
-
+	
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -270,7 +272,10 @@ public class MainApp extends Application {
 		}
 
 	}
-	
+
+	/**
+	 * Exibe a tela de funcionários.
+	 */
 	public void showEditFuncionario() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -379,7 +384,7 @@ public class MainApp extends Application {
 	}
 	
 	/**
-	 * Exibe a tela do Funcionario passado como argumento.
+	 * Exibe a tela do Funcionário passado como argumento.
 	 * @param funcionario.
 	 */
 	public void showViewFuncionario(Funcionarios funcionario) {
@@ -494,10 +499,7 @@ public class MainApp extends Application {
 	
 	
 	/**
-	 * Carrega os dados do grupo do arquivo especificado. Os grupos atual
-	 * será substituída.
-	 * 
-	 * @param file
+	 * Carrega os dados do obtidos dos XML que foram salvos.
 	 */
 	public void loadDataFromFile() {
 	    try {
@@ -544,7 +546,7 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * Salva os dados do grupo atual no arquivo especificado.
+	 * Salva os dados atuais para arquivos XML.
 	 * 
 	 * @param file
 	 */
@@ -592,7 +594,6 @@ public class MainApp extends Application {
 	
 	/**
 	 * Retorna o palco principal.
-	 * 
 	 * @return primaryStage
 	 */
 	public Stage getPrimaryStage() {
