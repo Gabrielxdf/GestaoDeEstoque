@@ -11,46 +11,58 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
-public class ViewProdutoController implements Initializable{
+/**
+ * Controlador da view ViewProduto
+ * 
+ * @author Gabriel Henrique
+ *
+ */
+public class ViewProdutoController implements Initializable {
 
-    @FXML
-    private TextField nomeTextField;
+	@FXML
+	private TextField nomeTextField;
 
-    @FXML
-    private TextField codigoTextField;
+	@FXML
+	private TextField codigoTextField;
 
-    @FXML
-    private TextField valorTextField;
+	@FXML
+	private TextField valorTextField;
 
-    @FXML
-    private TextField codigoBarrasTextField;
+	@FXML
+	private TextField codigoBarrasTextField;
 
-    @FXML
-    private TextField minimoTextField;
+	@FXML
+	private TextField minimoTextField;
 
-    @FXML
-    private TextField idealTextField;
-    
-    @FXML
-    private TextField atualTextField;
+	@FXML
+	private TextField idealTextField;
 
-    @FXML
-    private TextField descricaoTextField;
+	@FXML
+	private TextField atualTextField;
 
-    @FXML
-    private ComboBox<Grupos> grupoComboBox;
+	@FXML
+	private TextField descricaoTextField;
 
-    @FXML
-    private ComboBox<String> classificacaoComboBox;
+	@FXML
+	private ComboBox<Grupos> grupoComboBox;
 
-    @FXML
-    private ComboBox<Fornecedor> fornecedorComboBox;
-    
+	@FXML
+	private ComboBox<String> classificacaoComboBox;
+
+	@FXML
+	private ComboBox<Fornecedor> fornecedorComboBox;
+
+	/**
+	 * Inicializa o controlador ViewProdutoController.
+	 * 
+	 * @param URL            location
+	 * @param ResourceBundle resources
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 	}
-	
+
 	/**
 	 * Seta o Produto dessa view.
 	 * 

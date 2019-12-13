@@ -6,8 +6,8 @@ import java.time.format.DateTimeParseException;
 
 /**
  * Classe para converter LocalDate para String e vice-versa.
+ * @author Marco Jakob
  * @author Gabriel Henrique
- *
  */
 public class DateUtil {
     
@@ -19,8 +19,8 @@ public class DateUtil {
             DateTimeFormatter.ofPattern(DATE_PATTERN);
     
     /**
-     * Retorna a data especificada como String formatado. O 
-     * {@link DateUtil#DATE_PATTERN} È usado.
+     * Retorna a data especificada como uma Strin formatada. O 
+     * {@link DateUtil#DATE_PATTERN} √© usado.
      * 
      * @param date. A data a ser retornada como String.
      * @return String formatada.
@@ -36,10 +36,10 @@ public class DateUtil {
      * Converte uma String no formato definido {@link DateUtil#DATE_PATTERN} 
      * para um objeto {@link LocalDate}.
      * 
-     * Retorna null se o String n„o puder se convertido.
+     * Retorna null se o String n√£o puder se convertido.
      * 
      * @param dateString a data como String
-     * @return o objeto data ou null se n„o puder ser convertido
+     * @return o Objeto LocalDate ou null se n√£o puder ser convertido
      */
     public static LocalDate parse(String dateString) {
         try {
@@ -50,12 +50,11 @@ public class DateUtil {
     }
 
     /**
-     * Checa se a String È uma data v·lida.
+     * Checa se a String √© uma data v√°lida.
      * @param dateString A data como String
-     * @return true se a String È uma data v·lida
+     * @return true se a String √© uma data v√°lida, false se n√£o for
      */
     public static boolean validDate(String dateString) {
-        // Tenta converter o String.
         return DateUtil.parse(dateString) != null;
     }
 }

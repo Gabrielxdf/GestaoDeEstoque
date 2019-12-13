@@ -15,13 +15,31 @@ import javafx.scene.control.ComboBox;
  *
  */
 public class FactoryFornecedores {
+	/**
+	 * Método para fabricar Fornecedores.
+	 * 
+	 * @param fornecedor
+	 * @param cnpj
+	 * @param codigo
+	 * @param email
+	 * @param telefone1
+	 * @param telefone2
+	 * @param razao
+	 * @param cep
+	 * @param endereço
+	 * @param cidade
+	 * @param bairro
+	 * @param estados
+	 * @return Fornecedor
+	 * @throws DadosInvalidosException
+	 */
 	public static Fornecedor getFornecedor(String fornecedor, String cnpj, String codigo, String email,
 			String telefone1, String telefone2, String razao, String cep, String endereço, String cidade, String bairro,
 			ComboBox<Estados> estados) throws DadosInvalidosException {
 
 		Fornecedor retorno = null;
 		String errorMessage = "";
-		
+
 		if (Verifica.stringVazia(codigo)) {
 			errorMessage += "O código não pode estar vazio!\n";
 		}

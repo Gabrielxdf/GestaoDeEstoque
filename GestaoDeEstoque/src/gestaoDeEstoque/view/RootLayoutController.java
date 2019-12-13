@@ -9,6 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 
+/**
+ * Controlador da view RootLayout
+ * 
+ * @author Gabriel
+ *
+ */
 public class RootLayoutController implements Initializable {
 	@FXML
 	private Tab principal;
@@ -44,9 +50,14 @@ public class RootLayoutController implements Initializable {
 	private Button relatoriosGruposButton;
 	@FXML
 	private Button relatoriosAjudaButton;
-	
-	private MainApp mainApp;
 
+	private MainApp mainApp;
+	/**
+	 * Inicializa o controlador RootLayoutController.
+	 * 
+	 * @param URL            location
+	 * @param ResourceBundle resources
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}
@@ -68,57 +79,69 @@ public class RootLayoutController implements Initializable {
 	private void handleGrupo() {
 		mainApp.showEditGrupos();
 	}
-	
+
 	/**
-	 * Chamado quando o usuário clica no botão "Fornecedores". Abre uma janela para criar, editar 
-	 * e excluir fornecedores.
+	 * Chamado quando o usuário clica no botão "Fornecedores". Abre uma janela para
+	 * criar, editar e excluir fornecedores.
 	 */
 	@FXML
 	private void handleFornecedores() {
 		mainApp.showEditFornecedores();
 	}
-	
+
 	/**
-	 * Chamado quando o usuário clica no botão "Produtos". Abre uma janela para criar, editar e excluir produtos.
+	 * Chamado quando o usuário clica no botão "Produtos". Abre uma janela para
+	 * criar, editar e excluir produtos.
 	 */
 	@FXML
 	private void handleProdutos() {
 		mainApp.showEditProdutos();
 	}
-	
+
 	/**
-	 * Chamado quando o usuário clica no botão "Clientes". Abre uma janela para criar, editar e excluir clientes.
+	 * Chamado quando o usuário clica no botão "Clientes". Abre uma janela para
+	 * criar, editar e excluir clientes.
 	 */
 	@FXML
 	private void handleClientes() {
 		mainApp.showEditCliente();
 	}
-	
+
 	/**
-	 * Chamado quando o usuário clica no botão "Funcionários". Abre uma janela para criar, editar e excluir funcionários.
+	 * Chamado quando o usuário clica no botão "Funcionários". Abre uma janela para
+	 * criar, editar e excluir funcionários.
 	 */
 	@FXML
 	private void handleFuncionarios() {
 		mainApp.showEditFuncionario();
 	}
-	
+
+	/**
+	 * Chamado quando o usuário clica no botão "Entrada". Abre uma janela para criar
+	 * entradas.
+	 */
 	@FXML
 	private void handleEntrada() {
 		mainApp.showEditEntrada();
 	}
-	
+
+	/**
+	 * Chamado quando o usuário clica no botão "Saída". Abre uma janela para criar
+	 * saídas
+	 */
 	@FXML
 	private void handleSaida() {
 		mainApp.showEditSaida();
 	}
-	
+
 	/**
-	 * Chamado quando o usuário clica no botão "Ajuda". Abre uma janela com algumas informações de ajuda para o usuário.
+	 * Chamado quando o usuário clica no botão "Ajuda". Abre uma janela com algumas
+	 * informações de ajuda para o usuário.
 	 */
 	@FXML
 	private void handleAjuda() {
 		String content = "";
-		if(principal.isSelected()) {
+		if (principal.isSelected()) {
 			content += "GRUPOS - Cria, deleta e edita Grupos de produtos.\n";
 			content += "\n";
 			content += "FORNECEDORES - Cria, deleta e edita Fornecedores de produtos.\n";
@@ -128,17 +151,17 @@ public class RootLayoutController implements Initializable {
 			content += "CLIENTES - Cria, deleta e edita Clientes do sistema.\n";
 			content += "\n";
 			content += "FUNCIONÁRIOS - Cria, deleta e edita Funcionários que têm acesso ao sistema.\n";
-			
+
 			AlertUtil.criaUmAlert("Ajuda - Principal", "Ajuda na aba Principal", content, "INFORMATION");
 		}
-		if(acoes.isSelected()) {
+		if (acoes.isSelected()) {
 			content += "ENTRADA - Abre uma Janela para fazer entradas no estoque.\n";
 			content += "\n";
 			content += "SAÍDA - Abre uma janela para fazer saídas no estoque.\n";
 			content += "\n";
 			AlertUtil.criaUmAlert("Ajuda - Ações", "Ajuda na aba Ações", content, "INFORMATION");
 		}
-		if(relatorios.isSelected()) {
+		if (relatorios.isSelected()) {
 			AlertUtil.criaUmAlert("Ajuda - Relatórios", "Ajuda na aba Relatórios", content, "INFORMATION");
 		}
 	}

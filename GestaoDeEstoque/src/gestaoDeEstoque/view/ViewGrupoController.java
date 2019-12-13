@@ -19,6 +19,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Controlador da view ViewGrupo
+ * 
+ * @author Gabriel Henrique
+ *
+ */
 public class ViewGrupoController implements Initializable {
 
 	@FXML
@@ -72,6 +78,12 @@ public class ViewGrupoController implements Initializable {
 	private MainApp mainApp;
 	private Grupos grupo;
 
+	/**
+	 * Inicializa o controlador ViewGrupoController.
+	 * 
+	 * @param URL            location
+	 * @param ResourceBundle resources
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -129,9 +141,9 @@ public class ViewGrupoController implements Initializable {
 	}
 
 	/**
-	 * Método de pesquisar na tabela pelo nome, ou código do Fornecedor, atualizando
-	 * a tabela apenas com os Fornecedor que contém a String passada no campo de
-	 * texto no nome ou código.
+	 * Método de pesquisar na tabela pelo nome, ou código do Grupo, atualizando a
+	 * tabela apenas com os Grupo que contém a String passada no campo de texto no
+	 * nome ou código.
 	 */
 	@FXML
 	private void pesquisar() {

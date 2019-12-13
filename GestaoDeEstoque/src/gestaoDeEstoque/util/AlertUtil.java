@@ -7,6 +7,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * Classe utilitária para criar Alerts.
+ * 
+ * @author Gabriel Henrique
+ *
+ */
 public class AlertUtil {
 	/**
 	 * Cria um Alert com os parâmetros dados.
@@ -51,8 +57,8 @@ public class AlertUtil {
 			alert.setAlertType(AlertType.INFORMATION);
 			alert.setTitle(title);
 			alert.setHeaderText(header);
-			//alert.setContentText(content);
-			alert.getDialogPane().setContent( new Label(content));
+			// alert.setContentText(content);
+			alert.getDialogPane().setContent(new Label(content));
 			alert.showAndWait();
 			alert.setResizable(true);
 			return true;

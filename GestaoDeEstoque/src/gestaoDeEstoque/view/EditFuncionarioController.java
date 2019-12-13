@@ -25,6 +25,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 
+/**
+ * Controlador da view EditFuncionario.
+ * 
+ * @author Gabriel Henrique
+ *
+ */
 public class EditFuncionarioController implements Initializable {
 	@FXML
 	private TextField nomeTextField;
@@ -70,11 +76,7 @@ public class EditFuncionarioController implements Initializable {
 	private MainApp mainApp;
 	private Stage dialogStage;
 
-	/**	if (tempFuncionario != null) {
-			 
-		} else {
-			
-		}
+	/**
 	 * Inicializa o controlador EditFuncionariorController.
 	 * 
 	 * @param URL            location
@@ -92,30 +94,31 @@ public class EditFuncionarioController implements Initializable {
 
 		funcionarioTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showFuncionarios(newValue));
-		
-		//Abre uma janela só deste funcionário específico selecionado, ao dar doubleclick no mouse.
-				funcionarioTable.setOnMousePressed(new EventHandler<MouseEvent>() {
-				    @SuppressWarnings("unchecked")
-					@Override 
-				    public void handle(MouseEvent event) {
-				        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-				            Node node = ((Node) event.getTarget()).getParent();
-				            TableRow<Funcionarios> row;
-				            if (node instanceof TableRow) {
-				                row = (TableRow<Funcionarios>) node;
-				            } else {
-				                // clicking on text part
-				                row = (TableRow<Funcionarios>) node.getParent();
-				            }
-				            mainApp.showViewFuncionario(row.getItem());
-				        }
-				    }
-				});
+
+		// Abre uma janela só deste funcionário específico selecionado, ao dar
+		// doubleclick no mouse.
+		funcionarioTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					Node node = ((Node) event.getTarget()).getParent();
+					TableRow<Funcionarios> row;
+					if (node instanceof TableRow) {
+						row = (TableRow<Funcionarios>) node;
+					} else {
+						// clicking on text part
+						row = (TableRow<Funcionarios>) node.getParent();
+					}
+					mainApp.showViewFuncionario(row.getItem());
+				}
+			}
+		});
 	}
-	
+
 	/**
-	 * Preenche todos os campos de texto com o os dados do Funcionário selecionado. Se o
-	 * Funcionário especificado for null, limpa todos os campos de texto.
+	 * Preenche todos os campos de texto com o os dados do Funcionário selecionado.
+	 * Se o Funcionário especificado for null, limpa todos os campos de texto.
 	 * 
 	 * @param fornecedor ou null
 	 */
@@ -128,11 +131,11 @@ public class EditFuncionarioController implements Initializable {
 			senhaPasswordField.setText(funcionario.getSenha().get());
 			confirmarSenhaPasswordField.setText(funcionario.getConfirmaSenha().get());
 		} else {
-			Limpa.limpaTextField(nomeTextField, usuarioTextField, codigoTextField, emailTextField,
-					senhaPasswordField, confirmarSenhaPasswordField);
+			Limpa.limpaTextField(nomeTextField, usuarioTextField, codigoTextField, emailTextField, senhaPasswordField,
+					confirmarSenhaPasswordField);
 		}
 	}
-	
+
 	/**
 	 * Chamado quando o usuário clica em "Ok". De acordo com o que ele está
 	 * selecionando no ToggleButton, o método adiciona um novo Funcionário, ou edita
@@ -141,18 +144,19 @@ public class EditFuncionarioController implements Initializable {
 	@FXML
 	private void handleOk() {
 		if (cadastrarToggleButton.isSelected()) {
-				adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-						"", "ERROR", -1);
+			adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", "", "ERROR",
+					-1);
 		}
 		if (alterarToggleButton.isSelected()) {
 			int selectedIndex = funcionarioTable.getSelectionModel().getSelectedIndex();
 			if (selectedIndex >= 0) {
-				if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa alteração ?",
+				if (AlertUtil
+						.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa alteração ?",
 								"Alteração no Funcionário: " + "'"
 										+ mainApp.getFuncionariosData().get(selectedIndex).getNome() + "'",
 								"CONFIRMATION")) {
-					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-							"", "ERROR", selectedIndex);
+					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", "",
+							"ERROR", selectedIndex);
 				}
 			} else {
 				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Funcionário Selecionado",
@@ -160,7 +164,7 @@ public class EditFuncionarioController implements Initializable {
 			}
 		}
 	}
-	
+
 	/**
 	 * Método para deletar algum item da Tabela por meio do botão "Excluir".
 	 */
@@ -188,7 +192,7 @@ public class EditFuncionarioController implements Initializable {
 	private void handleCancel() {
 		dialogStage.close();
 	}
-	
+
 	/**
 	 * Adiciona um novo Funcionário na Tabela ou altera um existente.
 	 * 
@@ -196,21 +200,22 @@ public class EditFuncionarioController implements Initializable {
 	 * @param header  o header para criar um Alert
 	 * @param content o content para criar um Alert
 	 * @param type    o type para criar um Alert
-	 * @param index o index do Funcionário a ser alterado.
+	 * @param index   o index do Funcionário a ser alterado.
 	 */
 	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
 		Funcionarios tempFuncionario;
 		try {
-			tempFuncionario = (Funcionarios) FactoryPessoa.getPessoa("F", codigoTextField.getText(), nomeTextField.getText(), emailTextField.getText(),
-					usuarioTextField.getText(), senhaPasswordField.getText(), confirmarSenhaPasswordField.getText(), "","",
-					"", "", "", "", "", "", null);
-			
+			tempFuncionario = (Funcionarios) FactoryPessoa.getPessoa("F", codigoTextField.getText(),
+					nomeTextField.getText(), emailTextField.getText(), usuarioTextField.getText(),
+					senhaPasswordField.getText(), confirmarSenhaPasswordField.getText(), "", "", "", "", "", "", "", "",
+					null);
+
 			if (index >= 0) {
 				mainApp.getFuncionariosData().set(index, tempFuncionario);
 				funcionarioTable.setItems(mainApp.getFuncionariosData());
 				Limpa.limpaTextField(nomeTextField, usuarioTextField, codigoTextField, emailTextField,
 						senhaPasswordField, confirmarSenhaPasswordField);
-			}else {
+			} else {
 				mainApp.getFuncionariosData().add(tempFuncionario);
 				funcionarioTable.setItems(mainApp.getFuncionariosData());
 				Limpa.limpaTextField(nomeTextField, usuarioTextField, codigoTextField, emailTextField,
@@ -222,7 +227,7 @@ public class EditFuncionarioController implements Initializable {
 			AlertUtil.criaUmAlert(title, header, errorMessage, type);
 		}
 	}
-	
+
 	/**
 	 * Cria um Alert com as informações de ajuda da tela.
 	 */
@@ -246,25 +251,25 @@ public class EditFuncionarioController implements Initializable {
 	}
 
 	/**
-	 * Método de pesquisar na tabela pelo nome, ou código do Fornecedor, atualizando
-	 * a tabela apenas com os Fornecedor que contém a String passada no campo de
-	 * texto no nome ou código.
+	 * Método de pesquisar na tabela pelo nome, ou código do Funcionário,
+	 * atualizando a tabela apenas com os Funcionários que contém a String passada
+	 * no campo de texto no nome ou código.
 	 */
 	@FXML
 	private void pesquisar() {
 		ObservableList<Funcionarios> pesquisa;
 
-			if (pesquisaPorNomeToggleButton.isSelected()) {
-				pesquisa = Pesquisa.pesquisarPorNome(mainApp.getFuncionariosData(), pesquisaTextField.getText());
-				funcionarioTable.setItems(pesquisa);
-			}
-			if (pesquisaPorCodigoToggleButton.isSelected()) {
-				pesquisa = Pesquisa.pesquisarPorCodigo(mainApp.getFuncionariosData(), pesquisaTextField.getText());
-				funcionarioTable.setItems(pesquisa);
-			}
+		if (pesquisaPorNomeToggleButton.isSelected()) {
+			pesquisa = Pesquisa.pesquisarPorNome(mainApp.getFuncionariosData(), pesquisaTextField.getText());
+			funcionarioTable.setItems(pesquisa);
+		}
+		if (pesquisaPorCodigoToggleButton.isSelected()) {
+			pesquisa = Pesquisa.pesquisarPorCodigo(mainApp.getFuncionariosData(), pesquisaTextField.getText());
+			funcionarioTable.setItems(pesquisa);
+		}
 
-		
 	}
+
 	/**
 	 * Uma instância do MainApp para o Controller poder usar os métodos do MainApp
 	 * 

@@ -2,7 +2,6 @@ package gestaoDeEstoque.util;
 /**
  * Enum de Estados para popular ComboBox.
  * @author Gabriel Henrique
- *
  */
 public enum Estados {
 

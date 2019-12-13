@@ -23,7 +23,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
+/**
+ * Controlador da view EditSaida.
+ * @author Gabriel Henrique
+ *
+ */
 public class EditSaidaController implements Initializable {
 
 	@FXML
@@ -98,7 +102,10 @@ public class EditSaidaController implements Initializable {
 	private MainApp mainApp;
 
 	private Stage dialogStage;
-
+	
+	/**
+	 * Inicializ o controlador EditSaidaController.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -129,7 +136,12 @@ public class EditSaidaController implements Initializable {
 		});
 
 	}
-
+	/**
+	 * Preenche todos os dados do Produto selecionado na ComboBox
+	 * {@link EditSaidaController#produtoComboBox}
+	 * 
+	 * @param produto
+	 */
 	private void showProduto(Produtos produto) {
 		atualTextField.setText(produto.getEstoqueAtual());
 		minimoTextField.setText(produto.getEstoqueMinimo());
@@ -137,7 +149,11 @@ public class EditSaidaController implements Initializable {
 		valorUnitarioTextField.setText(produto.getValor());
 		valorTotalTextField.setText(foo().toString());
 	}
-	
+	/**
+	 * Método que atualiza o TextField do valor total entre outros.
+	 * 
+	 * @return valorTotal
+	 */
 	@FXML
 	private Double foo() {
 		try {
@@ -157,7 +173,9 @@ public class EditSaidaController implements Initializable {
 			return null;
 		}
 	}
-
+	/**
+	 * Adiciona um produto à saída.
+	 */
 	@FXML
 	private void handleAdicionar() {
 		if(produtoComboBox.getSelectionModel().getSelectedIndex()>=0) {
@@ -169,14 +187,19 @@ public class EditSaidaController implements Initializable {
 		}
 		
 	}
-
+	/**
+	 * Seleciona um Produto na ComboBox e chama o método
+	 * {@link EditSaidaController#showProduto(Produtos)}
+	 */
 	@FXML
 	private void selecionaProduto() {
 		if (produtoComboBox.getSelectionModel().getSelectedIndex() >= 0) {
 			showProduto(produtoComboBox.getSelectionModel().getSelectedItem());
 		}
 	}
-	
+	/**
+	 * Efetua a saída.
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@FXML 
 	private void handleOk() {
@@ -198,10 +221,16 @@ public class EditSaidaController implements Initializable {
 			this.dialogStage.close();
 		}
 	}
+	/**
+	 * Chamado quando o usuário clica em "Cancelar".
+	 */
 	@FXML
 	private void handleCancel() {
 		this.dialogStage.close();
 	}
+	/**
+	 * Cria um Alert com as informações de ajuda da tela.
+	 */
 	@FXML
 	private void helpButton() {
 		String content = "CAMPO PRODUTO - Seleciona o Produto para a saída.\n";
@@ -215,6 +244,9 @@ public class EditSaidaController implements Initializable {
 
 		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Fornecedores", content, "INFORMATION");
 	}
+	/**
+	 * Método para deletar algum item da Tabela por meio do botão "Excluir".
+	 */
 	@FXML
 	private void handleDelete() {
 		int selectedIndex;

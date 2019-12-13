@@ -12,15 +12,43 @@ import gestaoDeEstoque.util.exception.DadosInvalidosException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.ComboBox;
 
+/**
+ * Classe para fabricar Pessoas.
+ * 
+ * @author Gabriel Henrique
+ *
+ */
 public class FactoryPessoa {
-	public static Pessoa getPessoa(String identificador, String codigo, String nome, String email,
-		String usuario, String senha, String confirmaSenha,String dataNascimento, String cpf, String telefone1,
-			String telefone2, String cep, String endereco, String cidade, String bairro, ComboBox<Estados> estados)
+	/**
+	 * Método para fabricar Pessoas.
+	 * 
+	 * @param identificador
+	 * @param codigo
+	 * @param nome
+	 * @param email
+	 * @param usuario
+	 * @param senha
+	 * @param confirmaSenha
+	 * @param dataNascimento
+	 * @param cpf
+	 * @param telefone1
+	 * @param telefone2
+	 * @param cep
+	 * @param endereco
+	 * @param cidade
+	 * @param bairro
+	 * @param estados
+	 * @return Pessoa
+	 * @throws DadosInvalidosException
+	 */
+	public static Pessoa getPessoa(String identificador, String codigo, String nome, String email, String usuario,
+			String senha, String confirmaSenha, String dataNascimento, String cpf, String telefone1, String telefone2,
+			String cep, String endereco, String cidade, String bairro, ComboBox<Estados> estados)
 			throws DadosInvalidosException {
 		Pessoa retorno = null;
 		String errorMessage = "";
-		if(identificador.equals("F") || identificador.equals("C")) {
-		}else {
+		if (identificador.equals("F") || identificador.equals("C")) {
+		} else {
 			errorMessage += "Identificador inválido! use apenas F ou C, para funcionário, ou cliente, respectivamente\n";
 		}
 		if (Verifica.stringVazia(codigo)) {

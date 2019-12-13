@@ -7,53 +7,65 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
-public class ViewClienteController implements Initializable{
+/**
+ * Controlador da view ViewCliente
+ * 
+ * @author Gabriel Henrique
+ *
+ */
+public class ViewClienteController implements Initializable {
 
-    @FXML
-    private TextField nomeTextField;
+	@FXML
+	private TextField nomeTextField;
 
-    @FXML
-    private TextField cpfTextField;
+	@FXML
+	private TextField cpfTextField;
 
-    @FXML
-    private TextField codigoTextField;
+	@FXML
+	private TextField codigoTextField;
 
-    @FXML
-    private TextField dataTextField;
+	@FXML
+	private TextField dataTextField;
 
-    @FXML
-    private TextField emailTextField;
+	@FXML
+	private TextField emailTextField;
 
-    @FXML
-    private TextField celularTextField;
+	@FXML
+	private TextField celularTextField;
 
-    @FXML
-    private TextField residencialTextField;
+	@FXML
+	private TextField residencialTextField;
 
-    @FXML
-    private TextField cepTextField;
+	@FXML
+	private TextField cepTextField;
 
-    @FXML
-    private TextField enderecoTextField;
+	@FXML
+	private TextField enderecoTextField;
 
-    @FXML
-    private TextField cidadeTextField;
+	@FXML
+	private TextField cidadeTextField;
 
-    @FXML
-    private TextField bairroTextField;
+	@FXML
+	private TextField bairroTextField;
 
-    @FXML
-    private TextField estadoTextField;
+	@FXML
+	private TextField estadoTextField;
 
+	/**
+	 * Inicializa o controlador ViewClienteController.
+	 * 
+	 * @param URL            location
+	 * @param ResourceBundle resources
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
 	}
-	
+
 	/**
 	 * Seta o Cliente dessa view.
 	 * 
-	 * @param cliente	
+	 * @param cliente
 	 */
 	public void setCliente(Cliente cliente) {
 		nomeTextField.setText(cliente.getNome());
@@ -69,6 +81,5 @@ public class ViewClienteController implements Initializable{
 		cidadeTextField.setText(cliente.getEndereco().getCidadeProperty().get());
 		estadoTextField.setText(cliente.getEndereco().getEstadoProperty().get());
 	}
-	
 
 }

@@ -29,6 +29,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 
+/**
+ * Controlador da view EditCliente.
+ * 
+ * @author Gabriel Henrique
+ *
+ */
 public class EditClienteController implements Initializable {
 	@FXML
 	private Tab principal;
@@ -153,25 +159,26 @@ public class EditClienteController implements Initializable {
 				.addListener((observable, oldValue, newValue) -> showClientes(newValue));
 		enderecoClienteTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showClientes(newValue));
-		
-		//Abre uma janela só deste cliente específico selecionado, ao dar doubleclick no mouse.
-				clienteTable.setOnMousePressed(new EventHandler<MouseEvent>() {
-				    @SuppressWarnings("unchecked")
-					@Override 
-				    public void handle(MouseEvent event) {
-				        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-				            Node node = ((Node) event.getTarget()).getParent();
-				            TableRow<Cliente> row;
-				            if (node instanceof TableRow) {
-				                row = (TableRow<Cliente>) node;
-				            } else {
-				                // clicking on text part
-				                row = (TableRow<Cliente>) node.getParent();
-				            }
-				            mainApp.showViewCliente(row.getItem());
-				        }
-				    }
-				});
+
+		// Abre uma janela só deste cliente específico selecionado, ao dar doubleclick
+		// no mouse.
+		clienteTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					Node node = ((Node) event.getTarget()).getParent();
+					TableRow<Cliente> row;
+					if (node instanceof TableRow) {
+						row = (TableRow<Cliente>) node;
+					} else {
+						// clicking on text part
+						row = (TableRow<Cliente>) node.getParent();
+					}
+					mainApp.showViewCliente(row.getItem());
+				}
+			}
+		});
 	}
 
 	/**
@@ -215,8 +222,8 @@ public class EditClienteController implements Initializable {
 			}
 
 			if (errorMessage.length() == 0) {
-				adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-						"", "ERROR", -1);
+				adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", "",
+						"ERROR", -1);
 			} else {
 				AlertUtil.criaUmAlert("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
 						errorMessage, "ERROR");
@@ -291,7 +298,7 @@ public class EditClienteController implements Initializable {
 	 * @param header  o header para criar um Alert
 	 * @param content o content para criar um Alert
 	 * @param type    o type para criar um Alert
-	 * @param index o index do Cliente a ser alterado.
+	 * @param index   o index do Cliente a ser alterado.
 	 */
 	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
 		Cliente tempCliente;
@@ -387,9 +394,9 @@ public class EditClienteController implements Initializable {
 	}
 
 	/**
-	 * Método de pesquisar na tabela pelo nome, ou código do Fornecedor, atualizando
-	 * a tabela apenas com os Fornecedor que contém a String passada no campo de
-	 * texto no nome ou código.
+	 * Método de pesquisar na tabela pelo nome, ou código do Cliente, atualizando a
+	 * tabela apenas com os Clientes que contém a String passada no campo de texto
+	 * do nome ou código.
 	 */
 	@FXML
 	private void pesquisar() {

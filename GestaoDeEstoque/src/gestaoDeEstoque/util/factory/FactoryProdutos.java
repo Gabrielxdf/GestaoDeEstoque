@@ -6,9 +6,27 @@ import gestaoDeEstoque.model.estoque.Produtos;
 import gestaoDeEstoque.util.Verifica;
 import gestaoDeEstoque.util.exception.DadosInvalidosException;
 import javafx.scene.control.ComboBox;
-
+/**
+ * Classe para fabricar Produtos.
+ * @author Gabriel Henrique
+ *
+ */
 public class FactoryProdutos {
-
+	/**
+	 * Método para fabricar Produtos.
+	 * @param nome
+	 * @param codigo
+	 * @param valor
+	 * @param codigoBarras
+	 * @param estoqueMinimo
+	 * @param estoqueIdeal
+	 * @param classificacao
+	 * @param descricao
+	 * @param fornecedor
+	 * @param grupo
+	 * @return Produtos
+	 * @throws DadosInvalidosException
+	 */
 	public static Produtos getProduto(String nome, String codigo, String valor, String codigoBarras,
 			String estoqueMinimo, String estoqueIdeal, ComboBox<String> classificacao, String descricao,
 			ComboBox<Fornecedor> fornecedor, ComboBox<Grupos> grupo) throws DadosInvalidosException {

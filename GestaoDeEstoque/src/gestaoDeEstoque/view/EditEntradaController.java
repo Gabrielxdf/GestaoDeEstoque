@@ -24,6 +24,12 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ * Controlador da view EditEntrada.
+ * 
+ * @author Gabriel Henrique
+ *
+ */
 public class EditEntradaController implements Initializable {
 
 	@FXML
@@ -99,6 +105,9 @@ public class EditEntradaController implements Initializable {
 
 	private Stage dialogStage;
 
+	/**
+	 * Inicializ o controlador EditEntradaController.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -130,6 +139,12 @@ public class EditEntradaController implements Initializable {
 
 	}
 
+	/**
+	 * Preenche todos os dados do Produto selecionado na ComboBox
+	 * {@link EditEntradaController#produtoComboBox}
+	 * 
+	 * @param produto
+	 */
 	private void showProduto(Produtos produto) {
 		fornecedorComboBox.setPromptText(produto.getFornecedor().getNome());
 		atualTextField.setText(produto.getEstoqueAtual());
@@ -138,7 +153,12 @@ public class EditEntradaController implements Initializable {
 		valorUnitarioTextField.setText(produto.getValor());
 		valorTotalTextField.setText(foo().toString());
 	}
-	
+
+	/**
+	 * Método que atualiza o TextField do valor total entre outros.
+	 * 
+	 * @return valorTotal
+	 */
 	@FXML
 	private Double foo() {
 		try {
@@ -152,57 +172,75 @@ public class EditEntradaController implements Initializable {
 				return valorTotal;
 			}
 		} catch (NumberFormatException e) {
-			AlertUtil.criaUmAlert("Eroo", "Digite apenas números na quantidade",
+			AlertUtil.criaUmAlert("Erro", "Digite apenas números na quantidade",
 					"Digite apenas números inteiros no campo quantidade", "ERROR");
 			quantidadeTextField.setText("");
 			return null;
 		}
 	}
 
+	/**
+	 * Adiciona um produto à entrada.
+	 */
 	@FXML
 	private void handleAdicionar() {
-		if(produtoComboBox.getSelectionModel().getSelectedIndex()>=0) {
-			
-		entradaTable.getItems().add(produtoComboBox.getSelectionModel().getSelectedItem());
-		}else {
+		if (produtoComboBox.getSelectionModel().getSelectedIndex() >= 0) {
+
+			entradaTable.getItems().add(produtoComboBox.getSelectionModel().getSelectedItem());
+		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
 					"Por favor, Selecione um Produto na tabela.", "ERROR");
 		}
-		
+
 	}
 
+	/**
+	 * Seleciona um Produto na ComboBox e chama o método
+	 * {@link EditEntradaController#showProduto(Produtos)}
+	 */
 	@FXML
 	private void selecionaProduto() {
 		if (produtoComboBox.getSelectionModel().getSelectedIndex() >= 0) {
 			showProduto(produtoComboBox.getSelectionModel().getSelectedItem());
 		}
 	}
-	
+
+	/**
+	 * Efetua a entrada.
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@FXML 
+	@FXML
 	private void handleOk() {
-		if(entradaTable.getItems().isEmpty()) {
+		if (entradaTable.getItems().isEmpty()) {
 			AlertUtil.criaUmAlert("Nenhum produto", "Nenhum Produto na entrada",
 					"Por favor, Adicione um Produto na entrada.", "ERROR");
-		}else {
+		} else {
 			int i = 0;
-			for(Produtos x: entradaTable.getItems()) {
+			for (Produtos x : entradaTable.getItems()) {
 				int estoqueAtual = Integer.parseInt(x.getEstoqueAtual());
-			    Produtos item = entradaTable.getItems().get(i);
-			    TableColumn col = entradaTable.getColumns().get(2);
-			    String data = (String) col.getCellObservableValue(item).getValue();
-			    estoqueAtual += Integer.parseInt(data);
-			    String novoEstoqueAtual = Integer.toString(estoqueAtual);
-			    x.setEstoqueAtual(new SimpleStringProperty(novoEstoqueAtual));
-			    i++;
+				Produtos item = entradaTable.getItems().get(i);
+				TableColumn col = entradaTable.getColumns().get(2);
+				String data = (String) col.getCellObservableValue(item).getValue();
+				estoqueAtual += Integer.parseInt(data);
+				String novoEstoqueAtual = Integer.toString(estoqueAtual);
+				x.setEstoqueAtual(new SimpleStringProperty(novoEstoqueAtual));
+				i++;
 			}
 			this.dialogStage.close();
 		}
 	}
+
+	/**
+	 * Chamado quando o usuário clica em "Cancelar".
+	 */
 	@FXML
 	private void handleCancel() {
 		this.dialogStage.close();
 	}
+
+	/**
+	 * Cria um Alert com as informações de ajuda da tela.
+	 */
 	@FXML
 	private void helpButton() {
 		String content = "CAMPO PRODUTO - Seleciona o Produto para a entrada.\n";
@@ -216,10 +254,14 @@ public class EditEntradaController implements Initializable {
 
 		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Fornecedores", content, "INFORMATION");
 	}
+
+	/**
+	 * Método para deletar algum item da Tabela por meio do botão "Excluir".
+	 */
 	@FXML
 	private void handleDelete() {
 		int selectedIndex;
-		selectedIndex =entradaTable.getSelectionModel().getSelectedIndex();
+		selectedIndex = entradaTable.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
 					"Excluir o Produto: " + "'" + mainApp.getProdutosData().get(selectedIndex).getNome() + "'" + " ?",
@@ -233,21 +275,23 @@ public class EditEntradaController implements Initializable {
 	}
 
 	/**
-	 * Método de pesquisar na tabela pelo nome, ou código do Produto, atualizando a tabela apenas
-	 * com os Produtos que contém a String passada no campo de texto no nome ou código.
+	 * Método de pesquisar na tabela pelo nome, ou código do Produto, atualizando a
+	 * tabela apenas com os Produtos que contém a String passada no campo de texto
+	 * do nome ou código.
 	 */
 	@FXML
 	private void pesquisar() {
 		ObservableList<Produtos> pesquisa;
-			if (pesquisaPorNomeToggleButton.isSelected()) {
-				pesquisa = Pesquisa.pesquisarPorNome(mainApp.getProdutosData(), pesquisaTextField.getText());
-				entradaTable.setItems(pesquisa);
-			}
-			if (pesquisaPorCodigoToggleButton.isSelected()) {
-				pesquisa = Pesquisa.pesquisarPorCodigo(mainApp.getProdutosData(), pesquisaTextField.getText());
-				entradaTable.setItems(pesquisa);
-			}
+		if (pesquisaPorNomeToggleButton.isSelected()) {
+			pesquisa = Pesquisa.pesquisarPorNome(mainApp.getProdutosData(), pesquisaTextField.getText());
+			entradaTable.setItems(pesquisa);
+		}
+		if (pesquisaPorCodigoToggleButton.isSelected()) {
+			pesquisa = Pesquisa.pesquisarPorCodigo(mainApp.getProdutosData(), pesquisaTextField.getText());
+			entradaTable.setItems(pesquisa);
+		}
 	}
+
 	/**
 	 * Define o Stage para este dialogo.
 	 * 

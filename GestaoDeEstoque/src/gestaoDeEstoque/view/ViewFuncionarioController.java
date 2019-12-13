@@ -7,27 +7,39 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
-public class ViewFuncionarioController implements Initializable{
+/**
+ * Controlador da view ViewFuncionario
+ * 
+ * @author Gabriel Henrique
+ *
+ */
+public class ViewFuncionarioController implements Initializable {
 
-    @FXML
-    private TextField nomeTextField;
+	@FXML
+	private TextField nomeTextField;
 
-    @FXML
-    private TextField codigoTextField;
+	@FXML
+	private TextField codigoTextField;
 
-    @FXML
-    private TextField usuarioTextField;
+	@FXML
+	private TextField usuarioTextField;
 
-    @FXML
-    private TextField emailTextField;
+	@FXML
+	private TextField emailTextField;
 
+	/**
+	 * Inicializa o controlador ViewFuncionarioController.
+	 * 
+	 * @param URL            location
+	 * @param ResourceBundle resources
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 	}
 
 	/**
-	 * Seta o Funcionario dessa view.
+	 * Seta o Funcionário dessa view.
 	 * 
 	 * @param funcionario
 	 */

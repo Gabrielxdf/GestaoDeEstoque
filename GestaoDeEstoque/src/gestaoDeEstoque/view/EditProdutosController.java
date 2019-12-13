@@ -26,6 +26,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 
+/**
+ * Controlador da view EditProdutos
+ * 
+ * @author Gabriel Henrique
+ *
+ */
 public class EditProdutosController implements Initializable {
 	@FXML
 	private TextField nomeTextField;
@@ -84,8 +90,8 @@ public class EditProdutosController implements Initializable {
 	@FXML
 	private ToggleButton pesquisaPorCodigoToggleButton;
 	@FXML
-	private ComboBox <Fornecedor> fornecedorComboBox;
-	
+	private ComboBox<Fornecedor> fornecedorComboBox;
+
 	private MainApp mainApp;
 	private Stage dialogStage;
 
@@ -98,45 +104,46 @@ public class EditProdutosController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// inicializa as colunas da tabela
-				codigoColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty());
-				nomeColumn.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
-				valorColumn.setCellValueFactory(cellData -> cellData.getValue().getValorProperty());
-				codigoBarrasColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoBarrasProperty());
-				minimoColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueMinimoProperty());
-				idealColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueIdealProperty());
-				atualColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueAtualProperty());
-				fornecedorColumn.setCellValueFactory(cellData -> cellData.getValue().getFornecedor().getFornecedorProperty());
-				classificacaoColumn.setCellValueFactory(cellData -> cellData.getValue().getClassificacaoProperty());
-				
-				showProdutos(null);
+		codigoColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty());
+		nomeColumn.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
+		valorColumn.setCellValueFactory(cellData -> cellData.getValue().getValorProperty());
+		codigoBarrasColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoBarrasProperty());
+		minimoColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueMinimoProperty());
+		idealColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueIdealProperty());
+		atualColumn.setCellValueFactory(cellData -> cellData.getValue().getEstoqueAtualProperty());
+		fornecedorColumn.setCellValueFactory(cellData -> cellData.getValue().getFornecedor().getFornecedorProperty());
+		classificacaoColumn.setCellValueFactory(cellData -> cellData.getValue().getClassificacaoProperty());
 
-				produtosTable.getSelectionModel().selectedItemProperty()
-						.addListener((observable, oldValue, newValue) -> showProdutos(newValue));
-				
-				//Abre uma janela só deste produto específico selecionado, ao dar doubleclick no mouse.
-				produtosTable.setOnMousePressed(new EventHandler<MouseEvent>() {
-					@SuppressWarnings("unchecked")
-					@Override
-					public void handle(MouseEvent event) {
-						if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-							Node node = ((Node) event.getTarget()).getParent();
-							TableRow<Produtos> row;
-							if (node instanceof TableRow) {
-								row = (TableRow<Produtos>) node;
-							} else {
-								// clicking on text part
-								row = (TableRow<Produtos>) node.getParent();
-							}
-							mainApp.showViewProduto(row.getItem());
-						}
+		showProdutos(null);
+
+		produtosTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> showProdutos(newValue));
+
+		// Abre uma janela só deste produto específico selecionado, ao dar doubleclick
+		// no mouse.
+		produtosTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					Node node = ((Node) event.getTarget()).getParent();
+					TableRow<Produtos> row;
+					if (node instanceof TableRow) {
+						row = (TableRow<Produtos>) node;
+					} else {
+						// clicking on text part
+						row = (TableRow<Produtos>) node.getParent();
 					}
-				});
+					mainApp.showViewProduto(row.getItem());
+				}
+			}
+		});
 
 	}
-	
+
 	/**
-	 * Preenche todos os campos de texto com o os dados do Produto selecionado.
-	 * Se o Produto especificado for null, limpa todos os campos de texto.
+	 * Preenche todos os campos de texto com o os dados do Produto selecionado. Se o
+	 * Produto especificado for null, limpa todos os campos de texto.
 	 * 
 	 * @param produto ou null
 	 */
@@ -152,44 +159,43 @@ public class EditProdutosController implements Initializable {
 			grupoComboBox.getSelectionModel().select(produto.getGrupo());
 			fornecedorComboBox.getSelectionModel().select(produto.getFornecedor());
 			classificacaoComboBox.getSelectionModel().select(produto.getClassificacaoProperty().get());
-			
+
 		} else {
-			Limpa.limpaTextField(nomeTextField, codigoTextField, valorTextField, codigoBarrasTextField,
-					minimoTextField, idealTextField, descricaoTextField);
+			Limpa.limpaTextField(nomeTextField, codigoTextField, valorTextField, codigoBarrasTextField, minimoTextField,
+					idealTextField, descricaoTextField);
 			Limpa.limpaComboBox(classificacaoComboBox, fornecedorComboBox, grupoComboBox);
 		}
 	}
-	
+
 	/**
 	 * Chamado quando o usuário clica em "Ok". De acordo com o que ele está
-	 * selecionando no ToggleButton, o método adiciona um novo Produto, ou edita
-	 * um Produto selecionado.
+	 * selecionando no ToggleButton, o método adiciona um novo Produto, ou edita um
+	 * Produto selecionado.
 	 */
 	@FXML
 	private void handleOk() {
-		
+
 		if (cadastrarToggleButton.isSelected()) {
-				adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-						"", "ERROR", -1);
+			adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", "", "ERROR",
+					-1);
 		}
 		if (alterarToggleButton.isSelected()) {
 			int selectedIndex;
 			selectedIndex = produtosTable.getSelectionModel().getSelectedIndex();
 			if (selectedIndex >= 0) {
 				if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa alteração ?",
-								"Alteração no Produto: " + "'"
-										+ mainApp.getProdutosData().get(selectedIndex).getNome() + "'",
-								"CONFIRMATION")) {
-					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-							"", "ERROR", selectedIndex);
+						"Alteração no Produto: " + "'" + mainApp.getProdutosData().get(selectedIndex).getNome() + "'",
+						"CONFIRMATION")) {
+					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", "",
+							"ERROR", selectedIndex);
 				}
 			} else {
 				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
 						"Por favor, Selecione um Produto na tabela.", "WARNING");
 			}
 		}
-		}
-	
+	}
+
 	/**
 	 * Método para deletar algum item da Tabela por meio do botão "Excluir".
 	 */
@@ -201,14 +207,14 @@ public class EditProdutosController implements Initializable {
 			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
 					"Excluir o Produto: " + "'" + mainApp.getProdutosData().get(selectedIndex).getNome() + "'" + " ?",
 					"CONFIRMATION")) {
-				produtosTable.getItems().get(selectedIndex).getGrupo().getListaProdutos().remove
-				(produtosTable.getSelectionModel().getSelectedItem());
-				produtosTable.getItems().get(selectedIndex).getFornecedor().getListaProdutos().remove
-				(produtosTable.getSelectionModel().getSelectedItem());
+				produtosTable.getItems().get(selectedIndex).getGrupo().getListaProdutos()
+						.remove(produtosTable.getSelectionModel().getSelectedItem());
+				produtosTable.getItems().get(selectedIndex).getFornecedor().getListaProdutos()
+						.remove(produtosTable.getSelectionModel().getSelectedItem());
 				produtosTable.getSelectionModel().getSelectedItem().getGrupo().setQuantidadeProdutos();
 				produtosTable.getSelectionModel().getSelectedItem().getGrupo().setValorTotal();
 				mainApp.getProdutosData().remove(selectedIndex);
-				//mainApp.saveDataToFile();
+				// mainApp.saveDataToFile();
 			}
 		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
@@ -224,14 +230,13 @@ public class EditProdutosController implements Initializable {
 		dialogStage.close();
 	}
 
-	
 	/**
 	 * Carrega a ComboBox dos Grupos
 	 */
 	private void carregarGrupoComboBox() {
 		grupoComboBox.setItems(mainApp.getGruposData());
 	}
-	
+
 	/**
 	 * Carrega a ComboBox dos Fornecedores
 	 */
@@ -247,7 +252,7 @@ public class EditProdutosController implements Initializable {
 		classificacaoComboBox.getItems().add("B");
 		classificacaoComboBox.getItems().add("C");
 	}
-	
+
 	/**
 	 * Adiciona um novo Produto na Tabela ou altera um existente.
 	 * 
@@ -255,16 +260,16 @@ public class EditProdutosController implements Initializable {
 	 * @param header  o header para criar um Alert
 	 * @param content o content para criar um Alert
 	 * @param type    o type para criar um Alert
-	 * @param index o index do Produto a ser alterado.
+	 * @param index   o index do Produto a ser alterado.
 	 */
 	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
 		Produtos tempProduto;
 		try {
 			tempProduto = FactoryProdutos.getProduto(nomeTextField.getText(), codigoTextField.getText(),
-					valorTextField.getText(), codigoBarrasTextField.getText(), minimoTextField.getText(), 
-					idealTextField.getText(), classificacaoComboBox, descricaoTextField.getText(), 
-					fornecedorComboBox, grupoComboBox);
-			
+					valorTextField.getText(), codigoBarrasTextField.getText(), minimoTextField.getText(),
+					idealTextField.getText(), classificacaoComboBox, descricaoTextField.getText(), fornecedorComboBox,
+					grupoComboBox);
+
 			if (index >= 0) {
 				mainApp.getProdutosData().set(index, tempProduto);
 				mainApp.getProdutosData().get(index).getFornecedor().getListaProdutos().set(index, tempProduto);
@@ -275,8 +280,8 @@ public class EditProdutosController implements Initializable {
 				Limpa.limpaTextField(nomeTextField, valorTextField, codigoTextField, minimoTextField, idealTextField,
 						codigoBarrasTextField, descricaoTextField);
 				Limpa.limpaComboBox(classificacaoComboBox, fornecedorComboBox, grupoComboBox);
-				//mainApp.saveDataToFile();
-				
+				// mainApp.saveDataToFile();
+
 			} else {
 				mainApp.getProdutosData().add(tempProduto);
 				tempProduto.getFornecedor().getListaProdutos().add(tempProduto);
@@ -287,10 +292,10 @@ public class EditProdutosController implements Initializable {
 				Limpa.limpaTextField(nomeTextField, valorTextField, codigoTextField, minimoTextField, idealTextField,
 						codigoBarrasTextField, descricaoTextField);
 				Limpa.limpaComboBox(classificacaoComboBox, fornecedorComboBox, grupoComboBox);
-				//mainApp.saveDataToFile();
+				// mainApp.saveDataToFile();
 			}
 		} catch (DadosInvalidosException e) {
-	
+
 			e.printStackTrace();
 			String errorMessage = content + "\n" + e.getMessage();
 			AlertUtil.criaUmAlert(title, header, errorMessage, type);
@@ -328,27 +333,28 @@ public class EditProdutosController implements Initializable {
 	}
 
 	/**
-	 * Método de pesquisar na tabela pelo nome, ou código do Produto, atualizando a tabela apenas
-	 * com os Produtos que contém a String passada no campo de texto no nome ou código.
+	 * Método de pesquisar na tabela pelo nome, ou código do Produto, atualizando a
+	 * tabela apenas com os Produtos que contém a String passada no campo de texto
+	 * no nome ou código.
 	 */
 	@FXML
 	private void pesquisar() {
 		ObservableList<Produtos> pesquisa;
-			if (pesquisaPorNomeToggleButton.isSelected()) {
-				pesquisa = Pesquisa.pesquisarPorNome(mainApp.getProdutosData(), pesquisaTextField.getText());
-				produtosTable.setItems(pesquisa);
-			}
-			if (pesquisaPorCodigoToggleButton.isSelected()) {
-				pesquisa = Pesquisa.pesquisarPorCodigo(mainApp.getProdutosData(), pesquisaTextField.getText());
-				produtosTable.setItems(pesquisa);
-			}
+		if (pesquisaPorNomeToggleButton.isSelected()) {
+			pesquisa = Pesquisa.pesquisarPorNome(mainApp.getProdutosData(), pesquisaTextField.getText());
+			produtosTable.setItems(pesquisa);
+		}
+		if (pesquisaPorCodigoToggleButton.isSelected()) {
+			pesquisa = Pesquisa.pesquisarPorCodigo(mainApp.getProdutosData(), pesquisaTextField.getText());
+			produtosTable.setItems(pesquisa);
+		}
 	}
-	
+
 	/**
-	 * Uma instância do MainApp para o Controller poder usar os métodos do
-	 * MainApp
-	 * @param {@link EditProdutosController#mainApp} uma referência à
-	 *               Aplicação principal.
+	 * Uma instância do MainApp para o Controller poder usar os métodos do MainApp
+	 * 
+	 * @param {@link EditProdutosController#mainApp} uma referência à Aplicação
+	 *               principal.
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;

@@ -30,7 +30,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 
 /**
- * Controlador da view EditFornecedor
+ * Controlador da view EditFornecedor.
  * 
  * @author Gabriel Henrique
  *
@@ -162,25 +162,26 @@ public class EditFornecedorController implements Initializable {
 				.addListener((observable, oldValue, newValue) -> showFornecedores(newValue));
 		enderecoFornecedorTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showFornecedores(newValue));
-		
-		//Abre uma janela só deste fornecedor específico selecionado, ao dar doubleclick no mouse.
-				fornecedorTable.setOnMousePressed(new EventHandler<MouseEvent>() {
-				    @SuppressWarnings("unchecked")
-					@Override 
-				    public void handle(MouseEvent event) {
-				        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-				            Node node = ((Node) event.getTarget()).getParent();
-				            TableRow<Fornecedor> row;
-				            if (node instanceof TableRow) {
-				                row = (TableRow<Fornecedor>) node;
-				            } else {
-				                // clicking on text part
-				                row = (TableRow<Fornecedor>) node.getParent();
-				            }
-				            mainApp.showViewFornecedor(row.getItem());
-				        }
-				    }
-				});
+
+		// Abre uma janela só deste fornecedor específico selecionado, ao dar
+		// doubleclick no mouse.
+		fornecedorTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					Node node = ((Node) event.getTarget()).getParent();
+					TableRow<Fornecedor> row;
+					if (node instanceof TableRow) {
+						row = (TableRow<Fornecedor>) node;
+					} else {
+						// clicking on text part
+						row = (TableRow<Fornecedor>) node.getParent();
+					}
+					mainApp.showViewFornecedor(row.getItem());
+				}
+			}
+		});
 
 	}
 
@@ -233,8 +234,8 @@ public class EditFornecedorController implements Initializable {
 				errorMessage += "CEP não encontrado ou inválido.\n";
 			}
 			if (errorMessage.length() == 0) {
-				adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-						"", "ERROR", -1);
+				adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", "",
+						"ERROR", -1);
 			} else {
 				AlertUtil.criaUmAlert("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
 						errorMessage, "ERROR");
@@ -255,8 +256,8 @@ public class EditFornecedorController implements Initializable {
 								"Alteração no Fornecedor: " + "'"
 										+ mainApp.getFornecedoresData().get(selectedIndex).getNome() + "'",
 								"CONFIRMATION")) {
-					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-							"", "ERROR", selectedIndex);
+					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", "",
+							"ERROR", selectedIndex);
 				}
 			} else {
 				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Fornecedor Selecionado",
@@ -306,17 +307,16 @@ public class EditFornecedorController implements Initializable {
 	 * @param header  o header para criar um Alert
 	 * @param content o content para criar um Alert
 	 * @param type    o type para criar um Alert
-	 * @param index o index do Fornecedor a ser alterado.
+	 * @param index   o index do Fornecedor a ser alterado.
 	 */
 	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
 		Fornecedor tempFornecedor;
 		try {
-			tempFornecedor = FactoryFornecedores.getFornecedor(fornecedorTextField.getText(),
-					cnpjTextField.getText(), codigoTextField.getText(), emailTextField.getText(),
-					tel1TextField.getText(), tel2TextField.getText(), razaoTextField.getText(),
-					cepTextField.getText(), enderecoTextField.getText(), cidadeTextField.getText(), bairroTextField.getText(),
-					estadosComboBox);
-			
+			tempFornecedor = FactoryFornecedores.getFornecedor(fornecedorTextField.getText(), cnpjTextField.getText(),
+					codigoTextField.getText(), emailTextField.getText(), tel1TextField.getText(),
+					tel2TextField.getText(), razaoTextField.getText(), cepTextField.getText(),
+					enderecoTextField.getText(), cidadeTextField.getText(), bairroTextField.getText(), estadosComboBox);
+
 			if (index >= 0) {
 				mainApp.getFornecedoresData().set(index, tempFornecedor);
 				fornecedorTable.setItems(mainApp.getFornecedoresData());
@@ -338,9 +338,11 @@ public class EditFornecedorController implements Initializable {
 			AlertUtil.criaUmAlert(title, header, errorMessage, type);
 		}
 	}
-	
+
 	/**
-	 * Verifica o CEP passado chamando o método {@link Verifica#validaCep}, e faz um Auto-Complete nos campos relevantes.
+	 * Verifica o CEP passado chamando o método {@link Verifica#validaCep}, e faz um
+	 * Auto-Complete nos campos relevantes.
+	 * 
 	 * @API <a href="https://viacep.com.br">ViaCep</a>
 	 * @return true caso o CEP seja validado, false caso contrário.
 	 */

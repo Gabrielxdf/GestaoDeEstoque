@@ -28,7 +28,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 
 /**
- * Janela para adição, exclusão e edição de grupos.
+ * Cotrolador da view EditGrupos
  * 
  * @author Gabriel Henrique
  *
@@ -79,24 +79,25 @@ public class EditGruposController implements Initializable {
 
 		gruposTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showGrupos(newValue));
-		
-		//Abre uma janela só deste grupo específico selecionado, ao dar doubleclick no mouse.
+
+		// Abre uma janela só deste grupo específico selecionado, ao dar doubleclick no
+		// mouse.
 		gruposTable.setOnMousePressed(new EventHandler<MouseEvent>() {
-		    @SuppressWarnings("unchecked")
-			@Override 
-		    public void handle(MouseEvent event) {
-		        if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-		            Node node = ((Node) event.getTarget()).getParent();
-		            TableRow<Grupos> row;
-		            if (node instanceof TableRow) {
-		                row = (TableRow<Grupos>) node;
-		            } else {
-		                // clicking on text part
-		                row = (TableRow<Grupos>) node.getParent();
-		            }
-		            mainApp.showViewGrupos(row.getItem());
-		        }
-		    }
+			@SuppressWarnings("unchecked")
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					Node node = ((Node) event.getTarget()).getParent();
+					TableRow<Grupos> row;
+					if (node instanceof TableRow) {
+						row = (TableRow<Grupos>) node;
+					} else {
+						// clicking on text part
+						row = (TableRow<Grupos>) node.getParent();
+					}
+					mainApp.showViewGrupos(row.getItem());
+				}
+			}
 		});
 
 	}
@@ -144,8 +145,8 @@ public class EditGruposController implements Initializable {
 	@FXML
 	private void handleOk() {
 		if (cadastrarToggleButton.isSelected()) {
-			adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-					"", "ERROR", -1);
+			adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", "", "ERROR",
+					-1);
 		}
 		if (alterarToggleButton.isSelected()) {
 			int selectedIndex = gruposTable.getSelectionModel().getSelectedIndex();
@@ -153,8 +154,8 @@ public class EditGruposController implements Initializable {
 				if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa alteração ?",
 						"Alteração no Grupo: " + "'" + mainApp.getGruposData().get(selectedIndex).getNome() + "'",
 						"CONFIRMATION")) {
-					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
-							"", "ERROR", selectedIndex);
+					adicionaOuAltera("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.", "",
+							"ERROR", selectedIndex);
 				}
 			} else {
 				AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Grupo Selecionado",
@@ -182,7 +183,7 @@ public class EditGruposController implements Initializable {
 					"Excluir o Grupo: " + "'" + mainApp.getGruposData().get(selectedIndex).getNome() + "'" + " ?",
 					"CONFIRMATION")) {
 				gruposTable.getItems().remove(selectedIndex);
-				//mainApp.saveDataToFile();
+				// mainApp.saveDataToFile();
 			}
 		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Grupo Selecionado",
@@ -197,29 +198,29 @@ public class EditGruposController implements Initializable {
 	 * @param header  o header para criar um Alert
 	 * @param content o content para criar um Alert
 	 * @param type    o type para criar um Alert
-	 * @param index o index do Grupo a ser alterado.
+	 * @param index   o index do Grupo a ser alterado.
 	 */
 	private void adicionaOuAltera(String title, String header, String content, String type, int index) {
 		Grupos tempGrupo;
 		try {
 			tempGrupo = FactoryGrupos.getGrupo(nomeTextField.getText());
-			
+
 			if (index >= 0) {
 				mainApp.getGruposData().set(index, tempGrupo);
 				gruposTable.setItems(mainApp.getGruposData());
 				Limpa.limpaTextField(nomeTextField);
-				//mainApp.saveDataToFile();
+				// mainApp.saveDataToFile();
 			} else {
 				mainApp.getGruposData().add(tempGrupo);
 				gruposTable.setItems(mainApp.getGruposData());
 				Limpa.limpaTextField(nomeTextField);
-				//mainApp.saveDataToFile();
+				// mainApp.saveDataToFile();
 			}
 		} catch (DadosInvalidosException e) {
 			e.printStackTrace();
 			String errorMessage = content + "\n" + e.getMessage();
 			AlertUtil.criaUmAlert(title, header, errorMessage, type);
-			
+
 		}
 	}
 
@@ -238,7 +239,7 @@ public class EditGruposController implements Initializable {
 		content += "\n";
 		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Grupos", content, "INFORMATION");
 	}
-	
+
 	/**
 	 * Método de pesquisar na tabela pelo nome do Grupo, atualizando a tabela apenas
 	 * com os grupos que contém a String passada no campo de texto no nome.
