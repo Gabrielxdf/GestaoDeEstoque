@@ -68,7 +68,6 @@ public class TesteAPI {
 			Desktop.getDesktop().open(new File("GestaoDeEstoque/src/Entradas/Teste.pdf"));
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("alo");
 		}
 	}
 }

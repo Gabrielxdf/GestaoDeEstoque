@@ -1,7 +1,19 @@
 package gestaoDeEstoque.view;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Produtos;
@@ -106,7 +118,7 @@ public class EditEntradaController implements Initializable {
 	private Stage dialogStage;
 
 	/**
-	 * Inicializ o controlador EditEntradaController.
+	 * Inicializa o controlador EditEntradaController.
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -216,16 +228,73 @@ public class EditEntradaController implements Initializable {
 					"Por favor, Adicione um Produto na entrada.", "ERROR");
 		} else {
 			int i = 0;
-			for (Produtos x : entradaTable.getItems()) {
-				int estoqueAtual = Integer.parseInt(x.getEstoqueAtual());
-				Produtos item = entradaTable.getItems().get(i);
-				TableColumn col = entradaTable.getColumns().get(2);
-				String data = (String) col.getCellObservableValue(item).getValue();
-				estoqueAtual += Integer.parseInt(data);
-				String novoEstoqueAtual = Integer.toString(estoqueAtual);
-				x.setEstoqueAtual(new SimpleStringProperty(novoEstoqueAtual));
-				i++;
+			
+			Document document = new Document();
+			try {
+
+				PdfWriter.getInstance(document, new FileOutputStream("GestaoDeEstoque/src/Entradas/Teste.pdf"));
+				document.open();
+				
+				// adicionando um parágrafo no documento
+				document.addCreationDate();
+				document.addAuthor("MyStock");
+				document.addSubject("Entradas");
+				document.addKeywords("MyStock");
+				Paragraph p = new Paragraph("Entradas");
+				p.setAlignment(1);
+				document.add(new Paragraph(p));
+				p = new Paragraph(" ");
+				document.add(new Paragraph(p));
+				
+				PdfPTable table = new PdfPTable(4);
+				table.setWidthPercentage(100);
+				PdfPCell cell = new PdfPCell(new Paragraph("Código"));
+				PdfPCell cell1 = new PdfPCell(new Paragraph("Nome do Produto"));
+				PdfPCell cell2 = new PdfPCell(new Paragraph("Quantidade"));
+				PdfPCell cell3 = new PdfPCell(new Paragraph("Valor Total"));
+
+				table.addCell(cell);
+				table.addCell(cell1);
+				table.addCell(cell2);
+				table.addCell(cell3);
+				
+				for (Produtos x : entradaTable.getItems()) {
+					int estoqueAtual = Integer.parseInt(x.getEstoqueAtual());
+					Produtos item = entradaTable.getItems().get(i);
+					TableColumn col = entradaTable.getColumns().get(2);
+					String data = (String) col.getCellObservableValue(item).getValue();
+					estoqueAtual += Integer.parseInt(data);
+					String novoEstoqueAtual = Integer.toString(estoqueAtual);
+					x.setEstoqueAtual(new SimpleStringProperty(novoEstoqueAtual));
+					i++;
+					
+					cell = new PdfPCell(new Paragraph(x.getCodigo()));
+					cell1 = new PdfPCell(new Paragraph(x.getNome()));
+					cell2 = new PdfPCell(new Paragraph(data));
+					cell3 = new PdfPCell(new Paragraph(""));
+
+					table.addCell(cell);
+					table.addCell(cell1);
+					table.addCell(cell2);
+					table.addCell(cell3);
+				}
+				
+				document.add(table);
+
+			} catch (DocumentException | IOException e) {
+				System.err.println(e.getMessage());
+			}finally {
+				document.close();
 			}
+			
+			/*try {
+				Desktop.getDesktop().open(new File("GestaoDeEstoque/src/Entradas/Teste.pdf"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}*/
+			
+			
+			
 			this.dialogStage.close();
 		}
 	}
