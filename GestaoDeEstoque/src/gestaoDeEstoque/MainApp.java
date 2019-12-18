@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
+import gestaoDeEstoque.model.estoque.Entradas;
 import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.FornecedoresListWrapper;
 import gestaoDeEstoque.model.estoque.Grupos;
@@ -54,6 +56,7 @@ public class MainApp extends Application {
 	private ObservableList<Produtos> produtosData = FXCollections.observableArrayList();
 	private ObservableList<Fornecedor> fornecedoresData = FXCollections.observableArrayList();
 	private ObservableList<Funcionarios> funcionariosData = FXCollections.observableArrayList();
+	private ObservableList<Entradas> entradasData = FXCollections.observableArrayList();
 
 	/**
 	 * Construtor do MainApp
@@ -86,7 +89,7 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * Retorna a ObservableList de Produtos.
+	 * Retorna a ObservableList dos Produtos.
 	 * 
 	 * @return produtosData
 	 */
@@ -95,20 +98,39 @@ public class MainApp extends Application {
 	}
 
 	/**
-	 * Retorna a ObservableList de Fornecedores
+	 * Retorna a ObservableList dos Fornecedores.
 	 * 
-	 * @return
+	 * @return fornecedoresData
 	 */
 	public ObservableList<Fornecedor> getFornecedoresData() {
 		return fornecedoresData;
 	}
-
+	
+	/**
+	 * Retorna a ObservableList dos Funcionários.
+	 * 
+	 * @return funcionariosData
+	 */
 	public ObservableList<Funcionarios> getFuncionariosData() {
 		return funcionariosData;
 	}
-
+	
+	/**
+	 * Retorna a ObservableList dos Clientes.
+	 * 
+	 * @return clientesData
+	 */
 	public ObservableList<Cliente> getClientesData() {
 		return clientesData;
+	}
+	
+	/**
+	 * Retorna a ObservableList das Entradas.
+	 * 
+	 * @return entradasData
+	 */
+	public ObservableList<Entradas> getEntradasData() {
+		return entradasData;
 	}
 
 	/**

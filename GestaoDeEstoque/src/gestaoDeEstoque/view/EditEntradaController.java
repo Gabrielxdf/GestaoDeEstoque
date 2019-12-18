@@ -5,22 +5,27 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import gestaoDeEstoque.MainApp;
+import gestaoDeEstoque.model.estoque.Entradas;
 import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Produtos;
+import gestaoDeEstoque.model.estoque.ProdutosEntrada;
 import gestaoDeEstoque.util.AlertUtil;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -54,7 +59,7 @@ public class EditEntradaController implements Initializable {
 	private TextField idealTextField;
 
 	@FXML
-	private TextField observacoesTextField;
+	private TextField descricaoTextField;
 
 	@FXML
 	private Button okButton;
@@ -69,22 +74,22 @@ public class EditEntradaController implements Initializable {
 	private Button helpButton;
 
 	@FXML
-	private TableView<Produtos> entradaTable;
+	private TableView<ProdutosEntrada> entradaTable;
 
 	@FXML
-	private TableColumn<Produtos, String> codigoColumn;
+	private TableColumn<ProdutosEntrada, String> codigoColumn;
 
 	@FXML
-	private TableColumn<Produtos, String> nomeColumn;
+	private TableColumn<ProdutosEntrada, String> nomeColumn;
 
 	@FXML
-	private TableColumn<String, String> quantidadeColumn;
+	private TableColumn<ProdutosEntrada, String> quantidadeColumn;
 
 	@FXML
-	private TableColumn<Produtos, String> valorColumn;
+	private TableColumn<ProdutosEntrada, String> valorColumn;
 
 	@FXML
-	private TableColumn<Double, Double> valorTotalColumn;
+	private TableColumn<ProdutosEntrada, String> valorTotalColumn;
 
 	@FXML
 	private Button excluirButton;
@@ -117,17 +122,22 @@ public class EditEntradaController implements Initializable {
 
 	private Stage dialogStage;
 
+	private ObservableList<ProdutosEntrada> produtos = FXCollections.observableArrayList();
+
 	/**
 	 * Inicializa o controlador EditEntradaController.
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		codigoColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty());
-		nomeColumn.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
-		valorColumn.setCellValueFactory(cellData -> cellData.getValue().getValorProperty());
-		quantidadeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(quantidadeTextField.getText()));
-		valorTotalColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<Double>(foo()));
+		codigoColumn.setCellValueFactory(cellData -> cellData.getValue().getProduto().getCodigoProperty());
+		nomeColumn.setCellValueFactory(cellData -> cellData.getValue().getProduto().getNomeProperty());
+		valorColumn.setCellValueFactory(cellData -> cellData.getValue().getProduto().getValorProperty());
+		quantidadeColumn.setCellValueFactory(cellData -> cellData.getValue().getQuantidadeProperty());
+		valorTotalColumn.setCellValueFactory(cellData -> cellData.getValue().getValorTotalProperty());
+
+		entradaTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> showProduto(newValue.getProduto()));
 
 		// Abre uma janela só deste produto específico selecionado, ao dar doubleclick
 		// no mouse.
@@ -137,14 +147,14 @@ public class EditEntradaController implements Initializable {
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
 					Node node = ((Node) event.getTarget()).getParent();
-					TableRow<Produtos> row;
+					TableRow<ProdutosEntrada> row;
 					if (node instanceof TableRow) {
-						row = (TableRow<Produtos>) node;
+						row = (TableRow<ProdutosEntrada>) node;
 					} else {
 						// clicking on text part
-						row = (TableRow<Produtos>) node.getParent();
+						row = (TableRow<ProdutosEntrada>) node.getParent();
 					}
-					mainApp.showViewProduto(row.getItem());
+					mainApp.showViewProduto(row.getItem().getProduto());
 				}
 			}
 		});
@@ -163,31 +173,24 @@ public class EditEntradaController implements Initializable {
 		minimoTextField.setText(produto.getEstoqueMinimo());
 		idealTextField.setText(produto.getEstoqueIdeal());
 		valorUnitarioTextField.setText(produto.getValor());
-		valorTotalTextField.setText(foo().toString());
 	}
 
 	/**
-	 * Método que atualiza o TextField do valor total entre outros.
-	 * 
-	 * @return valorTotal
+	 * Método que atualiza o TextField do valor total de acordo com o TextField da quantidade.
 	 */
 	@FXML
-	private Double foo() {
+	private void atualizaValorTotal() {
 		try {
-			if (quantidadeTextField.getText().length() <= 0) {
-				return null;
-			} else {
+			if (quantidadeTextField.getText().length() >= 0) {
 				int qtd = Integer.parseInt(quantidadeTextField.getText());
 				Double valor = Double.parseDouble(valorUnitarioTextField.getText());
 				Double valorTotal = qtd * valor;
 				valorTotalTextField.setText(valorTotal.toString());
-				return valorTotal;
 			}
 		} catch (NumberFormatException e) {
 			AlertUtil.criaUmAlert("Erro", "Digite apenas números na quantidade",
 					"Digite apenas números inteiros no campo quantidade", "ERROR");
 			quantidadeTextField.setText("");
-			return null;
 		}
 	}
 
@@ -197,13 +200,13 @@ public class EditEntradaController implements Initializable {
 	@FXML
 	private void handleAdicionar() {
 		if (produtoComboBox.getSelectionModel().getSelectedIndex() >= 0) {
-
-			entradaTable.getItems().add(produtoComboBox.getSelectionModel().getSelectedItem());
+			produtos.add(new ProdutosEntrada(produtoComboBox.getSelectionModel().getSelectedItem(),
+					quantidadeTextField.getText(), valorTotalTextField.getText()));
+			entradaTable.setItems(produtos);
 		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
-					"Por favor, Selecione um Produto na tabela.", "ERROR");
+					"Por favor, Selecione um Produto.", "ERROR");
 		}
-
 	}
 
 	/**
@@ -220,82 +223,94 @@ public class EditEntradaController implements Initializable {
 	/**
 	 * Efetua a entrada.
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@FXML
 	private void handleOk() {
 		if (entradaTable.getItems().isEmpty()) {
 			AlertUtil.criaUmAlert("Nenhum produto", "Nenhum Produto na entrada",
 					"Por favor, Adicione um Produto na entrada.", "ERROR");
 		} else {
+			mainApp.getEntradasData().add(new Entradas(entradaTable.getItems(), descricaoTextField.getText()));
 			int i = 0;
-			
+			Double totalDaEntrada = 0.0;
 			Document document = new Document();
 			try {
 
 				PdfWriter.getInstance(document, new FileOutputStream("GestaoDeEstoque/src/Entradas/Teste.pdf"));
 				document.open();
-				
+
 				// adicionando um parágrafo no documento
 				document.addCreationDate();
 				document.addAuthor("MyStock");
 				document.addSubject("Entradas");
 				document.addKeywords("MyStock");
-				Paragraph p = new Paragraph("Entradas");
+				Paragraph p = new Paragraph("Entrada - " + descricaoTextField.getText());
 				p.setAlignment(1);
 				document.add(new Paragraph(p));
 				p = new Paragraph(" ");
 				document.add(new Paragraph(p));
-				
-				PdfPTable table = new PdfPTable(4);
+
+				PdfPTable table = new PdfPTable(5);
 				table.setWidthPercentage(100);
-				PdfPCell cell = new PdfPCell(new Paragraph("Código"));
+				PdfPCell cell = new PdfPCell(new Paragraph("Código do Produto"));
 				PdfPCell cell1 = new PdfPCell(new Paragraph("Nome do Produto"));
 				PdfPCell cell2 = new PdfPCell(new Paragraph("Quantidade"));
-				PdfPCell cell3 = new PdfPCell(new Paragraph("Valor Total"));
+				PdfPCell cell3 = new PdfPCell(new Paragraph("Valor Unitário"));
+				PdfPCell cell4 = new PdfPCell(new Paragraph("Valor Total"));
 
 				table.addCell(cell);
 				table.addCell(cell1);
 				table.addCell(cell2);
 				table.addCell(cell3);
+				table.addCell(cell4);
 				
-				for (Produtos x : entradaTable.getItems()) {
-					int estoqueAtual = Integer.parseInt(x.getEstoqueAtual());
-					Produtos item = entradaTable.getItems().get(i);
-					TableColumn col = entradaTable.getColumns().get(2);
-					String data = (String) col.getCellObservableValue(item).getValue();
-					estoqueAtual += Integer.parseInt(data);
+				for (ProdutosEntrada x : entradaTable.getItems()) {
+					// Atualiza o estoque dos produtos.
+					int estoqueAtual = Integer.parseInt(x.getProduto().getEstoqueAtual());
+					ProdutosEntrada item = entradaTable.getItems().get(i);
+					TableColumn<ProdutosEntrada, ?> col = entradaTable.getColumns().get(2);
+					String dado = (String) col.getCellObservableValue(item).getValue();
+					estoqueAtual += Integer.parseInt(dado);
 					String novoEstoqueAtual = Integer.toString(estoqueAtual);
-					x.setEstoqueAtual(new SimpleStringProperty(novoEstoqueAtual));
+					x.getProduto().setEstoqueAtual(new SimpleStringProperty(novoEstoqueAtual));
+					totalDaEntrada += Double.parseDouble(x.getValorTotalProperty().get());
 					i++;
-					
-					cell = new PdfPCell(new Paragraph(x.getCodigo()));
-					cell1 = new PdfPCell(new Paragraph(x.getNome()));
-					cell2 = new PdfPCell(new Paragraph(data));
-					cell3 = new PdfPCell(new Paragraph(""));
+
+					cell = new PdfPCell(new Paragraph(x.getProduto().getCodigo()));
+					cell1 = new PdfPCell(new Paragraph(x.getProduto().getNome()));
+					cell2 = new PdfPCell(new Paragraph(x.getQuantidadeProperty().get()));
+					cell3 = new PdfPCell(new Paragraph(x.getProduto().getValor()));
+					cell4 = new PdfPCell(new Paragraph(x.getValorTotalProperty().get()));
 
 					table.addCell(cell);
 					table.addCell(cell1);
 					table.addCell(cell2);
 					table.addCell(cell3);
+					table.addCell(cell4);
 				}
-				
+				p = new Paragraph("Valor total desta entrada: R$ " + totalDaEntrada);
+				Font fonte = new Font();
+				fonte.setSize(0.2f);
+				p.setFont(fonte);
+				document.add(p);
+				p = new Paragraph("Data: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
+				document.add(p);
+				p = new Paragraph(" ");
+				document.add(new Paragraph(p));
 				document.add(table);
 
 			} catch (DocumentException | IOException e) {
 				System.err.println(e.getMessage());
-			}finally {
+			} finally {
 				document.close();
 			}
+			this.dialogStage.close();
 			
+			//Não funciona, o programa trava. Acredito que seja porque o pdf tem Tabelas.
 			/*try {
 				Desktop.getDesktop().open(new File("GestaoDeEstoque/src/Entradas/Teste.pdf"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}*/
-			
-			
-			
-			this.dialogStage.close();
 		}
 	}
 
@@ -339,7 +354,7 @@ public class EditEntradaController implements Initializable {
 			}
 		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
-					"Por favor, Selecione um Produto na tabela.", "ERROR");
+					"Por favor, Selecione um Produto na tabela de entrada.", "ERROR");
 		}
 	}
 
@@ -350,13 +365,13 @@ public class EditEntradaController implements Initializable {
 	 */
 	@FXML
 	private void pesquisar() {
-		ObservableList<Produtos> pesquisa;
+		ObservableList<ProdutosEntrada> pesquisa;
 		if (pesquisaPorNomeToggleButton.isSelected()) {
-			pesquisa = Pesquisa.pesquisarPorNome(mainApp.getProdutosData(), pesquisaTextField.getText());
+			pesquisa = Pesquisa.pesquisarPorNome(produtos, pesquisaTextField.getText());
 			entradaTable.setItems(pesquisa);
 		}
 		if (pesquisaPorCodigoToggleButton.isSelected()) {
-			pesquisa = Pesquisa.pesquisarPorCodigo(mainApp.getProdutosData(), pesquisaTextField.getText());
+			pesquisa = Pesquisa.pesquisarPorCodigo(produtos, pesquisaTextField.getText());
 			entradaTable.setItems(pesquisa);
 		}
 	}
