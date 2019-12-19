@@ -10,8 +10,9 @@ private List<ProdutosEntrada> entrada = new ArrayList<>();
 private String data;
 private Double valorTotal = 0.0;
 private String descricao;
+private String numeroDocumento;
 
-public Entradas(List<ProdutosEntrada> entrada, String descricao) {
+public Entradas(List<ProdutosEntrada> entrada, String descricao, String numeroDocumento) {
 	this.entrada = entrada;
 	this.data = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 	for(ProdutosEntrada p : this.entrada) {
@@ -19,6 +20,7 @@ public Entradas(List<ProdutosEntrada> entrada, String descricao) {
 		this.valorTotal += valorDoProduto;
 	}
 	this.descricao = descricao;
+	this.numeroDocumento = numeroDocumento;
 }
 
 public List<ProdutosEntrada> getEntrada() {
@@ -45,6 +47,20 @@ public void setValorTotal(Double valorTotal) {
 	this.valorTotal = valorTotal;
 }
 
+public String getDescricao() {
+	return descricao;
+}
 
+public void setDescricao(String descricao) {
+	this.descricao = descricao;
+}
+
+public String getNumeroDocumento() {
+	return numeroDocumento;
+}
+
+public void setNumeroDocumento(String numeroDocumento) {
+	this.numeroDocumento = numeroDocumento;
+}
 
 }

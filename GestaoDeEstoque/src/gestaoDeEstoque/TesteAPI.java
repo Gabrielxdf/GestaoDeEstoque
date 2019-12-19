@@ -7,6 +7,8 @@ import java.io.IOException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -18,7 +20,7 @@ public class TesteAPI {
 		Document document = new Document();
 		try {
 
-			PdfWriter.getInstance(document, new FileOutputStream("GestaoDeEstoque/src/Entradas/Teste.pdf"));
+			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("GestaoDeEstoque/src/Entradas/Teste.pdf"));
 			document.open();
 			
 			// adicionando um parágrafo no documento
@@ -26,6 +28,14 @@ public class TesteAPI {
 			document.addAuthor("MyStock");
 			document.addSubject("Gerando PDF em Java");
 			document.addKeywords("www.devmedia.com.br");
+			PdfContentByte canvas = writer.getDirectContent();
+	        CMYKColor blackColor = new CMYKColor(0.f, 0.f, 0.f, 100.f);
+	        canvas.setColorStroke(blackColor);
+	        canvas.moveTo(35, 800);
+	        canvas.lineTo(560, 800);
+	        canvas.moveTo(35, 750);
+	        canvas.lineTo(560, 750);
+	        canvas.closePathStroke();
 			Paragraph p = new Paragraph("Entradas");
 			p.setAlignment(1);
 			document.add(new Paragraph(p));

@@ -8,15 +8,15 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
-
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Entradas;
 import gestaoDeEstoque.model.estoque.Fornecedor;
@@ -117,6 +117,9 @@ public class EditEntradaController implements Initializable {
 
 	@FXML
 	private Button addButton;
+	
+	@FXML
+	private TextField numeroDocumentoTextField;
 
 	private MainApp mainApp;
 
@@ -229,26 +232,35 @@ public class EditEntradaController implements Initializable {
 			AlertUtil.criaUmAlert("Nenhum produto", "Nenhum Produto na entrada",
 					"Por favor, Adicione um Produto na entrada.", "ERROR");
 		} else {
-			mainApp.getEntradasData().add(new Entradas(entradaTable.getItems(), descricaoTextField.getText()));
+			mainApp.getEntradasData().add(new Entradas(entradaTable.getItems(), descricaoTextField.getText(),
+					numeroDocumentoTextField.getText()));
 			int i = 0;
 			Double totalDaEntrada = 0.0;
 			Document document = new Document();
 			try {
-
-				PdfWriter.getInstance(document, new FileOutputStream("GestaoDeEstoque/src/Entradas/Teste.pdf"));
+				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("GestaoDeEstoque/src/Entradas/" + 
+			new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
 				document.open();
-
-				// adicionando um parágrafo no documento
+			
 				document.addCreationDate();
 				document.addAuthor("MyStock");
-				document.addSubject("Entradas");
+				document.addSubject("Entrada");
 				document.addKeywords("MyStock");
+				
+				PdfContentByte canvas = writer.getDirectContent();
+		        CMYKColor blackColor = new CMYKColor(0.f, 0.f, 0.f, 100.f);
+		        canvas.setColorStroke(blackColor);
+		        canvas.moveTo(35, 800);
+		        canvas.lineTo(560, 800);
+		        canvas.moveTo(35, 677);
+		        canvas.lineTo(560, 677);
+		        canvas.closePathStroke();
 				Paragraph p = new Paragraph("Entrada - " + descricaoTextField.getText());
 				p.setAlignment(1);
-				document.add(new Paragraph(p));
+				document.add(p);
 				p = new Paragraph(" ");
-				document.add(new Paragraph(p));
-
+				document.add(p);
+				
 				PdfPTable table = new PdfPTable(5);
 				table.setWidthPercentage(100);
 				PdfPCell cell = new PdfPCell(new Paragraph("Código do Produto"));
@@ -287,30 +299,35 @@ public class EditEntradaController implements Initializable {
 					table.addCell(cell3);
 					table.addCell(cell4);
 				}
+				Phrase f = new Phrase("Gerado pelo MyStock");
+				document.add(f);
+				p = new Paragraph("Documento de Número: " + numeroDocumentoTextField.getText());
+				document.add(p);
 				p = new Paragraph("Valor total desta entrada: R$ " + totalDaEntrada);
-				Font fonte = new Font();
-				fonte.setSize(0.2f);
-				p.setFont(fonte);
 				document.add(p);
 				p = new Paragraph("Data: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
 				document.add(p);
+				p = new Paragraph("Fornecedor: " + produtoComboBox.getSelectionModel().getSelectedItem().getFornecedor().getNome());
+				document.add(p);
 				p = new Paragraph(" ");
-				document.add(new Paragraph(p));
+				document.add(p);
+				document.add(p);
 				document.add(table);
-
+				
 			} catch (DocumentException | IOException e) {
 				System.err.println(e.getMessage());
 			} finally {
 				document.close();
 			}
 			this.dialogStage.close();
+			document.close();
 			
-			//Não funciona, o programa trava. Acredito que seja porque o pdf tem Tabelas.
-			/*try {
-				Desktop.getDesktop().open(new File("GestaoDeEstoque/src/Entradas/Teste.pdf"));
+			try {
+				Desktop.getDesktop().open(new File("GestaoDeEstoque/src/Entradas/" + 
+						new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
 			} catch (IOException e) {
 				e.printStackTrace();
-			}*/
+			}
 		}
 	}
 
@@ -394,7 +411,6 @@ public class EditEntradaController implements Initializable {
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 		produtoComboBox.setItems(mainApp.getProdutosData());
-		fornecedorComboBox.setItems(mainApp.getFornecedoresData());
 	}
 
 }
