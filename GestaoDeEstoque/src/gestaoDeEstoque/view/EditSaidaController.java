@@ -1,14 +1,37 @@
 package gestaoDeEstoque.view;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.CMYKColor;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import gestaoDeEstoque.MainApp;
+import gestaoDeEstoque.model.estoque.Entradas;
 import gestaoDeEstoque.model.estoque.Produtos;
+import gestaoDeEstoque.model.estoque.ProdutosEntrada;
+import gestaoDeEstoque.model.estoque.ProdutosSaida;
+import gestaoDeEstoque.model.estoque.Saidas;
 import gestaoDeEstoque.model.pessoa.Cliente;
 import gestaoDeEstoque.util.AlertUtil;
+import gestaoDeEstoque.util.Verifica;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -40,7 +63,7 @@ public class EditSaidaController implements Initializable {
 	private TextField idealTextField;
 
 	@FXML
-	private TextField observacoesTextField;
+	private TextField descricaoTextField;
 
 	@FXML
 	private Button okButton;
@@ -55,22 +78,22 @@ public class EditSaidaController implements Initializable {
 	private Button helpButton;
 
 	@FXML
-	private TableView<Produtos> saidaTable;
+	private TableView<ProdutosSaida> saidaTable;
 
 	@FXML
-	private TableColumn<Produtos, String> codigoColumn;
+	private TableColumn<ProdutosSaida, String> codigoColumn;
 
 	@FXML
-	private TableColumn<Produtos, String> nomeColumn;
+	private TableColumn<ProdutosSaida, String> nomeColumn;
 
 	@FXML
-	private TableColumn<String, String> quantidadeColumn;
+	private TableColumn<ProdutosSaida, String> quantidadeColumn;
 
 	@FXML
-	private TableColumn<Produtos, String> valorColumn;
+	private TableColumn<ProdutosSaida, String> valorColumn;
 
 	@FXML
-	private TableColumn<Double, Double> valorTotalColumn;
+	private TableColumn<ProdutosSaida, String> valorTotalColumn;
 
 	@FXML
 	private Button excluirButton;
@@ -98,22 +121,30 @@ public class EditSaidaController implements Initializable {
 
 	@FXML
 	private Button addButton;
+	
+	@FXML
+	private TextField numeroDocumentoTextField;
 
 	private MainApp mainApp;
 
 	private Stage dialogStage;
 	
+	private ObservableList<ProdutosSaida> produtos = FXCollections.observableArrayList();
+	
 	/**
-	 * Inicializ o controlador EditSaidaController.
+	 * Inicializa o controlador EditSaidaController.
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		codigoColumn.setCellValueFactory(cellData -> cellData.getValue().getCodigoProperty());
-		nomeColumn.setCellValueFactory(cellData -> cellData.getValue().getNomeProperty());
-		valorColumn.setCellValueFactory(cellData -> cellData.getValue().getValorProperty());
-		quantidadeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(quantidadeTextField.getText()));
-		valorTotalColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<Double>(foo()));
+		codigoColumn.setCellValueFactory(cellData -> cellData.getValue().getProduto().getCodigoProperty());
+		nomeColumn.setCellValueFactory(cellData -> cellData.getValue().getProduto().getNomeProperty());
+		valorColumn.setCellValueFactory(cellData -> cellData.getValue().getProduto().getValorProperty());
+		quantidadeColumn.setCellValueFactory(cellData -> cellData.getValue().getQuantidadeProperty());
+		valorTotalColumn.setCellValueFactory(cellData -> cellData.getValue().getValorTotalProperty());
+
+		saidaTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> showProduto(newValue.getProduto()));
 
 		// Abre uma janela só deste produto específico selecionado, ao dar doubleclick
 		// no mouse.
@@ -123,22 +154,23 @@ public class EditSaidaController implements Initializable {
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
 					Node node = ((Node) event.getTarget()).getParent();
-					TableRow<Produtos> row;
+					TableRow<ProdutosEntrada> row;
 					if (node instanceof TableRow) {
-						row = (TableRow<Produtos>) node;
+						row = (TableRow<ProdutosEntrada>) node;
 					} else {
 						// clicking on text part
-						row = (TableRow<Produtos>) node.getParent();
+						row = (TableRow<ProdutosEntrada>) node.getParent();
 					}
-					mainApp.showViewProduto(row.getItem());
+					mainApp.showViewProduto(row.getItem().getProduto());
 				}
 			}
 		});
 
 	}
+
 	/**
 	 * Preenche todos os dados do Produto selecionado na ComboBox
-	 * {@link EditSaidaController#produtoComboBox}
+	 * {@link EditEntradaController#produtoComboBox}
 	 * 
 	 * @param produto
 	 */
@@ -147,49 +179,50 @@ public class EditSaidaController implements Initializable {
 		minimoTextField.setText(produto.getEstoqueMinimo());
 		idealTextField.setText(produto.getEstoqueIdeal());
 		valorUnitarioTextField.setText(produto.getValor());
-		valorTotalTextField.setText(foo().toString());
+		atualizaValorTotal();
 	}
+
 	/**
-	 * Método que atualiza o TextField do valor total entre outros.
-	 * 
-	 * @return valorTotal
+	 * Método que atualiza o TextField do valor total de acordo com o TextField da quantidade.
 	 */
 	@FXML
-	private Double foo() {
+	private void atualizaValorTotal() {
 		try {
-			if (quantidadeTextField.getText().length() <= 0) {
-				return null;
-			} else {
+			if (quantidadeTextField.getText().length() > 0 && !Verifica.comboBoxSemSeleção(produtoComboBox)) {
 				int qtd = Integer.parseInt(quantidadeTextField.getText());
 				Double valor = Double.parseDouble(valorUnitarioTextField.getText());
 				Double valorTotal = qtd * valor;
 				valorTotalTextField.setText(valorTotal.toString());
-				return valorTotal;
+			}else {
+				valorTotalTextField.setText("");
 			}
 		} catch (NumberFormatException e) {
-			AlertUtil.criaUmAlert("Eroo", "Digite apenas números na quantidade",
+			AlertUtil.criaUmAlert("Erro", "Digite apenas números na quantidade",
 					"Digite apenas números inteiros no campo quantidade", "ERROR");
 			quantidadeTextField.setText("");
-			return null;
+			valorTotalTextField.setText("");
 		}
 	}
+
 	/**
-	 * Adiciona um produto à saída.
+	 * Adiciona um produto à entrada.
 	 */
 	@FXML
 	private void handleAdicionar() {
-		if(produtoComboBox.getSelectionModel().getSelectedIndex()>=0) {
-			
-		saidaTable.getItems().add(produtoComboBox.getSelectionModel().getSelectedItem());
-		}else {
+		if (produtoComboBox.getSelectionModel().getSelectedIndex() >= 0) {
+			produtos.add(new ProdutosSaida(produtoComboBox.getSelectionModel().getSelectedItem(),
+					quantidadeTextField.getText(), valorTotalTextField.getText(), 
+					clienteComboBox.getSelectionModel().getSelectedItem()));
+			saidaTable.setItems(produtos);
+		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
-					"Por favor, Selecione um Produto na tabela.", "ERROR");
+					"Por favor, Selecione um Produto.", "ERROR");
 		}
-		
 	}
+
 	/**
 	 * Seleciona um Produto na ComboBox e chama o método
-	 * {@link EditSaidaController#showProduto(Produtos)}
+	 * {@link EditEntradaController#showProduto(Produtos)}
 	 */
 	@FXML
 	private void selecionaProduto() {
@@ -197,30 +230,114 @@ public class EditSaidaController implements Initializable {
 			showProduto(produtoComboBox.getSelectionModel().getSelectedItem());
 		}
 	}
+
 	/**
-	 * Efetua a saída.
+	 * Efetua a entrada.
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@FXML 
+	@FXML
 	private void handleOk() {
-		if(saidaTable.getItems().isEmpty()) {
+		if (saidaTable.getItems().isEmpty()) {
 			AlertUtil.criaUmAlert("Nenhum produto", "Nenhum Produto na entrada",
 					"Por favor, Adicione um Produto na entrada.", "ERROR");
-		}else {
+		} else {
+			mainApp.getSaidasData().add(new Saidas(saidaTable.getItems(), descricaoTextField.getText(),
+					numeroDocumentoTextField.getText()));
 			int i = 0;
-			for(Produtos x: saidaTable.getItems()) {
-				int estoqueAtual = Integer.parseInt(x.getEstoqueAtual());
-			    Produtos item = saidaTable.getItems().get(i);
-			    TableColumn col = saidaTable.getColumns().get(2);
-			    String data = (String) col.getCellObservableValue(item).getValue();
-			    estoqueAtual -= Integer.parseInt(data);
-			    String novoEstoqueAtual = Integer.toString(estoqueAtual);
-			    x.setEstoqueAtual(new SimpleStringProperty(novoEstoqueAtual));
-			    i++;
+			Double totalDaSaida = 0.0;
+			Document document = new Document();
+			try {
+				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("GestaoDeEstoque/src/Saidas/" + 
+			new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
+				document.open();
+			
+				document.addCreationDate();
+				document.addAuthor("MyStock");
+				document.addSubject("Saída");
+				document.addKeywords("MyStock");
+				
+				PdfContentByte canvas = writer.getDirectContent();
+		        CMYKColor blackColor = new CMYKColor(0.f, 0.f, 0.f, 100.f);
+		        canvas.setColorStroke(blackColor);
+		        canvas.moveTo(35, 800);
+		        canvas.lineTo(560, 800);
+		        canvas.moveTo(35, 677);
+		        canvas.lineTo(560, 677);
+		        canvas.closePathStroke();
+				Paragraph p = new Paragraph("Saída - " + descricaoTextField.getText());
+				p.setAlignment(1);
+				document.add(p);
+				p = new Paragraph(" ");
+				document.add(p);
+				
+				PdfPTable table = new PdfPTable(5);
+				table.setWidthPercentage(100);
+				PdfPCell cell = new PdfPCell(new Paragraph("Código do Produto"));
+				PdfPCell cell1 = new PdfPCell(new Paragraph("Nome do Produto"));
+				PdfPCell cell2 = new PdfPCell(new Paragraph("Quantidade"));
+				PdfPCell cell3 = new PdfPCell(new Paragraph("Valor Unitário"));
+				PdfPCell cell4 = new PdfPCell(new Paragraph("Valor Total"));
+
+				table.addCell(cell);
+				table.addCell(cell1);
+				table.addCell(cell2);
+				table.addCell(cell3);
+				table.addCell(cell4);
+				
+				for (ProdutosSaida x : saidaTable.getItems()) {
+					// Atualiza o estoque dos produtos.
+					int estoqueAtual = Integer.parseInt(x.getProduto().getEstoqueAtual());
+					ProdutosSaida item = saidaTable.getItems().get(i);
+					TableColumn<ProdutosSaida, ?> col = saidaTable.getColumns().get(2);
+					String dado = (String) col.getCellObservableValue(item).getValue();
+					estoqueAtual -= Integer.parseInt(dado);
+					String novoEstoqueAtual = Integer.toString(estoqueAtual);
+					x.getProduto().setEstoqueAtual(new SimpleStringProperty(novoEstoqueAtual));
+					totalDaSaida += Double.parseDouble(x.getValorTotalProperty().get());
+					i++;
+
+					cell = new PdfPCell(new Paragraph(x.getProduto().getCodigo()));
+					cell1 = new PdfPCell(new Paragraph(x.getProduto().getNome()));
+					cell2 = new PdfPCell(new Paragraph(x.getQuantidadeProperty().get()));
+					cell3 = new PdfPCell(new Paragraph(x.getProduto().getValor()));
+					cell4 = new PdfPCell(new Paragraph(x.getValorTotalProperty().get()));
+
+					table.addCell(cell);
+					table.addCell(cell1);
+					table.addCell(cell2);
+					table.addCell(cell3);
+					table.addCell(cell4);
+				}
+				Phrase f = new Phrase("Gerado pelo MyStock");
+				document.add(f);
+				p = new Paragraph("Documento de Número: " + numeroDocumentoTextField.getText());
+				document.add(p);
+				p = new Paragraph("Valor total desta saída: R$ " + totalDaSaida);
+				document.add(p);
+				p = new Paragraph("Data: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
+				document.add(p);
+				p = new Paragraph("Cliente: " + clienteComboBox.getSelectionModel().getSelectedItem().getNome());
+				document.add(p);
+				p = new Paragraph(" ");
+				document.add(p);
+				document.add(p);
+				document.add(table);
+				
+			} catch (DocumentException | IOException e) {
+				System.err.println(e.getMessage());
+			} finally {
+				document.close();
+			}
+			document.close();
+			try {
+				Desktop.getDesktop().open(new File("GestaoDeEstoque/src/Saidas/" + 
+						new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			this.dialogStage.close();
 		}
 	}
+
 	/**
 	 * Chamado quando o usuário clica em "Cancelar".
 	 */
@@ -250,35 +367,38 @@ public class EditSaidaController implements Initializable {
 	@FXML
 	private void handleDelete() {
 		int selectedIndex;
-		selectedIndex =saidaTable.getSelectionModel().getSelectedIndex();
+		selectedIndex = saidaTable.getSelectionModel().getSelectedIndex();
+		ProdutosSaida selectedProdutosSaida= saidaTable.getSelectionModel().getSelectedItem();
 		if (selectedIndex >= 0) {
 			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
-					"Excluir o Produto: " + "'" + mainApp.getProdutosData().get(selectedIndex).getNome() + "'" + " ?",
+					"Excluir o Produto: " + "'" + selectedProdutosSaida.getProduto().getNome() + "'" + " ?",
 					"CONFIRMATION")) {
-				saidaTable.getItems().remove(selectedIndex);
+				saidaTable.getItems().remove(selectedProdutosSaida);
 			}
 		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
-					"Por favor, Selecione um Produto na tabela.", "ERROR");
+					"Por favor, Selecione um Produto na tabela de saída.", "ERROR");
 		}
 	}
 
 	/**
-	 * Método de pesquisar na tabela pelo nome, ou código do Produto, atualizando a tabela apenas
-	 * com os Produtos que contém a String passada no campo de texto no nome ou código.
+	 * Método de pesquisar na tabela pelo nome, ou código do Produto, atualizando a
+	 * tabela apenas com os Produtos que contém a String passada no campo de texto
+	 * do nome ou código.
 	 */
 	@FXML
 	private void pesquisar() {
-		ObservableList<Produtos> pesquisa;
-			if (pesquisaPorNomeToggleButton.isSelected()) {
-				pesquisa = Pesquisa.pesquisarPorNome(mainApp.getProdutosData(), pesquisaTextField.getText());
-				saidaTable.setItems(pesquisa);
-			}
-			if (pesquisaPorCodigoToggleButton.isSelected()) {
-				pesquisa = Pesquisa.pesquisarPorCodigo(mainApp.getProdutosData(), pesquisaTextField.getText());
-				saidaTable.setItems(pesquisa);
-			}
+		ObservableList<ProdutosSaida> pesquisa;
+		if (pesquisaPorNomeToggleButton.isSelected()) {
+			pesquisa = Pesquisa.pesquisarPorNome(produtos, pesquisaTextField.getText());
+			saidaTable.setItems(pesquisa);
+		}
+		if (pesquisaPorCodigoToggleButton.isSelected()) {
+			pesquisa = Pesquisa.pesquisarPorCodigo(produtos, pesquisaTextField.getText());
+			saidaTable.setItems(pesquisa);
+		}
 	}
+
 	/**
 	 * Define o Stage para este dialogo.
 	 * 
@@ -299,5 +419,5 @@ public class EditSaidaController implements Initializable {
 		produtoComboBox.setItems(mainApp.getProdutosData());
 		clienteComboBox.setItems(mainApp.getClientesData());
 	}
-
+	
 }

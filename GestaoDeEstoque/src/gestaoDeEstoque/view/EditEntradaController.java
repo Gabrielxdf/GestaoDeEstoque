@@ -23,6 +23,7 @@ import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Produtos;
 import gestaoDeEstoque.model.estoque.ProdutosEntrada;
 import gestaoDeEstoque.util.AlertUtil;
+import gestaoDeEstoque.util.Verifica;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -176,6 +177,7 @@ public class EditEntradaController implements Initializable {
 		minimoTextField.setText(produto.getEstoqueMinimo());
 		idealTextField.setText(produto.getEstoqueIdeal());
 		valorUnitarioTextField.setText(produto.getValor());
+		atualizaValorTotal();
 	}
 
 	/**
@@ -184,16 +186,19 @@ public class EditEntradaController implements Initializable {
 	@FXML
 	private void atualizaValorTotal() {
 		try {
-			if (quantidadeTextField.getText().length() >= 0) {
+			if (quantidadeTextField.getText().length() > 0 && !Verifica.comboBoxSemSeleção(produtoComboBox)) {
 				int qtd = Integer.parseInt(quantidadeTextField.getText());
 				Double valor = Double.parseDouble(valorUnitarioTextField.getText());
 				Double valorTotal = qtd * valor;
 				valorTotalTextField.setText(valorTotal.toString());
+			}else {
+				valorTotalTextField.setText("");
 			}
 		} catch (NumberFormatException e) {
 			AlertUtil.criaUmAlert("Erro", "Digite apenas números na quantidade",
 					"Digite apenas números inteiros no campo quantidade", "ERROR");
 			quantidadeTextField.setText("");
+			valorTotalTextField.setText("");
 		}
 	}
 
@@ -319,15 +324,14 @@ public class EditEntradaController implements Initializable {
 			} finally {
 				document.close();
 			}
-			this.dialogStage.close();
 			document.close();
-			
 			try {
 				Desktop.getDesktop().open(new File("GestaoDeEstoque/src/Entradas/" + 
 						new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			this.dialogStage.close();
 		}
 	}
 
@@ -363,11 +367,12 @@ public class EditEntradaController implements Initializable {
 	private void handleDelete() {
 		int selectedIndex;
 		selectedIndex = entradaTable.getSelectionModel().getSelectedIndex();
+		ProdutosEntrada selectedProdutosEntrada= entradaTable.getSelectionModel().getSelectedItem();
 		if (selectedIndex >= 0) {
 			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
-					"Excluir o Produto: " + "'" + mainApp.getProdutosData().get(selectedIndex).getNome() + "'" + " ?",
+					"Excluir o Produto: " + "'" + selectedProdutosEntrada.getProduto().getNome() + "'" + " ?",
 					"CONFIRMATION")) {
-				entradaTable.getItems().remove(selectedIndex);
+				entradaTable.getItems().remove(selectedProdutosEntrada);
 			}
 		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",

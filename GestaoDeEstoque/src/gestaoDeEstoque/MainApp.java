@@ -13,6 +13,7 @@ import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.GruposListWrapper;
 import gestaoDeEstoque.model.estoque.Produtos;
 import gestaoDeEstoque.model.estoque.ProdutosListWrapper;
+import gestaoDeEstoque.model.estoque.Saidas;
 import gestaoDeEstoque.model.pessoa.Cliente;
 import gestaoDeEstoque.model.pessoa.Funcionarios;
 import gestaoDeEstoque.util.Enderecos;
@@ -57,6 +58,7 @@ public class MainApp extends Application {
 	private ObservableList<Fornecedor> fornecedoresData = FXCollections.observableArrayList();
 	private ObservableList<Funcionarios> funcionariosData = FXCollections.observableArrayList();
 	private ObservableList<Entradas> entradasData = FXCollections.observableArrayList();
+	private ObservableList<Saidas> saidasData = FXCollections.observableArrayList();
 
 	/**
 	 * Construtor do MainApp
@@ -131,6 +133,15 @@ public class MainApp extends Application {
 	 */
 	public ObservableList<Entradas> getEntradasData() {
 		return entradasData;
+	}
+	
+	/**
+	 * Retorna a ObservableList das Saídas.
+	 * 
+	 * @return entradasData
+	 */
+	public ObservableList<Saidas> getSaidasData() {
+		return saidasData;
 	}
 
 	/**
