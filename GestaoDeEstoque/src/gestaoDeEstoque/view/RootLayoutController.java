@@ -45,7 +45,7 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	private Button mensalButton;
 	@FXML
-	private Button anualButton;
+	private Button porPeriodoButton;
 	@FXML
 	private Button relatoriosGruposButton;
 	@FXML

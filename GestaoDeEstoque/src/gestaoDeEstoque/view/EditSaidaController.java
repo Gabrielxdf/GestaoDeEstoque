@@ -8,7 +8,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
-
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
@@ -18,18 +17,17 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-
 import gestaoDeEstoque.MainApp;
-import gestaoDeEstoque.model.estoque.Entradas;
 import gestaoDeEstoque.model.estoque.Produtos;
-import gestaoDeEstoque.model.estoque.ProdutosEntrada;
-import gestaoDeEstoque.model.estoque.ProdutosSaida;
-import gestaoDeEstoque.model.estoque.Saidas;
+import gestaoDeEstoque.model.estoque.entradaOuSaida.ProdutosEntrada;
+import gestaoDeEstoque.model.estoque.entradaOuSaida.ProdutosSaida;
+import gestaoDeEstoque.model.estoque.entradaOuSaida.Saidas;
 import gestaoDeEstoque.model.pessoa.Cliente;
 import gestaoDeEstoque.util.AlertUtil;
 import gestaoDeEstoque.util.Verifica;
+import gestaoDeEstoque.util.exception.DadosInvalidosException;
+import gestaoDeEstoque.util.factory.FactoryProdutosSaida;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,8 +44,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
 /**
  * Controlador da view EditSaida.
+ * 
  * @author Gabriel Henrique
  *
  */
@@ -121,16 +121,16 @@ public class EditSaidaController implements Initializable {
 
 	@FXML
 	private Button addButton;
-	
+
 	@FXML
 	private TextField numeroDocumentoTextField;
 
 	private MainApp mainApp;
 
 	private Stage dialogStage;
-	
+
 	private ObservableList<ProdutosSaida> produtos = FXCollections.observableArrayList();
-	
+
 	/**
 	 * Inicializa o controlador EditSaidaController.
 	 */
@@ -146,8 +146,8 @@ public class EditSaidaController implements Initializable {
 		saidaTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showProduto(newValue.getProduto()));
 
-		// Abre uma janela só deste produto específico selecionado, ao dar doubleclick
-		// no mouse.
+		// Abre uma janela só do produto específico selecionado na tabela, ao dar
+		// doubleclick no mouse.
 		saidaTable.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@SuppressWarnings("unchecked")
 			@Override
@@ -183,7 +183,8 @@ public class EditSaidaController implements Initializable {
 	}
 
 	/**
-	 * Método que atualiza o TextField do valor total de acordo com o TextField da quantidade.
+	 * Método que atualiza o TextField do valor total de acordo com o TextField da
+	 * quantidade.
 	 */
 	@FXML
 	private void atualizaValorTotal() {
@@ -193,7 +194,7 @@ public class EditSaidaController implements Initializable {
 				Double valor = Double.parseDouble(valorUnitarioTextField.getText());
 				Double valorTotal = qtd * valor;
 				valorTotalTextField.setText(valorTotal.toString());
-			}else {
+			} else {
 				valorTotalTextField.setText("");
 			}
 		} catch (NumberFormatException e) {
@@ -205,18 +206,26 @@ public class EditSaidaController implements Initializable {
 	}
 
 	/**
-	 * Adiciona um produto à entrada.
+	 * Adiciona um produto à tabela de saída.
 	 */
 	@FXML
 	private void handleAdicionar() {
 		if (produtoComboBox.getSelectionModel().getSelectedIndex() >= 0) {
-			produtos.add(new ProdutosSaida(produtoComboBox.getSelectionModel().getSelectedItem(),
-					quantidadeTextField.getText(), valorTotalTextField.getText(), 
-					clienteComboBox.getSelectionModel().getSelectedItem()));
+			
+			try {
+				produtos.add(FactoryProdutosSaida.getProdutosSaida(
+						produtoComboBox.getSelectionModel().getSelectedItem(), quantidadeTextField.getText(),
+						valorTotalTextField.getText(), clienteComboBox, numeroDocumentoTextField.getText()));
+			} catch (DadosInvalidosException e) {
+				AlertUtil.criaUmAlert("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
+						e.getMessage(), "ERROR");
+			}
+
 			saidaTable.setItems(produtos);
+
 		} else {
-			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
-					"Por favor, Selecione um Produto.", "ERROR");
+			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado", "Por favor, Selecione um Produto.",
+					"ERROR");
 		}
 	}
 
@@ -232,7 +241,7 @@ public class EditSaidaController implements Initializable {
 	}
 
 	/**
-	 * Efetua a entrada.
+	 * Efetua a saída e gera seu PDF.
 	 */
 	@FXML
 	private void handleOk() {
@@ -246,29 +255,31 @@ public class EditSaidaController implements Initializable {
 			Double totalDaSaida = 0.0;
 			Document document = new Document();
 			try {
-				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("GestaoDeEstoque/src/Saidas/" + 
-			new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
+				PdfWriter writer = PdfWriter.getInstance(document,
+						new FileOutputStream(
+								"GestaoDeEstoque/src/Saidas/" + new SimpleDateFormat("dd-MM-yyyy").format(new Date())
+										+ "_" + numeroDocumentoTextField.getText() + ".pdf"));
 				document.open();
-			
+
 				document.addCreationDate();
 				document.addAuthor("MyStock");
 				document.addSubject("Saída");
 				document.addKeywords("MyStock");
-				
+
 				PdfContentByte canvas = writer.getDirectContent();
-		        CMYKColor blackColor = new CMYKColor(0.f, 0.f, 0.f, 100.f);
-		        canvas.setColorStroke(blackColor);
-		        canvas.moveTo(35, 800);
-		        canvas.lineTo(560, 800);
-		        canvas.moveTo(35, 677);
-		        canvas.lineTo(560, 677);
-		        canvas.closePathStroke();
+				CMYKColor blackColor = new CMYKColor(0.f, 0.f, 0.f, 100.f);
+				canvas.setColorStroke(blackColor);
+				canvas.moveTo(35, 800);
+				canvas.lineTo(560, 800);
+				canvas.moveTo(35, 677);
+				canvas.lineTo(560, 677);
+				canvas.closePathStroke();
 				Paragraph p = new Paragraph("Saída - " + descricaoTextField.getText());
 				p.setAlignment(1);
 				document.add(p);
 				p = new Paragraph(" ");
 				document.add(p);
-				
+
 				PdfPTable table = new PdfPTable(5);
 				table.setWidthPercentage(100);
 				PdfPCell cell = new PdfPCell(new Paragraph("Código do Produto"));
@@ -282,7 +293,7 @@ public class EditSaidaController implements Initializable {
 				table.addCell(cell2);
 				table.addCell(cell3);
 				table.addCell(cell4);
-				
+
 				for (ProdutosSaida x : saidaTable.getItems()) {
 					// Atualiza o estoque dos produtos.
 					int estoqueAtual = Integer.parseInt(x.getProduto().getEstoqueAtual());
@@ -321,7 +332,7 @@ public class EditSaidaController implements Initializable {
 				document.add(p);
 				document.add(p);
 				document.add(table);
-				
+
 			} catch (DocumentException | IOException e) {
 				System.err.println(e.getMessage());
 			} finally {
@@ -329,8 +340,9 @@ public class EditSaidaController implements Initializable {
 			}
 			document.close();
 			try {
-				Desktop.getDesktop().open(new File("GestaoDeEstoque/src/Saidas/" + 
-						new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
+				Desktop.getDesktop().open(
+						new File("GestaoDeEstoque/src/Saidas/" + new SimpleDateFormat("dd-MM-yyyy").format(new Date())
+								+ "_" + numeroDocumentoTextField.getText() + ".pdf"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -345,6 +357,7 @@ public class EditSaidaController implements Initializable {
 	private void handleCancel() {
 		this.dialogStage.close();
 	}
+
 	/**
 	 * Cria um Alert com as informações de ajuda da tela.
 	 */
@@ -361,6 +374,7 @@ public class EditSaidaController implements Initializable {
 
 		AlertUtil.criaUmAlert("Ajuda", "Ajuda - Fornecedores", content, "INFORMATION");
 	}
+
 	/**
 	 * Método para deletar algum item da Tabela por meio do botão "Excluir".
 	 */
@@ -368,7 +382,7 @@ public class EditSaidaController implements Initializable {
 	private void handleDelete() {
 		int selectedIndex;
 		selectedIndex = saidaTable.getSelectionModel().getSelectedIndex();
-		ProdutosSaida selectedProdutosSaida= saidaTable.getSelectionModel().getSelectedItem();
+		ProdutosSaida selectedProdutosSaida = saidaTable.getSelectionModel().getSelectedItem();
 		if (selectedIndex >= 0) {
 			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
 					"Excluir o Produto: " + "'" + selectedProdutosSaida.getProduto().getNome() + "'" + " ?",
@@ -419,5 +433,5 @@ public class EditSaidaController implements Initializable {
 		produtoComboBox.setItems(mainApp.getProdutosData());
 		clienteComboBox.setItems(mainApp.getClientesData());
 	}
-	
+
 }

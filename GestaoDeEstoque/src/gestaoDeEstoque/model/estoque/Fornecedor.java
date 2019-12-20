@@ -48,7 +48,7 @@ public class Fornecedor implements Pesquisavel {
 	}
 
 	/**
-	 * Get a StringProperty da razão social.
+	 * Pega a StringProperty da razão social.
 	 * 
 	 * @return razaoSocial
 	 */

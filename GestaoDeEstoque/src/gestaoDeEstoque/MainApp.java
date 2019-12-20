@@ -6,14 +6,14 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import gestaoDeEstoque.model.estoque.Entradas;
 import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.FornecedoresListWrapper;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.GruposListWrapper;
 import gestaoDeEstoque.model.estoque.Produtos;
 import gestaoDeEstoque.model.estoque.ProdutosListWrapper;
-import gestaoDeEstoque.model.estoque.Saidas;
+import gestaoDeEstoque.model.estoque.entradaOuSaida.Entradas;
+import gestaoDeEstoque.model.estoque.entradaOuSaida.Saidas;
 import gestaoDeEstoque.model.pessoa.Cliente;
 import gestaoDeEstoque.model.pessoa.Funcionarios;
 import gestaoDeEstoque.util.Enderecos;
@@ -23,15 +23,15 @@ import gestaoDeEstoque.view.EditEntradaController;
 import gestaoDeEstoque.view.EditFornecedorController;
 import gestaoDeEstoque.view.EditFuncionarioController;
 import gestaoDeEstoque.view.EditGruposController;
+import gestaoDeEstoque.view.EditProdutosController;
+import gestaoDeEstoque.view.EditSaidaController;
+import gestaoDeEstoque.view.LoginController;
 import gestaoDeEstoque.view.RootLayoutController;
 import gestaoDeEstoque.view.ViewClienteController;
 import gestaoDeEstoque.view.ViewFornecedorController;
 import gestaoDeEstoque.view.ViewFuncionarioController;
 import gestaoDeEstoque.view.ViewGrupoController;
 import gestaoDeEstoque.view.ViewProdutoController;
-import gestaoDeEstoque.view.EditProdutosController;
-import gestaoDeEstoque.view.EditSaidaController;
-import gestaoDeEstoque.view.LoginController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -66,9 +66,9 @@ public class MainApp extends Application {
 	public MainApp() {
 		// alguns dados de exemplo
 		gruposData.add(new Grupos("Indefinido"));
-		fornecedoresData.add(new Fornecedor("Indefinido", "05075964000112", "0000", "example@example.com",
+		fornecedoresData.add(new Fornecedor("Indefinido", "00000000000000", "000", "exemplo@exemplo.com",
 				new Telefones("0", "0"), new Enderecos("", "", "", "", ""), "example"));
-		funcionariosData.add(new Funcionarios("000", "admin", "example@example.com", "admin", "admin", "admin"));
+		funcionariosData.add(new Funcionarios("000", "admin", "exemplo@exemplo.com", "admin", "admin", "admin"));
 		//loadDataFromFile();
 	}
 	

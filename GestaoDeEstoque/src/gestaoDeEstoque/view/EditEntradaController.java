@@ -18,12 +18,14 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import gestaoDeEstoque.MainApp;
-import gestaoDeEstoque.model.estoque.Entradas;
 import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Produtos;
-import gestaoDeEstoque.model.estoque.ProdutosEntrada;
+import gestaoDeEstoque.model.estoque.entradaOuSaida.Entradas;
+import gestaoDeEstoque.model.estoque.entradaOuSaida.ProdutosEntrada;
 import gestaoDeEstoque.util.AlertUtil;
 import gestaoDeEstoque.util.Verifica;
+import gestaoDeEstoque.util.exception.DadosInvalidosException;
+import gestaoDeEstoque.util.factory.FactoryProdutosEntrada;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -203,14 +205,24 @@ public class EditEntradaController implements Initializable {
 	}
 
 	/**
-	 * Adiciona um produto à entrada.
+	 * Adiciona um produto tabela à entrada.
 	 */
 	@FXML
 	private void handleAdicionar() {
 		if (produtoComboBox.getSelectionModel().getSelectedIndex() >= 0) {
-			produtos.add(new ProdutosEntrada(produtoComboBox.getSelectionModel().getSelectedItem(),
-					quantidadeTextField.getText(), valorTotalTextField.getText()));
+			
+			try {
+				produtos.add(FactoryProdutosEntrada.getProdutosEntrada(
+						produtoComboBox.getSelectionModel().getSelectedItem(), 
+						quantidadeTextField.getText(), valorTotalTextField.getText(),
+						numeroDocumentoTextField.getText()));
+			} catch (DadosInvalidosException e) {
+				AlertUtil.criaUmAlert("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
+						e.getMessage(), "ERROR");
+			}
+			
 			entradaTable.setItems(produtos);
+			
 		} else {
 			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
 					"Por favor, Selecione um Produto.", "ERROR");
@@ -229,7 +241,7 @@ public class EditEntradaController implements Initializable {
 	}
 
 	/**
-	 * Efetua a entrada.
+	 * Efetua a entrada e gera o seu PDF.
 	 */
 	@FXML
 	private void handleOk() {
@@ -291,7 +303,7 @@ public class EditEntradaController implements Initializable {
 					x.getProduto().setEstoqueAtual(new SimpleStringProperty(novoEstoqueAtual));
 					totalDaEntrada += Double.parseDouble(x.getValorTotalProperty().get());
 					i++;
-
+					
 					cell = new PdfPCell(new Paragraph(x.getProduto().getCodigo()));
 					cell1 = new PdfPCell(new Paragraph(x.getProduto().getNome()));
 					cell2 = new PdfPCell(new Paragraph(x.getQuantidadeProperty().get()));
