@@ -1,7 +1,6 @@
 package gestaoDeEstoque.view;
 
-import java.awt.Desktop;
-import java.io.File;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -257,7 +256,7 @@ public class EditSaidaController implements Initializable {
 			try {
 				PdfWriter writer = PdfWriter.getInstance(document,
 						new FileOutputStream(
-								"GestaoDeEstoque/src/Saidas/" + new SimpleDateFormat("dd-MM-yyyy").format(new Date())
+								"GestaoDeEstoque/src/Relatorios/Saidas/" + new SimpleDateFormat("dd-MM-yyyy").format(new Date())
 										+ "_" + numeroDocumentoTextField.getText() + ".pdf"));
 				document.open();
 
@@ -339,13 +338,13 @@ public class EditSaidaController implements Initializable {
 				document.close();
 			}
 			document.close();
-			try {
+			/**try {
 				Desktop.getDesktop().open(
-						new File("GestaoDeEstoque/src/Saidas/" + new SimpleDateFormat("dd-MM-yyyy").format(new Date())
+						new File("GestaoDeEstoque/src/Relatorios/Saidas/" + new SimpleDateFormat("dd-MM-yyyy").format(new Date())
 								+ "_" + numeroDocumentoTextField.getText() + ".pdf"));
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			}**/
 			this.dialogStage.close();
 		}
 	}

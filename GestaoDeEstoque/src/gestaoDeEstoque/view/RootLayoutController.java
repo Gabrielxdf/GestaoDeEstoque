@@ -133,6 +133,15 @@ public class RootLayoutController implements Initializable {
 	private void handleSaida() {
 		mainApp.showEditSaida();
 	}
+	
+	/**
+	 * Chamado quando o usuário clica no botão "Grupos". Abre uma janela para criar
+	 * relatórios de grupos.
+	 */
+	@FXML
+	private void relatorioGrupo() {
+		mainApp.showRelatorioGrupo();
+	}
 
 	/**
 	 * Chamado quando o usuário clica no botão "Ajuda". Abre uma janela com algumas

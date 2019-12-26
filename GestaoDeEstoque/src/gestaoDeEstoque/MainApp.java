@@ -26,6 +26,7 @@ import gestaoDeEstoque.view.EditGruposController;
 import gestaoDeEstoque.view.EditProdutosController;
 import gestaoDeEstoque.view.EditSaidaController;
 import gestaoDeEstoque.view.LoginController;
+import gestaoDeEstoque.view.RelatorioGrupoController;
 import gestaoDeEstoque.view.RootLayoutController;
 import gestaoDeEstoque.view.ViewClienteController;
 import gestaoDeEstoque.view.ViewFornecedorController;
@@ -528,8 +529,31 @@ public class MainApp extends Application {
 		}
 	}
 	
-	
-	
+	/**
+	 * Exibe a tela de geração de relatórios em PDF dos Grupos.
+	 */
+	public void showRelatorioGrupo() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/RelatorioGrupo.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Relatório de Grupos");
+			dialogStage.initModality(Modality.NONE);
+			dialogStage.initOwner(primaryStage);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			RelatorioGrupoController controller = loader.getController();
+			controller.setMainApp(this);
+			dialogStage.getIcons().add(new Image("file:GestaoDeEstoque/src/gestaoDeEstoque/resources/groups-icon.png"));
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}		
 	
 	/**
 	 * Carrega os dados do obtidos dos XML que foram salvos.

@@ -1,7 +1,6 @@
 package gestaoDeEstoque.view;
 
-import java.awt.Desktop;
-import java.io.File;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +22,7 @@ import gestaoDeEstoque.model.estoque.Produtos;
 import gestaoDeEstoque.model.estoque.entradaOuSaida.Entradas;
 import gestaoDeEstoque.model.estoque.entradaOuSaida.ProdutosEntrada;
 import gestaoDeEstoque.util.AlertUtil;
+import gestaoDeEstoque.util.Limpa;
 import gestaoDeEstoque.util.Verifica;
 import gestaoDeEstoque.util.exception.DadosInvalidosException;
 import gestaoDeEstoque.util.factory.FactoryProdutosEntrada;
@@ -199,8 +199,7 @@ public class EditEntradaController implements Initializable {
 		} catch (NumberFormatException e) {
 			AlertUtil.criaUmAlert("Erro", "Digite apenas números na quantidade",
 					"Digite apenas números inteiros no campo quantidade", "ERROR");
-			quantidadeTextField.setText("");
-			valorTotalTextField.setText("");
+			Limpa.limpaTextField(quantidadeTextField, valorTotalTextField);
 		}
 	}
 
@@ -255,7 +254,7 @@ public class EditEntradaController implements Initializable {
 			Double totalDaEntrada = 0.0;
 			Document document = new Document();
 			try {
-				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("GestaoDeEstoque/src/Entradas/" + 
+				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("GestaoDeEstoque/src/Relatorios/Entradas/" + 
 			new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
 				document.open();
 			
@@ -337,12 +336,12 @@ public class EditEntradaController implements Initializable {
 				document.close();
 			}
 			document.close();
-			try {
-				Desktop.getDesktop().open(new File("GestaoDeEstoque/src/Entradas/" + 
+			/**try {
+				Desktop.getDesktop().open(new File("GestaoDeEstoque/src/Relatorios/Entradas/" + 
 						new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			}**/
 			this.dialogStage.close();
 		}
 	}
