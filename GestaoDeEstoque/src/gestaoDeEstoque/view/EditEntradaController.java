@@ -1,6 +1,6 @@
 package gestaoDeEstoque.view;
 
-
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -21,7 +21,9 @@ import gestaoDeEstoque.model.estoque.Fornecedor;
 import gestaoDeEstoque.model.estoque.Produtos;
 import gestaoDeEstoque.model.estoque.entradaOuSaida.Entradas;
 import gestaoDeEstoque.model.estoque.entradaOuSaida.ProdutosEntrada;
+import gestaoDeEstoque.util.AbrePdf;
 import gestaoDeEstoque.util.AlertUtil;
+import gestaoDeEstoque.util.BarraDeProgresso;
 import gestaoDeEstoque.util.Limpa;
 import gestaoDeEstoque.util.Verifica;
 import gestaoDeEstoque.util.exception.DadosInvalidosException;
@@ -36,6 +38,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -120,9 +124,15 @@ public class EditEntradaController implements Initializable {
 
 	@FXML
 	private Button addButton;
-	
+
 	@FXML
 	private TextField numeroDocumentoTextField;
+
+	@FXML
+	private ProgressBar barraDeProgresso;
+
+	@FXML
+	private Label progressLabel;
 
 	private MainApp mainApp;
 
@@ -164,7 +174,19 @@ public class EditEntradaController implements Initializable {
 				}
 			}
 		});
-
+	}
+	
+	@FXML
+	private void geraBarra() {
+		if (this.barraDeProgresso.isVisible()) {
+			barraDeProgresso.setVisible(false);
+			progressLabel.setVisible(false);
+		} else {
+			BarraDeProgresso barraProgresso = new BarraDeProgresso(barraDeProgresso);
+			Thread t = new Thread(barraProgresso);
+			t.start();
+			
+		}
 	}
 
 	/**
@@ -183,7 +205,8 @@ public class EditEntradaController implements Initializable {
 	}
 
 	/**
-	 * Método que atualiza o TextField do valor total de acordo com o TextField da quantidade.
+	 * Método que atualiza o TextField do valor total de acordo com o TextField da
+	 * quantidade.
 	 */
 	@FXML
 	private void atualizaValorTotal() {
@@ -193,7 +216,7 @@ public class EditEntradaController implements Initializable {
 				Double valor = Double.parseDouble(valorUnitarioTextField.getText());
 				Double valorTotal = qtd * valor;
 				valorTotalTextField.setText(valorTotal.toString());
-			}else {
+			} else {
 				valorTotalTextField.setText("");
 			}
 		} catch (NumberFormatException e) {
@@ -209,22 +232,21 @@ public class EditEntradaController implements Initializable {
 	@FXML
 	private void handleAdicionar() {
 		if (produtoComboBox.getSelectionModel().getSelectedIndex() >= 0) {
-			
+
 			try {
 				produtos.add(FactoryProdutosEntrada.getProdutosEntrada(
-						produtoComboBox.getSelectionModel().getSelectedItem(), 
-						quantidadeTextField.getText(), valorTotalTextField.getText(),
-						numeroDocumentoTextField.getText()));
+						produtoComboBox.getSelectionModel().getSelectedItem(), quantidadeTextField.getText(),
+						valorTotalTextField.getText(), numeroDocumentoTextField.getText()));
 			} catch (DadosInvalidosException e) {
 				AlertUtil.criaUmAlert("Dados inválidos", "Alguns dados obrigatórios estão inválidos e/ou vazios.",
 						e.getMessage(), "ERROR");
 			}
-			
+
 			entradaTable.setItems(produtos);
-			
+
 		} else {
-			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado",
-					"Por favor, Selecione um Produto.", "ERROR");
+			AlertUtil.criaUmAlert("Nenhuma seleção", "Nenhum Produto Selecionado", "Por favor, Selecione um Produto.",
+					"ERROR");
 		}
 	}
 
@@ -254,29 +276,31 @@ public class EditEntradaController implements Initializable {
 			Double totalDaEntrada = 0.0;
 			Document document = new Document();
 			try {
-				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("GestaoDeEstoque/src/Relatorios/Entradas/" + 
-			new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
+				PdfWriter writer = PdfWriter.getInstance(document,
+						new FileOutputStream("GestaoDeEstoque/src/Relatorios/Entradas/"
+								+ new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_"
+								+ numeroDocumentoTextField.getText() + ".pdf"));
 				document.open();
-			
+
 				document.addCreationDate();
 				document.addAuthor("MyStock");
 				document.addSubject("Entrada");
 				document.addKeywords("MyStock");
-				
+
 				PdfContentByte canvas = writer.getDirectContent();
-		        CMYKColor blackColor = new CMYKColor(0.f, 0.f, 0.f, 100.f);
-		        canvas.setColorStroke(blackColor);
-		        canvas.moveTo(35, 800);
-		        canvas.lineTo(560, 800);
-		        canvas.moveTo(35, 677);
-		        canvas.lineTo(560, 677);
-		        canvas.closePathStroke();
+				CMYKColor blackColor = new CMYKColor(0.f, 0.f, 0.f, 100.f);
+				canvas.setColorStroke(blackColor);
+				canvas.moveTo(35, 800);
+				canvas.lineTo(560, 800);
+				canvas.moveTo(35, 677);
+				canvas.lineTo(560, 677);
+				canvas.closePathStroke();
 				Paragraph p = new Paragraph("Entrada - " + descricaoTextField.getText());
 				p.setAlignment(1);
 				document.add(p);
 				p = new Paragraph(" ");
 				document.add(p);
-				
+
 				PdfPTable table = new PdfPTable(5);
 				table.setWidthPercentage(100);
 				PdfPCell cell = new PdfPCell(new Paragraph("Código do Produto"));
@@ -290,7 +314,7 @@ public class EditEntradaController implements Initializable {
 				table.addCell(cell2);
 				table.addCell(cell3);
 				table.addCell(cell4);
-				
+
 				for (ProdutosEntrada x : entradaTable.getItems()) {
 					// Atualiza o estoque dos produtos.
 					int estoqueAtual = Integer.parseInt(x.getProduto().getEstoqueAtual());
@@ -302,7 +326,7 @@ public class EditEntradaController implements Initializable {
 					x.getProduto().setEstoqueAtual(new SimpleStringProperty(novoEstoqueAtual));
 					totalDaEntrada += Double.parseDouble(x.getValorTotalProperty().get());
 					i++;
-					
+
 					cell = new PdfPCell(new Paragraph(x.getProduto().getCodigo()));
 					cell1 = new PdfPCell(new Paragraph(x.getProduto().getNome()));
 					cell2 = new PdfPCell(new Paragraph(x.getQuantidadeProperty().get()));
@@ -323,25 +347,25 @@ public class EditEntradaController implements Initializable {
 				document.add(p);
 				p = new Paragraph("Data: " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()));
 				document.add(p);
-				p = new Paragraph("Fornecedor: " + produtoComboBox.getSelectionModel().getSelectedItem().getFornecedor().getNome());
+				p = new Paragraph("Fornecedor: "
+						+ produtoComboBox.getSelectionModel().getSelectedItem().getFornecedor().getNome());
 				document.add(p);
 				p = new Paragraph(" ");
 				document.add(p);
 				document.add(p);
 				document.add(table);
-				
+
 			} catch (DocumentException | IOException e) {
 				System.err.println(e.getMessage());
 			} finally {
 				document.close();
 			}
 			document.close();
-			/**try {
-				Desktop.getDesktop().open(new File("GestaoDeEstoque/src/Relatorios/Entradas/" + 
-						new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}**/
+			AbrePdf pdf = new AbrePdf(new File(
+					"GestaoDeEstoque/src/Relatorios/Entradas/" + new SimpleDateFormat("dd-MM-yyyy").format(new Date())
+							+ "_" + numeroDocumentoTextField.getText() + ".pdf"));
+			Thread threadAbrePdf = new Thread(pdf);
+			threadAbrePdf.start();
 			this.dialogStage.close();
 		}
 	}
@@ -351,7 +375,18 @@ public class EditEntradaController implements Initializable {
 	 */
 	@FXML
 	private void handleCancel() {
-		this.dialogStage.close();
+		//geraBarra();
+		new Thread(() -> {
+			if (this.barraDeProgresso.isVisible()) {
+				barraDeProgresso.setVisible(false);
+				progressLabel.setVisible(false);
+			} else {
+				BarraDeProgresso barraProgresso = new BarraDeProgresso(barraDeProgresso);
+				Thread t = new Thread(barraProgresso);
+				t.start();	
+			}
+        }).start();
+		// this.dialogStage.close();
 	}
 
 	/**
@@ -378,7 +413,7 @@ public class EditEntradaController implements Initializable {
 	private void handleDelete() {
 		int selectedIndex;
 		selectedIndex = entradaTable.getSelectionModel().getSelectedIndex();
-		ProdutosEntrada selectedProdutosEntrada= entradaTable.getSelectionModel().getSelectedItem();
+		ProdutosEntrada selectedProdutosEntrada = entradaTable.getSelectionModel().getSelectedItem();
 		if (selectedIndex >= 0) {
 			if (AlertUtil.criaUmAlert("Confirmação", "Você deseja mesmo fazer essa exclusão ?",
 					"Excluir o Produto: " + "'" + selectedProdutosEntrada.getProduto().getNome() + "'" + " ?",

@@ -20,6 +20,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import gestaoDeEstoque.MainApp;
 import gestaoDeEstoque.model.estoque.Grupos;
 import gestaoDeEstoque.model.estoque.Produtos;
+import gestaoDeEstoque.util.AbrePdf;
 import gestaoDeEstoque.util.Limpa;
 import gestaoDeEstoque.util.pesquisa.Pesquisa;
 import javafx.collections.ObservableList;
@@ -368,13 +369,11 @@ public class RelatorioGrupoController implements Initializable {
 				System.err.println(e.getMessage());
 			}
 			document.close();
-			/**try {
-				Desktop.getDesktop().open(
-						new File("GestaoDeEstoque/src/Relatorios/Grupos/" + new SimpleDateFormat("dd-MM-yyyy").format(new Date())
-								+ "_" + grupoComboBox.getSelectionModel().getSelectedItem().getNome()+ ".pdf"));
-			} catch (IOException e) {
-				e.printStackTrace();
-		}**/
+			AbrePdf pdf = new AbrePdf(new File("GestaoDeEstoque/src/Relatorios/Grupos/" + 
+					new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + 
+					grupoComboBox.getSelectionModel().getSelectedItem().getNome()+ ".pdf"));
+			Thread threadAbrePdf = new Thread(pdf);
+			threadAbrePdf.start();
 		}
 	}
 

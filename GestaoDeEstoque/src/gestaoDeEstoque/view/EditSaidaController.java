@@ -1,6 +1,7 @@
 package gestaoDeEstoque.view;
 
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -22,6 +23,7 @@ import gestaoDeEstoque.model.estoque.entradaOuSaida.ProdutosEntrada;
 import gestaoDeEstoque.model.estoque.entradaOuSaida.ProdutosSaida;
 import gestaoDeEstoque.model.estoque.entradaOuSaida.Saidas;
 import gestaoDeEstoque.model.pessoa.Cliente;
+import gestaoDeEstoque.util.AbrePdf;
 import gestaoDeEstoque.util.AlertUtil;
 import gestaoDeEstoque.util.Verifica;
 import gestaoDeEstoque.util.exception.DadosInvalidosException;
@@ -338,13 +340,10 @@ public class EditSaidaController implements Initializable {
 				document.close();
 			}
 			document.close();
-			/**try {
-				Desktop.getDesktop().open(
-						new File("GestaoDeEstoque/src/Relatorios/Saidas/" + new SimpleDateFormat("dd-MM-yyyy").format(new Date())
-								+ "_" + numeroDocumentoTextField.getText() + ".pdf"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}**/
+			AbrePdf pdf = new AbrePdf(new File("GestaoDeEstoque/src/Relatorios/Saidas/" + 
+					new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "_" + numeroDocumentoTextField.getText() + ".pdf"));
+			Thread threadAbrePdf = new Thread(pdf);
+			threadAbrePdf.start();
 			this.dialogStage.close();
 		}
 	}
